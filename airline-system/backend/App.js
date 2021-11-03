@@ -18,6 +18,10 @@ connection.once('open',()=> {
     console.log("MongoDb databse is succesfully established succesfully");
 });
 
+const flightsRouter = require('./routes/flights');
+
+app.use('/flights', flightsRouter);
+
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);
 });
