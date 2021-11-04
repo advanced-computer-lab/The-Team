@@ -19,7 +19,7 @@ const flightSchema = new Schema({
     },
 
     Cabin: {
-        type: text,
+        type: String,
         required: true,
     },
 
