@@ -14,7 +14,7 @@ const flightSchema = new Schema({
     },
 
     Flight_date: {
-        type: Date,
+        type: String,
         required: true,
     },
 

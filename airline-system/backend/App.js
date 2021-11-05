@@ -15,7 +15,7 @@ mongoose.connect(uri, {useNewUrlParser : true, useUnifiedTopology: true});
 
 const connection= mongoose.connection;
 connection.once('open',()=> {
-    console.log("MongoDb databse is succesfully established succesfully");
+    console.log("MongoDb database is succesfully established succesfully");
 });
 
 const flightsRouter = require('./routes/flights');
