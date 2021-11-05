@@ -3,7 +3,7 @@ const route = express.Router();
 const {
   signin,
   requireSignin,
-} = require("../controllers/authControllers");
+} = require("../controllers/authController");
 
 //import validator
 const { runValidation } = require("../validators");

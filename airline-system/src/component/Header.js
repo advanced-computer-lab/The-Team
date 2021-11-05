@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { isAuth, signout } from "../action/authAcation";
+import { isAuth } from "../action/authAcation";
 import {
   Collapse,
   Navbar,
@@ -62,17 +62,6 @@ const Header = ({ history }) => {
                     isAuth().name
                   }'s Dashboard`}</NavLink>
                 </Link>
-              </NavItem>
-            )}
-
-            {isAuth() && (
-              <NavItem>
-                <NavLink
-                  style={{ cursor: "pointer" }}
-                  onClick={() => signout(() => history.push("/signin"))}
-                >
-                  SignOut
-                </NavLink>
               </NavItem>
             )}
           </Nav>
