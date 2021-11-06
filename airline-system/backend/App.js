@@ -19,8 +19,10 @@ connection.once('open',()=> {
 });
 
 const flightsRouter = require('./routes/flights');
+const adminRouter = require('./Routes/admin');
 
 app.use('/flights', flightsRouter);
+app.use('/adminpanel',adminRouter);
 
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);
