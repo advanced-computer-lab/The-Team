@@ -13,10 +13,11 @@ router.route('/add').post((req, res)=>{
 const From = req.body.From;
 const To = req.body.To;
 const Flight_date = req.body.Flight_date;
-const Cabin = req.body.Cabin;
-const Seats = Number(req.body.Seats);
+const Economy_seats = Number(req.body.Economy_seats);
+const Business_seats = Number(req.body.Business_seats);
+const First_seats = Number(req.body.First_seats);
 
-const newFlight =new Flight({From,To,Flight_date,Cabin,Seats})
+const newFlight =new Flight({From,To,Flight_date,Economy_seats,Business_seats, First_seats})
 
 newFlight.save()
 .then(()=>res.json('Flight Added!'))

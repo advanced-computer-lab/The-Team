@@ -6,8 +6,11 @@ import ReactDOM from 'react-dom';
 
 
 import DeleteFlight from './Components/DeleteFlight';
+import CreateFlight from './Components/CreateFlight';
+
 
 const DeleteFlightElement = DeleteFlight();
+const CreateFlightElement = CreateFlight;
 function App() {
   return (
     <div className="App">
@@ -15,8 +18,9 @@ function App() {
 
       <Router>
         <Routes>
-      <Route
-     exact path='/remove' element={DeleteFlightElement} />
+      <Route exact path='/delete' element={DeleteFlightElement} />
+      <Route exact path='/create' element={<CreateFlightElement/>} />
+
       </Routes>
       </Router>
 

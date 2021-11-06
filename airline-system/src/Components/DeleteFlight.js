@@ -3,7 +3,7 @@ import React from 'react'
 export default function DeleteFlight() {
     return (
         <div>
-            <h1>yarab nekhlas</h1>
+            <h1>here delete flights</h1>
         </div>
     )
 }

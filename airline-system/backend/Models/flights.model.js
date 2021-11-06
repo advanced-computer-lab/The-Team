@@ -18,12 +18,17 @@ const flightSchema = new Schema({
         required: true,
     },
 
-    Cabin: {
-        type: String,
+    Economy_seats: {
+        type: Number,
         required: true,
     },
 
-    Seats: {
+    Business_seats: {
+        type: Number,
+        required: true,
+    },
+
+    First_seats: {
         type: Number,
         required: true,
     }
