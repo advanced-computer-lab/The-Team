@@ -4,10 +4,10 @@ import '../App.css';
 import axios from 'axios';
 
 
-
 class CreateFlight extends Component {
   constructor(props) {
     super(props);
+
 
 
 
@@ -103,7 +103,7 @@ class CreateFlight extends Component {
           Business_seats:'',
           First_seats:''
         })
-        this.props.history.push('/');
+        window.location.reload();
       })
       .catch(err => {
           console.log(data)
