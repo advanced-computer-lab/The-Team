@@ -43,7 +43,7 @@ const Flight = props => (
   }
 
   flightList() {
-    return this.state.flight.map(currentflight => {
+    return this.state.flights.map(currentflight => {
       return <Flight flight={currentflight} deleteFlight={this.deleteFlight} key={currentflight._id}/>;
     })
   }
