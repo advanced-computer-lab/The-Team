@@ -4,7 +4,8 @@ let Flight = require('../models/flights.model');
 
 
 router.route('/').get((req, res)=>{
-    Flight.find()
+  console.log(req);
+  Flight.find()
     .then(flights => res.json(flights))
     .catch(err => res.status(400).json('Error: ' + err));
 });
