@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
 
 class UpdateFlight extends Component {
+  
   constructor(props) {
     super(props);
+    
 
-
-
-
-
-    this.onChangeId = this.onChangeId.bind(this);
     this.onChangeFrom = this.onChangeFrom.bind(this);
     this.onChangeTo = this.onChangeTo.bind(this);
     this.onChangeFlight_date = this.onChangeFlight_date.bind(this);
@@ -36,7 +33,7 @@ class UpdateFlight extends Component {
     this.state = {
 
 
-            Id:'',
+          
             From: '',
             To:'',
             Flight_date:'',
@@ -46,7 +43,7 @@ class UpdateFlight extends Component {
           
     };
   }
-
+  
 //   componentDidMount() {
 //     // console.log("Print id: " + this.props.match.params.id);
 //     axios
@@ -68,12 +65,8 @@ class UpdateFlight extends Component {
 //       })
 //   };
 
-onChangeId(e) {
-    this.setState({
-      Id: e.target.value
-    })
-  }
 
+  
 
   onChangeFrom(e) {
     this.setState({
@@ -128,9 +121,12 @@ onChangeId(e) {
 
   onSubmit = e => {
     e.preventDefault();
-
+    const GetId = () => {
+      const { state } = useLocation();
+      const { id } = state; // Read values passed on state
+      console.log(id);
+    }
     const data = {
-        Id: this.state.Id,
         From: this.state.From,
         To: this.state.To,
         Flight_date: this.state.Flight_date,

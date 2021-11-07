@@ -18,7 +18,7 @@ const AdminPanelElement = AdminPanel();
 const AllFlightElement = AllFlight;
 const CreateFlightElement = CreateFlight;
 const UpdateFlightElement = UpdateFlight;
-const DeleteFlightElement = DeleteFlight();
+//const DeleteFlightElement = DeleteFlight();
 
 // AllFlight = (index , e) =>{
 //   const AllFlight = Object.assign([], this.state.AllFlight);
@@ -40,7 +40,7 @@ function App() {
       <Route exact path='/home/adminpanel/flights' element={<AllFlightElement/>} />  
       <Route exact path='/home/adminpanel/create' element={<CreateFlightElement/>} />
       <Route exact path='/home/adminpanel/flights/update' element={<UpdateFlightElement/>} />
-      <Route exact path='/delete' element={DeleteFlightElement} />
+      {/* <Route exact path='/delete' element={DeleteFlightElement} /> */}
 
 
       </Routes>

@@ -34,25 +34,25 @@ router.route('/:id').get((req, res) => {
   
 
 
-//   router.route('/:id/delete').delete((req, res) => {
-//     Flight.findByIdAndDelete(req.params.id)
-//       .then(() => res.json('Flight deleted.'))
-//       .catch(err => res.status(400).json('Error: ' + err));
-//   });
+  router.route('/:id/delete').delete((req, res) => {
+    Flight.findByIdAndDelete(req.params.id)
+      .then(() => res.json('Flight deleted.'))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
 
-//   router.route('/:id/update').patch((req, res) => {
-//     Flight.findById(req.params.id)
-//       .then(flights => {
-//         flights.From = req.body.From;
-//         flights.To = req.body.To;
-//         flights.Flight_date = Date.parse(req.body.Cabin)
-//         flights.Cabin = req.body.Cabin;
-//         flights.Seats = Number(req.body.Seats);
+  router.route('/:id/update').patch((req, res) => {
+    Flight.findById(req.params.id)
+      .then(flights => {
+        flights.From = req.body.From;
+        flights.To = req.body.To;
+        flights.Flight_date = Date.parse(req.body.Cabin)
+        flights.Cabin = req.body.Cabin;
+        flights.Seats = Number(req.body.Seats);
   
-//         flights.save()
-//           .then(() => res.json('Flight updated!'))
-//           .catch(err => res.status(400).json('Error: ' + err));
-//       })
-//       .catch(err => res.status(400).json('Error: ' + err));
-//   });
+        flights.save()
+          .then(() => res.json('Flight updated!'))
+          .catch(err => res.status(400).json('Error: ' + err));
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
 module.exports= router;
