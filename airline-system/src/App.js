@@ -20,12 +20,12 @@ const CreateFlightElement = CreateFlight;
 const UpdateFlightElement = UpdateFlight;
 const DeleteFlightElement = DeleteFlight();
 
-AllFlight = (index , e) =>{
-  const AllFlight = Object.assign([], this.state.AllFlight);
-  AllFlight.splice(index, 1);
-  this.setState({AllFlight:AllFlight});
+// AllFlight = (index , e) =>{
+//   const AllFlight = Object.assign([], this.state.AllFlight);
+//   AllFlight.splice(index, 1);
+//   this.setState({AllFlight:AllFlight});
   
-}
+// }
 
 
 function App() {
