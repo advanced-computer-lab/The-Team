@@ -31,22 +31,23 @@ router.route('/:id').get((req, res) => {
   });
 
 
-  router.route('/delete/:id').delete((req, res) => {
+  
+
+
+  router.route('/:id/delete').delete((req, res) => {
     Flight.findByIdAndDelete(req.params.id)
       .then(() => res.json('Flight deleted.'))
       .catch(err => res.status(400).json('Error: ' + err));
   });
 
-  router.route('/update/:id').patch((req, res) => {
-    Flight.findById(req.params.id)
+  router.route('/update').patch((req, res) => {
+    Flight.findById(req.body.id)
       .then(flights => {
         flights.From = req.body.From;
         flights.To = req.body.To;
         flights.Flight_date = req.body.Flight_date;
         flights.Economy_seats = Number(req.body.Economy_seats);
         flights.Business_seats = Number(req.body.Business_seats);
-        flights.First_seats = Number(req.body.First_seats);
-  
         flights.save()
           .then(() => res.json('Flight updated!'))
           .catch(err => res.status(400).json('Error: ' + err));

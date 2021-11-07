@@ -1,192 +1,89 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
 
-class UpdateFlight extends Component {
-  constructor(props) {
-    super(props);
+function UpdateFlight(props) {
+  const [From, setFrom] = useState('');
+  const [To, setTo] = useState('');
+  const [Flight_date, setFlight_date] = useState('');
+  const [Economy_seats, setEconomy_seats] = useState('');
+  const [Business_seats, setBusiness_seats] = useState('');
+  const [First_seats, setFirst_seats] = useState('');
+  
+  const { state } = useLocation();
+  const {id} = state 
 
-
-
-
-
-    this.onChangeId = this.onChangeId.bind(this);
-    this.onChangeFrom = this.onChangeFrom.bind(this);
-    this.onChangeTo = this.onChangeTo.bind(this);
-    this.onChangeFlight_date = this.onChangeFlight_date.bind(this);
-    this.onChangeEconomy_seats = this.onChangeEconomy_seats.bind(this);
-    this.onChangeBusiness_seats = this.onChangeBusiness_seats.bind(this);
-    this.onChangeFirst_seats = this.onChangeFirst_seats.bind(this);
-    
-    
-    
-    
-    this.onSubmit = this.onSubmit.bind(this);
-
-
-
-
-
-
-
-
-
-
-    this.state = {
-
-
-            Id:'',
-            From: '',
-            To:'',
-            Flight_date:'',
-            Economy_seats:'',
-            Business_seats:'',
-            First_seats:''
-          
-    };
+  const onChangeFrom = (e) => {
+    setFrom(e.target.value);
   }
 
-//   componentDidMount() {
-//     // console.log("Print id: " + this.props.match.params.id);
-//     axios
-//       //.get('http://localhost:5000/flights/'+this.props.match.params.id)
-//       .get('http://localhost:5000/flights/')
-//       .then(res => {
-//         // this.setState({...this.state, book: res.data})
-//         this.setState({
-//             From: this.state.From,
-//             To: this.state.To,
-//             Flight_date: this.state.Flight_date,
-//             Economy_seats: this.state.Economy_seats,
-//             Business_seats: this.state.Business_seats,
-//             First_seats: this.state.First_seats
-//         })
-//       })
-//       .catch(err => {
-//         console.log("Error from UpdateFlight");
-//       })
-//   };
-
-onChangeId(e) {
-    this.setState({
-      Id: e.target.value
-    })
+  const onChangeTo = (e) => {
+    setTo(e.target.value);
   }
 
-
-  onChangeFrom(e) {
-    this.setState({
-      From: e.target.value
-    })
+  const onChangeFlight_date = (e) => {
+    setFlight_date(e.target.value);
   }
 
-  onChangeTo(e) {
-    this.setState({
-      To: e.target.value
-    })
+  const onChangeEconomy_seats = (e) => {
+    setEconomy_seats(e.target.value);
   }
 
-  onChangeFlight_date(e) {
-    this.setState({
-      Flight_date: e.target.value
-    })
+  const onChangeBusiness_seats = (e) => {
+    setBusiness_seats(e.target.value);
   }
 
-  onChangeEconomy_seats(e) {
-    this.setState({
-      Economy_seats: e.target.value
-    })
-  }
-
-  onChangeBusiness_seats(e) {
-    this.setState({
-      Business_seats: e.target.value
-    })
-  }
-
-  onChangeFirst_seats(e) {
-    this.setState({
-      First_seats: e.target.value
-    })
+  const onChangeFirst_seats = (e) => {
+    setFirst_seats(e.target.value);
   }
 
 
 
 
-
-
-
-
-
-
-
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  onSubmit = e => {
+  const onSubmit = e => {
     e.preventDefault();
 
     const data = {
-        Id: this.state.Id,
-        From: this.state.From,
-        To: this.state.To,
-        Flight_date: this.state.Flight_date,
-        Economy_seats: this.state.Economy_seats,
-        Business_seats: this.state.Business_seats,
-        First_seats: this.state.First_seats
+      id: id,
+      From: From,
+      To: To,
+      Flight_date: Flight_date,
+      Economy_seats: Economy_seats,
+      Business_seats: Business_seats,
+      First_seats: First_seats
     };
+    console.log(data)
 
     axios
-      .patch('http://localhost:5000/flights/update/'+this.state.Id, data)
+      .patch('http://localhost:5000/flights/update/', data)
       .then(res => {
+        alert("Flight updated successfully");
         window.location.reload();
-      //  this.props.history.push('/show-book/'+this.props.match.params.id);
-      //this.props.history.push('/'+this.props.match.params.id);
-
       })
       .catch(err => {
-        
-        console.log("Error in UpdateFlight!"+ err);
+        console.log("Error in UpdateFlight!" + err);
       })
   };
 
 
-  render() {
-    return (
-      <div className="UpdateFlight">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <br />
-              <Link to="/" className="btn btn-outline-warning float-left">
-                  Show Flights List
-              </Link>
-            </div>
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Edit Flight</h1>
-              <p className="lead text-center">
-                  Update Flight's Info
-              </p>
-            </div>
-          </div>
-
+  return (
+    <div className="UpdateFlight">
+      <div className="container">
+        <div className="row">
           <div className="col-md-8 m-auto">
-          <form noValidate onSubmit={this.onSubmit}>
-          <div className='form-group'>
-              <label htmlFor="title">ID:</label>
-              <input
-                type='text'
-                placeholder='Enter flight id here'
-                name='From'
-                className='form-control'
-                value={this.state.Id}
-                onChange={this.onChangeId}
-              />
-            </div>
-            
+            <br />
+          </div>
+          <div className="col-md-8 m-auto">
+            <h1 className="display-4 text-center">Edit Flight</h1>
+            <p className="lead text-center">
+              Update Flight's Info
+            </p>
+          </div>
+        </div>
+
+        <div className="col-md-8 m-auto">
+          <form noValidate onSubmit={onSubmit}>
             <div className='form-group'>
               <label htmlFor="title">From</label>
               <input
@@ -194,78 +91,77 @@ onChangeId(e) {
                 placeholder='From'
                 name='From'
                 className='form-control'
-                value={this.state.From}
-                onChange={this.onChangeFrom}
+                value={From}
+                onChange={onChangeFrom}
               />
             </div>
 
             <div className='form-group'>
-            <label htmlFor="isbn">To</label>
+              <label htmlFor="isbn">To</label>
               <input
                 type='text'
                 placeholder='To'
                 name='isbn'
                 className='form-control'
-                value={this.state.To}
-                onChange={this.onChangeTo}
+                value={To}
+                onChange={onChangeTo}
               />
             </div>
 
             <div className='form-group'>
-            <label htmlFor="author">Flight date</label>
+              <label htmlFor="author">Flight date</label>
               <input
                 type='text'
                 placeholder='Flight_date'
                 name='author'
                 className='form-control'
-                value={this.state.Flight_date}
-                onChange={this.onChangeFlight_date}
+                value={Flight_date}
+                onChange={onChangeFlight_date}
               />
             </div>
 
             <div className='form-group'>
-            <label htmlFor="description">Economy Seats</label>
+              <label htmlFor="description">Economy Seats</label>
               <input
                 type='text'
                 placeholder='Economy seats'
                 name='description'
                 className='form-control'
-                value={this.state.Economy_seats}
-                onChange={this.onChangeEconomy_seats}
+                value={Economy_seats}
+                onChange={onChangeEconomy_seats}
               />
             </div>
 
             <div className='form-group'>
-            <label htmlFor="published_date">Business_seats</label>
+              <label htmlFor="published_date">Business_seats</label>
               <input
                 type='text'
                 placeholder='business seats'
                 name='published_date'
                 className='form-control'
-                value={this.state.Business_seats}
-                onChange={this.onChangeBusiness_seats}
+                value={Business_seats}
+                onChange={onChangeBusiness_seats}
               />
             </div>
             <div className='form-group'>
-            <label htmlFor="publisher">First seats</label>
+              <label htmlFor="publisher">First seats</label>
               <input
                 type='text'
                 placeholder='first seats'
                 name='publisher'
                 className='form-control'
-                value={this.state.First_seats}
-                onChange={this.onChangeFirst_seats}
+                value={First_seats}
+                onChange={onChangeFirst_seats}
               />
             </div>
 
             <button type="submit" className="btn btn-outline-info btn-lg btn-block">Update Flight</button>
-            </form>
-          </div>
-
+          </form>
         </div>
+
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default UpdateFlight;
