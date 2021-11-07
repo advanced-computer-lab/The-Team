@@ -76,89 +76,90 @@ function UpdateFlight(props) {
           </div>
           <div className="col-md-8 m-auto">
             <h1 className="display-4 text-center">Edit Flight</h1>
-            <p className="lead text-center">
-              Update Flight's Info
-            </p>
+            <p className="lead text-center">Update Flight's Info</p>
           </div>
         </div>
 
         <div className="col-md-8 m-auto">
           <form noValidate onSubmit={onSubmit}>
-            <div className='form-group'>
+            <div className="form-group">
               <label htmlFor="title">From</label>
               <input
-                type='text'
-                placeholder='From'
-                name='From'
-                className='form-control'
+                type="text"
+                placeholder="From"
+                name="From"
+                className="form-control"
                 value={From}
                 onChange={onChangeFrom}
               />
             </div>
 
-            <div className='form-group'>
+            <div className="form-group">
               <label htmlFor="isbn">To</label>
               <input
-                type='text'
-                placeholder='To'
-                name='isbn'
-                className='form-control'
+                type="text"
+                placeholder="To"
+                name="isbn"
+                className="form-control"
                 value={To}
                 onChange={onChangeTo}
               />
             </div>
 
-            <div className='form-group'>
+            <div className="form-group">
               <label htmlFor="author">Flight date</label>
               <input
-                type='text'
-                placeholder='Flight_date'
-                name='author'
-                className='form-control'
+                type="date"
+                name="author"
+                className="form-control"
                 value={Flight_date}
                 onChange={onChangeFlight_date}
               />
             </div>
 
-            <div className='form-group'>
+            <div className="form-group">
               <label htmlFor="description">Economy Seats</label>
               <input
-                type='text'
-                placeholder='Economy seats'
-                name='description'
-                className='form-control'
+                type="text"
+                placeholder="Economy seats"
+                name="description"
+                className="form-control"
                 value={Economy_seats}
                 onChange={onChangeEconomy_seats}
               />
             </div>
 
-            <div className='form-group'>
+            <div className="form-group">
               <label htmlFor="published_date">Business_seats</label>
               <input
-                type='text'
-                placeholder='business seats'
-                name='published_date'
-                className='form-control'
+                type="text"
+                placeholder="business seats"
+                name="published_date"
+                className="form-control"
                 value={Business_seats}
                 onChange={onChangeBusiness_seats}
               />
             </div>
-            <div className='form-group'>
+            <div className="form-group">
               <label htmlFor="publisher">First seats</label>
               <input
-                type='text'
-                placeholder='first seats'
-                name='publisher'
-                className='form-control'
+                type="text"
+                placeholder="first seats"
+                name="publisher"
+                className="form-control"
                 value={First_seats}
                 onChange={onChangeFirst_seats}
               />
             </div>
 
-            <button type="submit" className="btn btn-outline-info btn-lg btn-block">Update Flight</button>
+            <button
+              type="submit"
+              className="btn btn-outline-info btn-lg btn-block"
+            >
+              Update Flight
+            </button>
           </form>
         </div>
-
       </div>
     </div>
   );

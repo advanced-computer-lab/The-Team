@@ -4,12 +4,12 @@ import axios from 'axios';
 
 const Flight = props => (
   <tr>
-    <td>{props.flight._id}</td>
     <td>{props.flight.From}</td>
     <td>{props.flight.To}</td>
     <td>{props.flight.Flight_date}</td>
     <td>{props.flight.Economy_seats}</td>
     <td>{props.flight.Business_seats}</td>
+    <td>{props.flight.First_seats}</td>
     <td>
       <Link
         to='/home/adminpanel/flights/update'
@@ -32,11 +32,11 @@ const Flight = props => (
 
 const handleDeleteFlight = (id) => {
   axios.delete('http://localhost:5000/flights/' + id + '/delete')
-    .then(response => { console.log(response.data) });
+    .then();
 }
 
 class AllFlight extends Component {
-
+  
   constructor(props) {
     super(props);
 
@@ -79,23 +79,20 @@ class AllFlight extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>Id</th>
               <th>From</th>
               <th>To</th>
-              <th>Flight_date</th>
-              <th>Economy_seats</th>
-              <th>Business_seats</th>
+              <th>Flight date</th>
+              <th>Economy</th>
+              <th>Business class</th>
+              <th>First class</th>
               <th>Update</th>
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody>
-            {this.flightList()}
-          </tbody>
+          <tbody>{this.flightList()}</tbody>
         </table>
-
       </div>
-    )
+    );
   };
 }
 
