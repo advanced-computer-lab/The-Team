@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, useNavigate  } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import axios from 'axios';
 
 const Flight = props => (
@@ -30,10 +30,6 @@ const Flight = props => (
   </tr>
 );
 
-function HandleUpdateFlight(e, id) {
-  const navigate = useNavigate();
-  navigate('/home/adminpanel/flights/update',{state:{id:id}});
-}
 const handleDeleteFlight = (id) => {
   axios.delete('http://localhost:5000/flights/' + id + '/delete')
     .then(response => { console.log(response.data) });
