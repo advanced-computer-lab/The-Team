@@ -40,15 +40,14 @@ router.route('/:id').get((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
   });
 
-  router.route('/:id/update').patch((req, res) => {
-    Flight.findById(req.params.id)
+  router.route('/update').patch((req, res) => {
+    Flight.findById(req.body.id)
       .then(flights => {
         flights.From = req.body.From;
         flights.To = req.body.To;
-        flights.Flight_date = Date.parse(req.body.Cabin)
-        flights.Cabin = req.body.Cabin;
-        flights.Seats = Number(req.body.Seats);
-  
+        flights.Flight_date = req.body.Flight_date;
+        flights.Economy_seats = Number(req.body.Economy_seats);
+        flights.Business_seats = Number(req.body.Business_seats);
         flights.save()
           .then(() => res.json('Flight updated!'))
           .catch(err => res.status(400).json('Error: ' + err));
