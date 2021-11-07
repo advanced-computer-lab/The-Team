@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import DeleteFlight from './DeleteFlight';
 
 const Flight = props => (
   <tr>
@@ -66,6 +67,7 @@ const Flight = props => (
             { this.flightList() }
           </tbody>
         </table>
+        <button onClick={DeleteFlight}>delete</button>
       </div>
     )
   }
