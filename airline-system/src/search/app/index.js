@@ -2,10 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios'
 import Datatable from '../datatable';
 import './styles.css';
-
-require('es6-promise').polyfill();
-require('isomorphic-fetch');
-
 export default function Search() {
 
   const [data, setData] = useState([]); 
