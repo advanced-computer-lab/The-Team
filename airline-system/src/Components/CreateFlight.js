@@ -106,7 +106,7 @@ class CreateFlight extends Component {
         window.location.reload();
       })
       .catch(err => {
-          console.log(data)
+          //console.log(data)
         console.log("Error in CreateFlight!" + err);
       })
   };
@@ -140,9 +140,9 @@ class CreateFlight extends Component {
 
 
         <div className="form-group">
-          <label>Flight Time:</label>
+          <label>Flight Date:</label>
           <input 
-              type="text" 
+              type="date" 
               className="form-control"
               value={this.state.Flight_date}
               onChange={this.onChangeFlight_date}
