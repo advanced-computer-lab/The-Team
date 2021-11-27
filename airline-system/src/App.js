@@ -8,6 +8,7 @@ import CreateFlight from "./Components/CreateFlight";
 import UpdateFlight from "./Components/UpdateFlight";
 import HomePage from "./Components/HomePage";
 import AdminPanel from "./Components/AdminPanel";
+import Home from "./homepage/homepage"
 
 const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
@@ -20,6 +21,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
+          <Route exact path="/h" element={<Home/>}/>
           <Route exact path="/home" element={HomePageElement} />
           <Route exact path="/home/adminpanel" element={AdminPanelElement} />
           <Route exact path="/home/adminpanel/search" element={Search()} />
