@@ -5,12 +5,12 @@ import DateFnsAdapter from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import Box from '@mui/material/Box';
 
-export default function useDatePicker() {
+export default function DatePicker(props) {
   const [value, setValue] = React.useState([null, null]);
 
-  return {
-    value: value,
-    render:(
+  props.func(value);
+
+  return (
     <LocalizationProvider dateAdapter={DateFnsAdapter}>
       <DateRangePicker
         startText="Departure"
@@ -21,12 +21,12 @@ export default function useDatePicker() {
         }}
         renderInput={(startProps, endProps) => (
           <React.Fragment>
-            <TextField {...startProps} />
+            <TextField {...startProps} error ={props.error}/>
             <Box sx={{ mx: 2 }}> to </Box>
-            <TextField {...endProps} />
+            <TextField {...endProps} error = {props.error} />
           </React.Fragment>
         )}
       />
     </LocalizationProvider>
-        )};
+        );
 }

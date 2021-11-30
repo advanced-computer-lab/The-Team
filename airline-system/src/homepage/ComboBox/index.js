@@ -63,6 +63,7 @@ export default function Asynchronous(props) {
       loading={loading}
       renderInput={(params) => (
         <TextField
+          error={props.error}
           {...params}
           label={props.title}
           InputProps={{

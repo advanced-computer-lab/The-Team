@@ -23,6 +23,7 @@ export default function Dropdown(props) {
             value={cabin}
             label="Cabin"
             onChange={handleChange}
+            error={props.error}
           >
             <MenuItem value={"Economy"}>Economy</MenuItem>
             <MenuItem value={"Business"}>Business</MenuItem>
