@@ -16,6 +16,7 @@ export default function Asynchronous(props) {
   const loading = open && options.length === 0;
 
   React.useEffect(() => {
+    
     let active = true;
 
     if (!loading) {
@@ -24,7 +25,7 @@ export default function Asynchronous(props) {
 
     (async () => {
       await sleep(1e3); // For demo purposes.
-
+      console.log()
       if (active) {
         setOptions([...topFilms]);
       }
@@ -36,6 +37,7 @@ export default function Asynchronous(props) {
   }, [loading]);
 
   React.useEffect(() => {
+    
     if (!open) {
       setOptions([]);
     }
