@@ -8,15 +8,20 @@ import CreateFlight from "./Components/CreateFlight";
 import UpdateFlight from "./Components/UpdateFlight";
 import HomePage from "./Components/HomePage";
 import AdminPanel from "./Components/AdminPanel";
+
+import Editprofile from "./Components/Editprofile";
 import Home from "./homepage/homepage";
 import Departure from "./Components/Departure"
 import Return from "./Components/Return"
+
 
 const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
 const AllFlightElement = AllFlight;
 const CreateFlightElement = CreateFlight;
 const UpdateFlightElement = UpdateFlight;
+const EditprofileElement  =  Editprofile;
+
 function App() {
   return (
     <div className="App">
@@ -43,6 +48,8 @@ function App() {
           />
           <Route
             exact
+            path="/users/update"
+            element={<Editprofile />} />
             path="/h/departure"
             element={<Departure/>}
           />
@@ -51,7 +58,6 @@ function App() {
             path="/h/return"
             element={<Return/>}
           />
-          {/* <Route exact path='/delete' element={DeleteFlightElement} /> */}
         </Routes>
       </Router>
     </div>
