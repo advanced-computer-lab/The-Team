@@ -8,12 +8,14 @@ import CreateFlight from "./Components/CreateFlight";
 import UpdateFlight from "./Components/UpdateFlight";
 import HomePage from "./Components/HomePage";
 import AdminPanel from "./Components/AdminPanel";
+import ExisitingUserEdit from "./Components/ExisitingUserEdit";
 
 const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
 const AllFlightElement = AllFlight;
 const CreateFlightElement = CreateFlight;
 const UpdateFlightElement = UpdateFlight;
+const ExisitingUserEditElement = ExisitingUserEdit;
 
 function App() {
   return (
@@ -37,6 +39,11 @@ function App() {
             exact
             path="/home/adminpanel/flights/update"
             element={<UpdateFlightElement />}
+          />
+                    <Route
+            exact
+            path="/home/eu/edit"
+            element={<ExisitingUserEditElement />}
           />
           {/* <Route exact path='/delete' element={DeleteFlightElement} /> */}
         </Routes>
