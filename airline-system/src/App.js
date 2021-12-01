@@ -13,7 +13,7 @@ import Editprofile from "./Components/Editprofile";
 import Home from "./homepage/homepage";
 import Departure from "./Components/Departure"
 import Return from "./Components/Return"
-
+import Login from "./login";
 
 const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
@@ -27,7 +27,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route exact path="/h" element={<Home/>}/>
+          <Route exact path="/h" element={<Home />} />
           <Route exact path="/home" element={HomePageElement} />
           <Route exact path="/home/adminpanel" element={AdminPanelElement} />
           <Route exact path="/home/adminpanel/search" element={Search()} />
@@ -46,18 +46,10 @@ function App() {
             path="/home/adminpanel/flights/update"
             element={<UpdateFlightElement />}
           />
-          <Route
-            exact
-            path="/users/update"
-            element={<Editprofile />} />
-            path="/h/departure"
-            element={<Departure/>}
-          />
-          <Route
-            exact
-            path="/h/return"
-            element={<Return/>}
-          />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/users/update" element={<Editprofile />} />
+          <Route path="/h/departure" element={<Departure />} />
+          <Route exact path="/h/return" element={<Return />} />
         </Routes>
       </Router>
     </div>
