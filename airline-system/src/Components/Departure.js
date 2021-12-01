@@ -31,7 +31,7 @@ export default function Departure() {
           onClick={handleChange}
           style={{ marginLeft: "5px" }}
         >
-          Return
+          Proceed
         </Button>{" "}
       </div>
     </div>
