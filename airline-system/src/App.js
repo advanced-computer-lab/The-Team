@@ -10,6 +10,7 @@ import HomePage from "./Components/HomePage";
 import AdminPanel from "./Components/AdminPanel";
 import Home from "./homepage/homepage";
 import Departure from "./Components/Departure"
+import Return from "./Components/Return"
 
 const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
@@ -44,6 +45,11 @@ function App() {
             exact
             path="/h/departure"
             element={<Departure/>}
+          />
+          <Route
+            exact
+            path="/h/return"
+            element={<Return/>}
           />
           {/* <Route exact path='/delete' element={DeleteFlightElement} /> */}
         </Routes>

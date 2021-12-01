@@ -45,6 +45,7 @@ export default function Home(props) {
     date = data;
     console.log("Date: " + date);
   };
+  
   const handleChange = async (event) => {
     setOpen(!open);
     var er = validateData();
