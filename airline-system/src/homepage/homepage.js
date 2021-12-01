@@ -24,7 +24,7 @@ export default function Home(props) {
   const [warning, setWarning] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const { state } = useLocation();
-  //let {isLogged, userId}= state
+  let { isLogged, userId } = state;
 
   const navigate = useNavigate();
   var from = "";
@@ -47,7 +47,7 @@ export default function Home(props) {
     date = data;
     console.log("Date: " + date);
   };
-  
+
   const handleChange = async (event) => {
     setOpen(!open);
     var er = validateData();
@@ -119,7 +119,7 @@ export default function Home(props) {
   return (
     <div>
       <div>
-        <NavBar  isLogged={true} />
+        <NavBar isLogged={isLogged} userId={userId} />
       </div>
       <div>
         <br />
