@@ -18,7 +18,12 @@ router.route("/search").post(async (req, res) => {
       Flight_date: ReturnDate,
     }).exec();
     if (docs2.length>0) {
-      res.json({ departure: docs, return: docs2 });
+      res.json(
+        {
+          departure: docs,
+          arrival: docs2
+         }
+        );
     } else {
       res.sendStatus(204);
     }
