@@ -46,7 +46,7 @@ export default function WithCheckBoxes(props) {
 
   const showLogs2 = (e) => {
     setCheckbox1(e);
-  
+    props.func(e);
   };
 
   return (
@@ -62,7 +62,7 @@ export default function WithCheckBoxes(props) {
         bodyCheckboxID="checkboxes2"
         getValueCheckBox={(e) => {
           showLogs2(e);
-          props.func(e);
+          
         }}
       />{" "}
     </>

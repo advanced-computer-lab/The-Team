@@ -7,26 +7,22 @@ import Button from "@mui/material/Button";
 export default function Departure() {
   var sel = {};
   const { state } = useLocation();
-  console.log(state);
+
   const { departure, arrival } = state;
   const navigate = useNavigate();
-  const selected = (data) => {
-    sel = data;
-    console.log(sel);
-  };
-  var returnData = {
-    selected_departure: sel,
-    arrival: arrival,
+
+  const selected =  (data) => {
+     sel =  data["_id"];
+     console.log(sel)
   };
 
- 
-  const handleChange = (event) => {
-    if (sel !== {}) {
- 
-     
-      navigate("/h/return", { state: returnData });
-    }
+  const handleChange = () => {
+    navigate("/h/arrive", { state : {
+      selected: sel,
+      arrival : arrival,
+    } });
   };
+
   return (
     <div>
       <WithCheckBoxes func={selected} rows={departure} />

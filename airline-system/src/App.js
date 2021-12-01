@@ -12,7 +12,7 @@ import AdminPanel from "./Components/AdminPanel";
 import Editprofile from "./Components/Editprofile";
 import Home from "./homepage/homepage";
 import Departure from "./Components/Departure"
-import Return from "./Components/Return"
+import Arrival from "./Components/Return";
 import Login from "./login";
 
 const HomePageElement = HomePage();
@@ -20,7 +20,6 @@ const AdminPanelElement = AdminPanel();
 const AllFlightElement = AllFlight;
 const CreateFlightElement = CreateFlight;
 const UpdateFlightElement = UpdateFlight;
-const EditprofileElement  =  Editprofile;
 
 function App() {
   return (
@@ -49,7 +48,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/users/update" element={<Editprofile />} />
           <Route path="/h/departure" element={<Departure />} />
-          <Route exact path="/h/return" element={<Return />} />
+          <Route exact path="/h/arrive" element={<Arrival />} />
         </Routes>
       </Router>
     </div>
