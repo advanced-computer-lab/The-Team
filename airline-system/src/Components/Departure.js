@@ -12,13 +12,18 @@ export default function Departure() {
   const navigate = useNavigate();
   const selected = (data) => {
     sel = data;
+    console.log(sel);
   };
   var returnData = {
     selected_departure: sel,
     arrival: arrival,
   };
+
+ 
   const handleChange = (event) => {
     if (sel !== {}) {
+ 
+     
       navigate("/h/return", { state: returnData });
     }
   };

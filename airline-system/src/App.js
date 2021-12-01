@@ -50,6 +50,7 @@ function App() {
             exact
             path="/users/update"
             element={<Editprofile />} />
+             <Route
             path="/h/departure"
             element={<Departure/>}
           />
