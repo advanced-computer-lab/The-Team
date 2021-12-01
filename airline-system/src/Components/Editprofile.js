@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 function Editprofile(props) {
   const [Username, setUsername] = useState('');
@@ -17,46 +20,27 @@ function Editprofile(props) {
   const { state } = useLocation();
  
 
-  const onChangeUsername = (e) => {
-    setUsername(e.target.value);
-  }
-
-  const onChangePassword = (e) => {
-    setPassword(e.target.value);
-  }
-
-  const onChangeFname = (e) => {
-    setFname(e.target.value);
-  }
-
-  const onChangeLname = (e) => {
-    setLname(e.target.value);
-  }
-
-  const onChangePassport_number = (e) => {
-    setPassport_number(e.target.value);
-  }
-
-  const onChangeEmail = (e) => {
-    setEmail(e.target.value);
-  }
   
-  const onChangeHome_address = (e) => {
-    setHome_address(e.target.value);
+
+
+
+   const onSubmit = () => {
+     const userDetails = {
+       Username:this.state.Username,
+       Password:this.state.Password,
+       Fname:this.state.Fname,
+       Lname:this.state.Lname,
+       Passport_number:this.state.Passport_number,
+       Email:this.state.Email,
+       Home_address:this.state.Home_address,
+       Country_code:this.state.Country_code,
+       Telephone_number:this.state.Telephone_number
+     };
+     this.props.editUserdetails(userDetails);
+
+
   }
-
-  const onCountry_code = (e) => {
-    setCountry_code(e.target.value);
-  }
-
-  const onChangeTelephone_number = (e) => {
-    setTelephone_number(e.target.value);
-  }
-
-
-
-  const onSubmit = e => {
-    e.preventDefault();
+    
 
     const data = {
       Username: Username,
@@ -80,7 +64,7 @@ function Editprofile(props) {
       .catch(err => {
         console.log("Error in Editprofile!" + err);
       })
-  };
+  
 
 
   return (
@@ -91,125 +75,60 @@ function Editprofile(props) {
             <br />
           </div>
           <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">Edit Profile</h1>
-            <p className="lead text-center">Edit profile Info</p>
+          <Typography variant="h3" gutterBottom component="div">
+        Edit profile
+      </Typography>
+           
           </div>
         </div>
 
         <div className="col-md-8 m-auto">
           <form noValidate onSubmit={onSubmit}>
             <div className="form-group">
-              <label htmlFor="Username">Username</label>
-              <input
-                type="text"
-                placeholder="Username"
-                name="Username"
-                className="form-control"
-                value={Username}
-                onChange={onChangeUsername}
-              />
+              
+              <TextField id="outlined-basic" label="Username" variant="outlined" />
+         
             </div>
 
             <div className="form-group">
-              <label htmlFor="Passowrd">Password</label>
-              <input
-                type="text"
-                placeholder="Password"
-                name="Password"
-                className="form-control"
-                value={Password}
-                onChange={onChangePassword}
-              />
+              
+              <TextField id="outlined-basic" label="Password" variant="outlined" />
             </div>
 
             <div className="form-group">
-              <label htmlFor="Fname">Fname</label>
-              <input
-                type="text"
-                name="Fname"
-                className="form-control"
-                value={Fname}
-                onChange={onChangeFname}
-              />
+            <TextField id="outlined-basic" label="Fname" variant="outlined" />
             </div>
 
             <div className="form-group">
-              <label htmlFor="Lname">Lname</label>
-              <input
-                type="text"
-                placeholder="Lname"
-                name="Lname"
-                className="form-control"
-                value={Lname}
-                onChange={onChangeLname}
-              />
+            <TextField id="outlined-basic" label="Lname" variant="outlined" />
             </div>
 
             <div className="form-group">
-              <label htmlFor="Passport_number">Passport_number</label>
-              <input
-                type="text"
-                placeholder="Passport_number"
-                name="Passport_number"
-                className="form-control"
-                value={Passport_number}
-                onChange={onChangePassport_number}
-              />
+            <TextField id="outlined-basic" label="Passport_number" variant="outlined" />
             </div>
             <div className="form-group">
-              <label htmlFor="Email">Email</label>
-              <input
-                type="text"
-                placeholder="Email"
-                name="Email"
-                className="form-control"
-                value={Email}
-                onChange={onChangeEmail}
-              />
+            <TextField id="outlined-basic" label="Email" variant="outlined" />
             </div>
 
             <div className="form-group">
-              <label htmlFor="Home_address">Home_address</label>
-              <input
-                type="text"
-                placeholder="Home_address"
-                name="Home_address"
-                className="form-control"
-                value={Home_address}
-                onChange={onChangeHome_address}
-              />
+            <TextField id="outlined-basic" label="Home_address" variant="outlined" />
             </div>
 
             <div className="form-group">
-              <label htmlFor="Country_code">Country_code</label>
-              <input
-                type="text"
-                placeholder="Country_code"
-                name="Country_code"
-                className="form-control"
-                value={Country_code}
-                onChange={onCountry_code}
-              />
+            <TextField id="outlined-basic" label="Country_code" variant="outlined" />
             </div>
 
             <div className="form-group">
-              <label htmlFor="Telephone_number">Telephone_number</label>
-              <input
-                type="text"
-                placeholder="Telephone_number"
-                name="Telephone_number"
-                className="form-control"
-                value={Telephone_number}
-                onChange={onChangeTelephone_number}
-              />
+            <TextField id="outlined-basic" label="Telephone_number" variant="outlined" />
             </div>
 
-            <button
-              type="submit"
-              className="btn btn-outline-info btn-lg btn-block"
-            >
-              Submit
-            </button>
+            <Button
+              onClick = {onSubmit}
+              variant="contained">submit</Button>
+            
+          
+               
+            
           </form>
         </div>
       </div>
