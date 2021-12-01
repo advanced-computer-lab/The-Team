@@ -15,7 +15,7 @@ function Editprofile(props) {
   const [Telephone_number, setTelephone_number] = useState('');
   
   const { state } = useLocation();
-  const {Username} = state 
+ 
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -72,7 +72,7 @@ function Editprofile(props) {
     console.log(data)
 
     axios
-      .patch('http://localhost:5000/update', data)
+      .patch('http://localhost:3000/users/update', data)
       .then(res => {
         alert("User updated successfully");
         window.location.reload();
@@ -188,7 +188,7 @@ function Editprofile(props) {
                 name="Country_code"
                 className="form-control"
                 value={Country_code}
-                onChange={onChangeCountry_code}
+                onChange={onCountry_code}
               />
             </div>
 
@@ -208,7 +208,7 @@ function Editprofile(props) {
               type="submit"
               className="btn btn-outline-info btn-lg btn-block"
             >
-              Edit User
+              Submit
             </button>
           </form>
         </div>
