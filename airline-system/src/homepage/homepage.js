@@ -74,7 +74,7 @@ export default function Home(props) {
       } else {
         var formatedData = res.data;
         console.log(formatedData);
-        navigate("", { state: formatedData }); //TODO: need to fix path
+        navigate("/h/departure", { state: formatedData }); //TODO: need to fix path
       }
     }
   };

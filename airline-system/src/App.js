@@ -8,14 +8,14 @@ import CreateFlight from "./Components/CreateFlight";
 import UpdateFlight from "./Components/UpdateFlight";
 import HomePage from "./Components/HomePage";
 import AdminPanel from "./Components/AdminPanel";
-import Home from "./homepage/homepage"
+import Home from "./homepage/homepage";
+import Departure from "./Components/Departure"
 
 const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
 const AllFlightElement = AllFlight;
 const CreateFlightElement = CreateFlight;
 const UpdateFlightElement = UpdateFlight;
-
 function App() {
   return (
     <div className="App">
@@ -39,6 +39,11 @@ function App() {
             exact
             path="/home/adminpanel/flights/update"
             element={<UpdateFlightElement />}
+          />
+          <Route
+            exact
+            path="/h/departure"
+            element={<Departure/>}
           />
           {/* <Route exact path='/delete' element={DeleteFlightElement} /> */}
         </Routes>
