@@ -7,11 +7,14 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 export default function NavBar(props) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
+  const isloggedIn = props.isLogged;
+  const userId = props.userId;
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -19,10 +22,14 @@ export default function NavBar(props) {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-  };;
-  const handleNavigate =() =>{
-      navigate("/h/profile", { state: {"id":props.Uid}}); //TODO: need to fix path
-  }
+  };
+  const handleNavigate = () => {
+    if (isloggedIn) {
+      navigate("/h/profile", { state: { id: userId } }); //TODO: need to fix path
+    } else {
+      navigate("/signin");
+    }
+  };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -41,7 +48,7 @@ export default function NavBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleNavigate}>Profile</MenuItem>
+      <MenuItem onClick={handleNavigate}>View profile</MenuItem>
     </Menu>
   );
 
@@ -51,17 +58,30 @@ export default function NavBar(props) {
         <Toolbar>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {isloggedIn && (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            )}
+            {!isloggedIn && (
+              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                <Button
+                  key="login"
+                  onClick={handleNavigate}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  Log in
+                </Button>
+              </Box>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

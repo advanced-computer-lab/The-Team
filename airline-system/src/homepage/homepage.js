@@ -11,21 +11,22 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import NavBar from "./NavBar";
 
 export default function Home(props) {
   const [open, setOpen] = React.useState(false);
-  const navigate = useNavigate();
-
   const [dateError, setDateError] = React.useState(false);
   const [arriveError, setArriveError] = React.useState(false);
   const [departError, setDepartError] = React.useState(false);
   const [cabinError, setCabinError] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
   const [warning, setWarning] = React.useState(false);
-
   const [loading, setLoading] = React.useState(true);
+  const { state } = useLocation();
+  //let {isLogged, userId}= state
 
+  const navigate = useNavigate();
   var from = "";
   var to = "";
   var cab = "";
@@ -117,7 +118,7 @@ export default function Home(props) {
   return (
     <div>
       <div>
-        <NavBar  />
+        <NavBar  isLogged={true} />
       </div>
       <div>
         <br />
