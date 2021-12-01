@@ -75,19 +75,35 @@ function Editprofile(props) {
             <br />
           </div>
           <div className="col-md-8 m-auto">
-          <Typography variant="h3" gutterBottom component="div">
-        Edit profile
-      </Typography>
-           
+          <h1 style={{
+            color:'rgb(51,51,51)'
+          }}>
+            Edit Profile
+          </h1>
+
           </div>
         </div>
 
-        <div className="col-md-8 m-auto">
-          <form noValidate onSubmit={onSubmit}>
+        <div className="col-md-8 m-auto" style={{
+          display:'flex',
+          gap:24,
+          flexDirection:'column',
+          justifyContent:'center',
+          alignItems:'center'
+        }} >
+          <form noValidate onSubmit={onSubmit} style={{
+            display: 'grid',
+            border: '1px solid grey',
+            padding:'24px 12px',
+            borderRadius:12,
+            boxShadow:"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+            background:'white',
+            gridTemplateColumns: '300px 300px',
+            gap: 12
+          }}>
             <div className="form-group">
               
               <TextField id="outlined-basic" label="Username" variant="outlined" />
-         
             </div>
 
             <div className="form-group">
@@ -96,40 +112,43 @@ function Editprofile(props) {
             </div>
 
             <div className="form-group">
-            <TextField id="outlined-basic" label="Fname" variant="outlined" />
+            <TextField id="outlined-basic" label="First Name" variant="outlined" />
             </div>
 
             <div className="form-group">
-            <TextField id="outlined-basic" label="Lname" variant="outlined" />
+            <TextField id="outlined-basic" label="Last Name" variant="outlined" />
             </div>
 
             <div className="form-group">
-            <TextField id="outlined-basic" label="Passport_number" variant="outlined" />
+            <TextField id="outlined-basic" label="Passport Number" variant="outlined" />
             </div>
             <div className="form-group">
             <TextField id="outlined-basic" label="Email" variant="outlined" />
             </div>
 
             <div className="form-group">
-            <TextField id="outlined-basic" label="Home_address" variant="outlined" />
+            <TextField id="outlined-basic" label="Home Address" variant="outlined" />
             </div>
 
             <div className="form-group">
-            <TextField id="outlined-basic" label="Country_code" variant="outlined" />
+            <TextField id="outlined-basic" label="Country Code" variant="outlined" />
             </div>
 
             <div className="form-group">
-            <TextField id="outlined-basic" label="Telephone_number" variant="outlined" />
+            <TextField id="outlined-basic" label="Telephone Number" variant="outlined" style={{
+              color:'red'
+            }}/>
             </div>
 
-            <Button
-              onClick = {onSubmit}
-              variant="contained">submit</Button>
+           
             
           
                
             
           </form>
+          <Button
+              onClick = {onSubmit}
+              variant="contained">submit</Button>
         </div>
       </div>
     </div>
