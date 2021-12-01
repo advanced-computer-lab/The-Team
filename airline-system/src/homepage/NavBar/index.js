@@ -19,8 +19,10 @@ export default function NavBar(props) {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    navigate("/h/profile", { state: {"id":props.Uid}}); //TODO: need to fix path
   };;
+  const handleNavigate =() =>{
+      navigate("/h/profile", { state: {"id":props.Uid}}); //TODO: need to fix path
+  }
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -39,7 +41,7 @@ export default function NavBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleNavigate}>Profile</MenuItem>
     </Menu>
   );
 

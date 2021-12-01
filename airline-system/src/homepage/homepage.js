@@ -117,7 +117,7 @@ export default function Home(props) {
   return (
     <div>
       <div>
-        <NavBar Uid = {props.Uid} />
+        <NavBar  />
       </div>
       <div>
         <br />
