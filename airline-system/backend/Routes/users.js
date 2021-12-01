@@ -36,6 +36,14 @@ router.route('/:id').get((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
   });
 
+  router.route('/:id/reservations').get((req, res) => {
+    user.findById(req.params.id)
+      .then(users => res.json(users.Flights.filter(Flights => Flights < 13)))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+
+  
+
 
   router.route('/update').patch((req, res) => {
     user.findById(req.body.id)
