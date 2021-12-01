@@ -9,13 +9,13 @@ router.route("/search").post(async (req, res) => {
   const docs = await Flight.find({
     From: From,
     To: To,
-    Flight_date: DepartureDate,
+    Dep_date: DepartureDate,
   }).exec();
   if (docs.length>0) {
     const docs2 = await Flight.find({
       From: To,
       To: From,
-      Flight_date: ReturnDate,
+      Dep_date: ReturnDate,
     }).exec();
     if (docs2.length>0) {
       res.json(
