@@ -11,6 +11,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import NavBar from "./NavBar";
 
 export default function Home(props) {
   const [open, setOpen] = React.useState(false);
@@ -115,6 +116,9 @@ export default function Home(props) {
   }
   return (
     <div>
+      <div>
+        <NavBar Uid = {props.Uid} />
+      </div>
       <div>
         <br />
       </div>
