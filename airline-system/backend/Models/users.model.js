@@ -44,12 +44,12 @@ const userSchema = new Schema({
     },
 
     Telephone_number: {
-        type: Array,
+        type: [Number],
         required: true,
     },
 
     Flights: {
-        type: Array,
+        type: [Number],
         required: true,
     }
 

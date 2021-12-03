@@ -36,12 +36,35 @@ router.route('/:id').get((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
   });
 
-  router.route('/:id/reservations').get((req, res) => {
+router.route('/:id/reservations').get((req, res) => {
     user.findById(req.params.id)
-      .then(users => res.json(users.Flights.filter(Flights => Flights < 13)))
+      .then(users => res.json(users.Flights))
       .catch(err => res.status(400).json('Error: ' + err));
   });
 
+// router.route('/:id/reservations/ww').get((req, res) => {
+//     user.findById(req.params.id)
+//       .then(users => res.json(users.Flights.filter(Flights => Flights < 13)))
+//       .catch(err => res.status(400).json('Error: ' + err));
+//   });
+
+  // router.route("/:id/reservations/delete").delete((req, res) => {
+  //   user.findById(req.params.id)
+  //     .then(users => res.json(users.Flights.splice(users.Flights.filter(Flights => Flights = 13))))
+  //     .catch(err => res.status(400).json('Error: ' + err));
+  // });
+
+
+  router.route('/:id/reservations/delete').patch((req, res) => {
+    user.findById(req.params.id)
+      .then(users => {
+        users.Flights = users.Flights.filter(Flights => Flights !=req.body);
+        users.save()
+          .then(() => res.json('Reservation deleted!'))
+          .catch(err => res.status(400).json('Error: ' + err));
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
   
 
 

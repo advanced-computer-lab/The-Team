@@ -34,17 +34,17 @@ const flightSchema = new Schema({
     },
 
     Economy_seats: {
-        type: Number,
+        type: [Number],
         required: true,
     },
 
     Business_seats: {
-        type: Number,
+        type: [Number],
         required: true,
     },
 
     First_seats: {
-        type: Number,
+        type: [Number],
         required: true,
     },
 

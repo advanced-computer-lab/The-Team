@@ -14,6 +14,7 @@ import Home from "./homepage/homepage";
 import Departure from "./Components/Departure"
 import Return from "./Components/Return"
 import Login from "./login";
+import UserCancelFlight from "./cancel/UserCancelFlight"
 
 const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
@@ -50,6 +51,7 @@ function App() {
           <Route exact path="/users/update" element={<Editprofile />} />
           <Route path="/h/departure" element={<Departure />} />
           <Route exact path="/h/return" element={<Return />} />
+          <Route exact path="/h/cancel" element={<UserCancelFlight />} />
         </Routes>
       </Router>
     </div>

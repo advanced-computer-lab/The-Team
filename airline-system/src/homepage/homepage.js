@@ -59,6 +59,7 @@ export default function Home(props) {
       setLoading(true);
       setAlert(false);
       var formatedDate = formatDate(date); // [0] = depart [1] = arrive
+      
       var queryData = {
         From: from,
         To: to,
