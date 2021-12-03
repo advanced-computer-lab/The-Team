@@ -78,6 +78,37 @@ router.route("/:id/delete").delete((req, res) => {
     .then(() => res.json("Flight deleted."))
     .catch((err) => res.status(400).json("Error: " + err));
 });
+
+router.route("/cancelledarr").patch((req, res) => {
+  Flight.findById(req.body.Arr_Flight_id)
+  .then(flights => {
+    flights.Economy_seats = Number(flights.Economy_seats+req.body.Arr_eSeats);
+    flights.Business_seats = Number(flights.Business_seats+req.body.Arr_bSeats);
+    flights.First_seats = Number(flights.First_seats+req.body.Arr_fSeats);
+
+    flights.save()
+      .then(() => res.json('Flight updated!'))
+      .catch(err => res.status(400).json('Error: ' + err));
+  })
+  .catch(err => res.status(400).json('Error: ' + err));
+
+});
+
+router.route("/cancelleddep").patch((req, res) => {
+  Flight.findById(req.body.Dep_Flight_id)
+  .then(flights => {
+    flights.Economy_seats = Number(flights.Economy_seats+req.body.Dep_eSeats);
+    flights.Business_seats = Number(flights.Business_seats+req.body.Dep_bSeats);
+    flights.First_seats = Number(flights.First_seats+req.body.Dep_fSeats);
+
+    flights.save()
+      .then(() => res.json('Flight updated!'))
+      .catch(err => res.status(400).json('Error: ' + err));
+  })
+  .catch(err => res.status(400).json('Error: ' + err));
+
+});
+
   router.route('/update').patch((req, res) => {
     Flight.findById(req.body.id)
       .then(flights => {

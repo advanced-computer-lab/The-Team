@@ -2,34 +2,6 @@ const express= require('express');
 const cors = require('cors');
 const mongoose= require('mongoose');
 require('dotenv').config({ path: 'env' });
-const nodemailer = require('nodemailer');
-  
-  
-let mailTransporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'acltheteam@gmail.com',
-        pass: 'Damnpass456'
-    }
-});
-  
-let mailDetails = {
-    from: 'acltheteam@gmail.com',
-    to: 'ziadearth@gmail.com', //to specific email
-    subject: 'Test mail',
-    text: 'dkvml' //var reservation and the amount to be refunded.
-};
-  
-mailTransporter.sendMail(mailDetails, function(err, data) {
-    if(err) {
-        console.log('Error Occurs');
-    } else {
-        console.log('Email sent successfully');
-    }
-});
-
-
-
 
 
 const app = express();
@@ -48,9 +20,12 @@ connection.once('open',()=> {
 
 const flightsRouter = require('./routes/flights');
 const usersRouter = require('./routes/users');
+const reservationsRouter = require('./routes/reservations');
 
 app.use('/flights', flightsRouter);
 app.use('/users',usersRouter);
+app.use('/reservations', reservationsRouter);
+
 
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);

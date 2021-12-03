@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import WithCheckBoxes from "../homepage/muiDatatable/index2.js";
+import ReservationsTable from "./ReservationsTable";
 import { useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
 import React, { useState, useEffect } from 'react';
@@ -15,6 +15,22 @@ export default function UserCancelFlight() {
   const [cancelled, setCancelled] = React.useState({});
   const [confirm, setConfirm] = React.useState(false);
   const [decision, setDecision] = React.useState(false);
+  const [flightidarr, setFlightidarr] = React.useState(Object);
+  const [flightearr, setFlightearr] = React.useState(Object);
+  const [flightbdarr, setFlightbarr] = React.useState(Object);
+  const [flightfarr, setFlightfarr] = React.useState(Object);
+  const [refunded, setRefunded] = React.useState(0);
+  const [flightiddep, setFlightiddep] = React.useState(Object);
+  const [flightedep, setFlightedep] = React.useState(Object);
+  const [flightbdep, setFlightbdep] = React.useState(Object);
+  const [flightfdep, setFlightfdep] = React.useState(Object);
+
+
+
+
+
+
+
 
   var sel = {};
 
@@ -22,7 +38,7 @@ export default function UserCancelFlight() {
 
     let {id}  = state;
      axios
-    .get("http://localhost:5000/users/"+id+"/reservations")
+    .get("http://localhost:5000/reservations"+id)
     .then((res)=> {
         setReservations(res.data)
   
@@ -30,8 +46,6 @@ export default function UserCancelFlight() {
     .catch((err) => {
       console.log(err);
     });
-
-
     
   });
   let {id}  = state;
@@ -52,11 +66,50 @@ export default function UserCancelFlight() {
       setConfirm(true)
     }
       if(decision===true){
+
         axios
+        .get()
+        .then((res)=> {
+          setFlightidarr(res.data)
+    
+      })
+        .catch((err)=>{
+          console.log(err)
+        });
+
+        axios
+        .post("http://localhost:5000/flights/cancelledarr", selected)
+        .catch((err)=>{
+          console.log(err)
+        });
+
+        axios
+        .post("http://localhost:5000/flights/cancelleddep", selected)
+        .catch((err)=>{
+          console.log(err)
+        });
+
+        axios
+        .post("http://localhost:5000/users/"+id+"/cancelled", selected)
+        .catch((err)=>{
+          console.log(err)
+        });
+        
+
+
+        axios
+    .delete("http://localhost:5000/reservations/"+id+"/reservations/delete",selected)
+    .catch((err) => {
+      console.log(err);
+    });
+
+    axios
     .patch("http://localhost:5000/users/"+id+"/reservations/delete",selected)
     .catch((err) => {
       console.log(err);
     });
+
+
 
 
 
@@ -68,7 +121,8 @@ export default function UserCancelFlight() {
       <div>{confirm && ( <AlertDialog d={decided}/> )}
       
        </div>
-      <WithCheckBoxes func={selected} rows={reservations} />
+       <div>//print here user stuff</div>
+      <ReservationsTable func={selected} rows={reservations} />
       <div>
         <Button
           variant="contained"
