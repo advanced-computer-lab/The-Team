@@ -1,4 +1,7 @@
 import * as React from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import DatePicker from "./DatePicker";
 import Asynchronous from "./ComboBox";
 import Dropdown from "./DropDown";
@@ -9,9 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import DiscreteSlider from "./Slider";
 import NavBar from "./NavBar";
 
 export default function Home(props) {
@@ -20,6 +21,8 @@ export default function Home(props) {
   const [arriveError, setArriveError] = React.useState(false);
   const [departError, setDepartError] = React.useState(false);
   const [cabinError, setCabinError] = React.useState(false);
+  const [passError, setPassError] = React.useState(false);
+
   const [alert, setAlert] = React.useState(false);
   const [warning, setWarning] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -31,6 +34,15 @@ export default function Home(props) {
   var to = "";
   var cab = "";
   var date = [];
+  var passengers = 0;
+  var children = 0;
+
+  const get_passengers = (data) => {
+    passengers = data;
+  };
+  const get_children = (data) => {
+    children = data;
+  };
   const get_from = (data) => {
     from = data;
     console.log("From: " + from);
@@ -59,7 +71,6 @@ export default function Home(props) {
       setLoading(true);
       setAlert(false);
       var formatedDate = formatDate(date); // [0] = depart [1] = arrive
-      
       var queryData = {
         From: from,
         To: to,
@@ -80,7 +91,8 @@ export default function Home(props) {
           departure:res.data.departure,
           arrival:res.data.arrival,
           cabin:cab,
-
+          children:children,
+          passengers:passengers,
         };
         console.log(formatedData);
         navigate("/h/departure", { state: formatedData}); //TODO: need to fix path
@@ -120,6 +132,10 @@ export default function Home(props) {
       setCabinError(true);
       er = true;
     }
+    if(passengers === 0){
+      setPassError(true);
+      er = true;
+    }
     return er;
   }
   return (
@@ -150,15 +166,7 @@ export default function Home(props) {
       <br />
       <div>
         {" "}
-        <Stack direction="row" spacing={2}>
-          <Button
-            variant="contained"
-            onClick={handleChange}
-            style={{ marginLeft: "5px" }}
-          >
-            Search
-          </Button>{" "}
-        </Stack>
+        <Stack direction="row" spacing={2}></Stack>
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={open}
@@ -206,6 +214,20 @@ export default function Home(props) {
         </Backdrop>
         <br />
       </div>
+      <DiscreteSlider
+        func={get_passengers}
+        text="Adults:"
+      />
+      <br />
+      <DiscreteSlider
+        
+        func={get_children}
+        text="Children:"
+      />
+      <br />
+      <Button variant="contained" onClick={handleChange}>
+        Search
+      </Button>{" "}
     </div>
   );
 }
