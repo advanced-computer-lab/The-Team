@@ -14,6 +14,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 import DiscreteSlider from "./Slider";
 import NavBar from "./NavBar";
+import '../App.css';
 
 export default function Home(props) {
   const [open, setOpen] = React.useState(false);
@@ -143,6 +144,24 @@ export default function Home(props) {
       <div>
         <NavBar isLogged={isLogged} userId={userId} />
       </div>
+
+      <div className="col-md-8 m-auto" style={{
+          display:'flex',
+          gap:100,
+          flexDirection:'column',
+          justifyContent:'center',
+          alignItems:'center'
+        }} >
+
+      <form noValidate style={{
+            display: 'grid',
+            border: '1px solid grey',
+            padding:'24px 12px',
+            borderRadius:15,
+            boxShadow:"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+            background:'white',
+            gap: 3
+          }}>
       <div>
         <br />
       </div>
@@ -167,6 +186,9 @@ export default function Home(props) {
       <div>
         {" "}
         <Stack direction="row" spacing={2}></Stack>
+
+        
+        
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={open}
@@ -224,6 +246,11 @@ export default function Home(props) {
         func={get_children}
         text="Children:"
       />
+
+      
+
+</form>
+</div>
       <br />
       <Button variant="contained" onClick={handleChange}>
         Search

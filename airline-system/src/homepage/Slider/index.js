@@ -18,7 +18,7 @@ export default function DiscreteSlider(props) {
       </Typography>
       <br />
       <Slider
-        style={{ marginLeft: "15px" }}
+        style={{ marginLeft: "50px" }}
         onChange={handleSliderChange}
         aria-label="Passengers"
         defaultValue={0}
