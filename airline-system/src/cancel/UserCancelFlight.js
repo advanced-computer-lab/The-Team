@@ -13,41 +13,27 @@ export default function UserCancelFlight() {
   const navigate = useNavigate();
   const [reservations, setReservations] = React.useState([]);
   const [cancelled, setCancelled] = React.useState({});
-  const [confirm, setConfirm] = React.useState(false);
-  const [decision, setDecision] = React.useState(false);
-  const [flightidarr, setFlightidarr] = React.useState(Object);
-  const [flightearr, setFlightearr] = React.useState(Object);
-  const [flightbdarr, setFlightbarr] = React.useState(Object);
-  const [flightfarr, setFlightfarr] = React.useState(Object);
-  const [refunded, setRefunded] = React.useState(0);
-  const [flightiddep, setFlightiddep] = React.useState(Object);
-  const [flightedep, setFlightedep] = React.useState(Object);
-  const [flightbdep, setFlightbdep] = React.useState(Object);
-  const [flightfdep, setFlightfdep] = React.useState(Object);
+  var [confirm, setConfirm] = React.useState(false);
+  var [decision, setDecision] = React.useState(false);
+  var dec=false;
 
 
-
-
-
-
-
-
-  var sel = {};
 
   useEffect(() => {
 
     let {id}  = state;
      axios
-    .get("http://localhost:5000/reservations"+id)
+    .get("http://localhost:5000/reservations/"+id)
     .then((res)=> {
         setReservations(res.data)
+        console.log(reservations)
   
     })
     .catch((err) => {
       console.log(err);
     });
     
-  });
+  },[reservations.length]);
   let {id}  = state;
 
   const selected = (data) => {
@@ -55,65 +41,51 @@ export default function UserCancelFlight() {
   };
 
   const decided = (data) => {
-    setDecision(data)
+    if(data===true){
+
+      axios
+      .post("http://localhost:5000/flights/cancelledarr", cancelled)
+      .catch((err)=>{
+        console.log(err)
+      });
+
+      axios
+      .post("http://localhost:5000/flights/cancelleddep", cancelled)
+      .catch((err)=>{
+        console.log(err)
+      });
+
+      axios
+      .post("http://localhost:5000/users/"+id+"/cancelled", cancelled)
+      .catch((err)=>{
+        console.log(err)
+      }); //working
+      
+
+
+      axios
+  .delete("http://localhost:5000/reservations/"+id+"/reservations/delete",cancelled)
+  .catch((err) => {
+    console.log(err);
+  }); //not working
+
+  axios
+  .patch("http://localhost:5000/users/"+id+"/reservations/delete",cancelled)
+  .catch((err) => {
+    console.log(err); //not working
+  });
+
+    }
   };
 
 
 
   const handleChange = (event) => {
-    console.log(id)
     if (cancelled !== {}) {
       setConfirm(true)
+      console.log(cancelled)
+      console.log(dec)
     }
-      if(decision===true){
-
-        axios
-        .get()
-        .then((res)=> {
-          setFlightidarr(res.data)
-    
-      })
-        .catch((err)=>{
-          console.log(err)
-        });
-
-        axios
-        .post("http://localhost:5000/flights/cancelledarr", selected)
-        .catch((err)=>{
-          console.log(err)
-        });
-
-        axios
-        .post("http://localhost:5000/flights/cancelleddep", selected)
-        .catch((err)=>{
-          console.log(err)
-        });
-
-        axios
-        .post("http://localhost:5000/users/"+id+"/cancelled", selected)
-        .catch((err)=>{
-          console.log(err)
-        });
-        
-
-
-        axios
-    .delete("http://localhost:5000/reservations/"+id+"/reservations/delete",selected)
-    .catch((err) => {
-      console.log(err);
-    });
-
-    axios
-    .patch("http://localhost:5000/users/"+id+"/reservations/delete",selected)
-    .catch((err) => {
-      console.log(err);
-    });
-
-
-
-
-
-      }
     
   };
   return (
@@ -121,8 +93,8 @@ export default function UserCancelFlight() {
       <div>{confirm && ( <AlertDialog d={decided}/> )}
       
        </div>
-       <div>//print here user stuff</div>
-      <ReservationsTable func={selected} rows={reservations} />
+       <div>{id}</div>
+      {reservations.length>0&&<ReservationsTable func={selected} rows={reservations} />}
       <div>
         <Button
           variant="contained"

@@ -14,7 +14,7 @@ export default function AlertDialog(props) {
   const handleCloseDiscard = () => {
     setOpen(false);
   };
-  const handleCloseDelete = () => {
+  const handleCloseDelete = () => { 
     props.d(true);
 
 
@@ -39,7 +39,7 @@ export default function AlertDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDiscard}>Discard</Button>
-          <Button onClick={handleCloseDelete} autoFocus>
+          <Button onClick={handleCloseDelete} >
             Delete
           </Button>
         </DialogActions>

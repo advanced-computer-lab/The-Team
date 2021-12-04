@@ -63,9 +63,9 @@ router.route('/:id/reservations').get((req, res) => {
 
 let mailDetails = {
   from: 'acltheteam@gmail.com',
-  to: mail,
+  to: 'ziadearth@gmail.com',
   subject: 'Test mail',
-  text: 'Hello bro, thank you for using our services hope to see you soon buddy you jave back'+req.body.Price +'for your reservation with number' + req.body.Confirmation_Number
+  text: 'Hello bro, thank you for using our services hope to see you soon buddy you jave back '+req.body.Price +' for your reservation with number' + req.body.Confirmation_Number
 };
 
 mailTransporter.sendMail(mailDetails, function(err, data) {

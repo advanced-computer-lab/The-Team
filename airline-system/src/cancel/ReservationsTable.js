@@ -4,6 +4,11 @@ export default function ReservationsTable(props) {
   const [datatable, setDatatable] = React.useState({
     columns: [
       {
+        label: "id",
+        field: "id",
+        width: 100,
+      },
+      {
         label: "userId",
         field: "userId",
         width: 100,
@@ -19,28 +24,53 @@ export default function ReservationsTable(props) {
         width: 100,
       },
       {
-        label: "Flight_no",
-        field: "Flight_no",  //should include 2 fl. numbers
+        label: "Arr_Flight_no",
+        field: "Arr_Flight_no",  
         width: 100,
       },
       {
-        label: "Flight_id",
-        field: "Flight_id", //should include 2 fl. ids
+        label: "Arr_Flight_id",
+        field: "Arr_Flight_id", 
         width: 100,
       },
       {
-        label: "eSeats",
-        field: "eSeats",
+        label: "Dep_Flight_no",
+        field: "Dep_Flight_no",  
         width: 100,
       },
       {
-        label: "bSeats",
-        field: "bSeats",
+        label: "Dep_Flight_id",
+        field: "Dep_Flight_id", 
         width: 100,
       },
       {
-        label: "fSeats",
-        field: "fSeats",
+        label: "Arr_eSeats",
+        field: "Arr_eSeats",
+        width: 100,
+      },
+      {
+        label: "Arr_bSeats",
+        field: "Arr_bSeats",
+        width: 100,
+      },
+      {
+        label: "Arr_fSeats",
+        field: "Arr_fSeats",
+        width: 100,
+      },
+      {
+        label: "Dep_eSeats",
+        field: "Dep_eSeats",
+        width: 100,
+      },
+      {
+        label: "Dep_bSeats",
+        field: "Dep_bSeats",
+        width: 100,
+      },
+      {
+        label: "Dep_fSeats",
+        field: "Dep_fSeats",
         width: 100,
       },
     ],
