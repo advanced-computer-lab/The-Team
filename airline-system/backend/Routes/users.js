@@ -84,7 +84,7 @@ mailTransporter.sendMail(mailDetails, function(err, data) {
   router.route('/:id/reservations/delete').patch((req, res) => {
 
 user.findById(req.params.id)
-.then(users => {
+    .then(users => {
   console.log(users.Flights)
   var reser=users.Flights
   var reserIndex=reser.indexOf(req.body.Confirmation_Number);

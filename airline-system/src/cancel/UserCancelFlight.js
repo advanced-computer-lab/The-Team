@@ -60,21 +60,20 @@ export default function UserCancelFlight() {
       .catch((err)=>{
         console.log(err)
       });
-      console.log(cancelled)
       
 
-      axios
-      .delete("http://localhost:5000/reservations/"+id+"/reservations/delete",cancelled)
+      axios 
+      .patch("http://localhost:5000/reservations/"+id+"/reservations/delete",cancelled)
        .catch((err) => {
         console.log(err);
-  }); //call working but overall not working
+      }); 
 
 
-  axios
-  .patch("http://localhost:5000/users/"+id+"/reservations/delete",cancelled)
-  .catch((err) => {
-    console.log(err); //call working but overall not working
-  });
+      axios
+      .patch("http://localhost:5000/users/"+id+"/reservations/delete",cancelled)
+      .catch((err) => {
+        console.log(err);
+      });
 
 }
   };

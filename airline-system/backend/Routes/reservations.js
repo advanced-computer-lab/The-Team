@@ -41,7 +41,7 @@ router.route('/add').post((req, res)=>{
     });
 
 
-router.route('/:id/reservations/delete').delete((req, res) => {
+router.route('/:id/reservations/delete').patch((req, res) => {
     var userid= req.params.id;
     var conNumbers= req.body.Confirmation_Number;
     console.log(req.body)
