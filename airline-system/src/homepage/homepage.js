@@ -76,9 +76,14 @@ export default function Home(props) {
         setLoading(false);
         setWarning(true);
       } else {
-        var formatedData = res.data;
+        let formatedData = {
+          departure:res.data.departure,
+          arrival:res.data.arrival,
+          cabin:cab,
+
+        };
         console.log(formatedData);
-        navigate("/h/departure", { state: formatedData }); //TODO: need to fix path
+        navigate("/h/departure", { state: formatedData}); //TODO: need to fix path
       }
     }
   };

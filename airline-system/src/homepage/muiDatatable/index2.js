@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { MDBDataTableV5 } from "mdbreact";
 export default function WithCheckBoxes(props) {
+
+ 
   const [datatable, setDatatable] = React.useState({
     columns: [
       {
@@ -15,38 +17,23 @@ export default function WithCheckBoxes(props) {
       },
       {
         label: "Flight_date",
-        field: "Flight_date",
-        width: 200,
+        field: "Dep_date",
+        width: 260,
       },
       {
-        label: "Economy_seats",
-        field: "Economy_seats",
-        sort: "asc",
-        width: 100,
+        label: "Seats",
+        field: "Seats",
+        width: 280,
       },
-      {
-        label: "Business_seats",
-        field: "Business_seats",
-        sort: "disabled",
-        width: 150,
-      },
-      {
-        label: "First_seats",
-        field: "First_seats",
-        sort: "disabled",
-        width: 100,
-      },
+     
     ],
     rows: props.rows,
   });
-
-
 
   const [checkbox1, setCheckbox1] = React.useState("");
 
   const showLogs2 = (e) => {
     setCheckbox1(e);
-  
   };
 
   return (
@@ -61,6 +48,7 @@ export default function WithCheckBoxes(props) {
         headCheckboxID="id2"
         bodyCheckboxID="checkboxes2"
         getValueCheckBox={(e) => {
+          console.log(props.rows);
           showLogs2(e);
           props.func(e);
         }}
