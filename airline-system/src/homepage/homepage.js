@@ -39,6 +39,7 @@ export default function Home(props) {
   var children = 0;
 
   const get_passengers = (data) => {
+    
     passengers = data;
   };
   const get_children = (data) => {

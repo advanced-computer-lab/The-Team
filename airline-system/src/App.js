@@ -13,6 +13,7 @@ import Editprofile from "./Components/Editprofile";
 import Home from "./homepage/homepage";
 import Departure from "./Components/Departure"
 import Return from "./Components/Return"
+import Seating from "./Components/Seating"
 import Login from "./login";
 import UserCancelFlight from "./cancel/UserCancelFlight"
 
@@ -51,6 +52,7 @@ function App() {
           <Route exact path="/users/update" element={<Editprofile />} />
           <Route path="/h/departure" element={<Departure />} />
           <Route exact path="/h/return" element={<Return />} />
+          <Route exact path="/h/seating" element={<Seating />} />
           <Route exact path="/h/cancel" element={<UserCancelFlight />} />
         </Routes>
       </Router>

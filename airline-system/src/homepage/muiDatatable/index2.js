@@ -48,7 +48,6 @@ export default function WithCheckBoxes(props) {
         headCheckboxID="id2"
         bodyCheckboxID="checkboxes2"
         getValueCheckBox={(e) => {
-          console.log(props.rows);
           showLogs2(e);
           props.func(e);
         }}

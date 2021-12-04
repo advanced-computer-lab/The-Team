@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import WithCheckBoxes from "../homepage/muiDatatable/index2.js";
 import { useLocation } from "react-router-dom";
@@ -8,23 +8,20 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import { set } from 'date-fns';
+import { set } from "date-fns";
 
 export default function Departure() {
-  var sel = {};
   const [change, setChange] = React.useState(false);
 
   const { state } = useLocation();
-  const { departure, arrival, cabin } = state;
+  const { departure, arrival, cabin,children,passengers } = state;
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [row, setRow] = React.useState([]);
- 
+
   useEffect(() => {
     seat();
-    
-  },[change])
- 
+  }, [change]);
 
   const handleClickToOpen = () => {
     setOpen(true);
@@ -36,48 +33,44 @@ export default function Departure() {
 
   const selected = (data) => {
     setRow(data);
-    sel = data["_id"];
     handleClickToOpen();
-
   };
   const seat = () => {
     var i = 0;
     while (i < departure.length) {
       var y = 0;
       var availableSeats = 0;
-      var eco=departure[i]["Economy_seats"];
-      var buss=departure[i]["Business_seats"];
-      var firs=departure[i]["First_seats"];
-      
+      var eco = departure[i]["Economy_seats"];
+      var buss = departure[i]["Business_seats"];
+      var firs = departure[i]["First_seats"];
+
       if (cabin === "Economy") {
         while (y < eco.length) {
           if (eco[y] == 1) {
             availableSeats++;
           }
-          y++
+          y++;
         }
-        departure[i]=Object.assign(departure[i],{Seats:availableSeats});
+        departure[i] = Object.assign(departure[i], { Seats: availableSeats });
         setChange(true);
-        console.log(departure[i])
+
       } else if (cabin === "Business") {
-        
         while (y < buss.length) {
           if (buss[y] == 1) {
             availableSeats++;
           }
-          y++
+          y++;
         }
-        departure[i]=Object.assign({Seats:availableSeats},departure[i]);
+        departure[i] = Object.assign({ Seats: availableSeats }, departure[i]);
         setChange(true);
       } else {
-        
         while (y < firs.length) {
           if (firs[y] == 1) {
             availableSeats++;
           }
-          y++
+          y++;
         }
-        departure[i]=Object.assign({Seats:availableSeats},departure[i]);
+        departure[i] = Object.assign({ Seats: availableSeats }, departure[i]);
         setChange(true);
       }
       i++;
@@ -85,19 +78,24 @@ export default function Departure() {
   };
 
   const handleChange = () => {
+    let formatedData = {
+      selected_departure: row["_id"],
+      arrival: arrival,
+      cabin: cabin,
+      children:children,
+      passengers:passengers,
+    };
+    console.log(passengers)
     navigate("/h/return", {
-      state: {
-        selected: sel,
-        arrival: arrival,
-        cabin:cabin
-      },
+      state: formatedData
     });
   };
 
   return (
-    <div>{
-      change && <WithCheckBoxes func={selected} rows={departure} cc={change} />
-    }
+    <div>
+      {change && (
+        <WithCheckBoxes func={selected} rows={departure} cc={change} />
+      )}
       <div>
         <Button
           variant="contained"

@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import WithCheckBoxes from "../homepage/muiDatatable/index2.js";
 import { useLocation } from "react-router-dom";
@@ -13,7 +13,7 @@ export default function Arrival(props) {
   var sel = {};
   const { state } = useLocation();
   const [change, setChange] = React.useState(false);
-  const { selected_departure, arrival,cabin } = state;
+  const { selected_departure, arrival, cabin,children,passengers } = state;
   const [open, setOpen] = React.useState(false);
   const [row, setRow] = React.useState([]);
   const navigate = useNavigate();
@@ -22,69 +22,70 @@ export default function Arrival(props) {
   };
   useEffect(() => {
     seat();
-    
-  })
+  });
 
   const handleToClose = () => {
     setOpen(false);
   };
   const selected = (data) => {
-    sel = data;
     setRow(data);
     handleClickToOpen();
   };
   const handleChange = (event) => {
-    if (sel !== {}) {
-      console.log("right")
-      console.log(selected_departure)
-    }
+    console.log(passengers)
+    navigate("/h/seating", {
+      state: {
+        arrival: row["_id"],
+        departure: selected_departure,
+        cabin: cabin,
+        children: children,
+        passengers: passengers,
+      },
+    });
   };
   const seat = () => {
     var i = 0;
     while (i < arrival.length) {
       var y = 0;
       var availableSeats = 0;
-      var eco=arrival[i]["Economy_seats"];
-      var buss=arrival[i]["Business_seats"];
-      var firs=arrival[i]["First_seats"];
-      
+      var eco = arrival[i]["Economy_seats"];
+      var buss = arrival[i]["Business_seats"];
+      var firs = arrival[i]["First_seats"];
+
       if (cabin === "Economy") {
         while (y < eco.length) {
           if (eco[y] == 1) {
             availableSeats++;
           }
-          y++
+          y++;
         }
-        arrival[i]=Object.assign(arrival[i],{Seats:availableSeats});
+        arrival[i] = Object.assign(arrival[i], { Seats: availableSeats });
         setChange(true);
-        console.log(arrival[i])
       } else if (cabin === "Business") {
-        
         while (y < buss.length) {
           if (buss[y] == 1) {
             availableSeats++;
           }
-          y++
+          y++;
         }
-        arrival[i]=Object.assign({Seats:availableSeats},arrival[i]);
+        arrival[i] = Object.assign({ Seats: availableSeats }, arrival[i]);
         setChange(true);
       } else {
-        
         while (y < firs.length) {
           if (firs[y] == 1) {
             availableSeats++;
           }
-          y++
+          y++;
         }
-        arrival[i]=Object.assign({Seats:availableSeats},arrival[i]);
+        arrival[i] = Object.assign({ Seats: availableSeats }, arrival[i]);
         setChange(true);
       }
       i++;
     }
   };
   return (
-    <div>{
-      change && <WithCheckBoxes func={selected} rows={arrival} />}
+    <div>
+      {change && <WithCheckBoxes func={selected} rows={arrival} />}
       <div>
         <Button
           variant="contained"
@@ -125,4 +126,3 @@ export default function Arrival(props) {
     </div>
   );
 }
-
