@@ -62,18 +62,5 @@ router.route('/:id/reservations').get((req, res) => {
       .then(users => res.json(users.Flights))
       .catch(err => res.status(400).json('Error: ' + err));
   });
-
-
-
-  // router.route('/:id/reservations/delete').patch((req, res) => {
-  //   user.findById(req.params.id)
-  //     .then(users => {
-  //       users.Flights = users.Flights.filter(Flights => Flights !=req.body);
-  //       users.save()
-  //         .then(() => res.json('Reservation deleted!'))
-  //         .catch(err => res.status(400).json('Error: ' + err));
-  //     })
-  //     .catch(err => res.status(400).json('Error: ' + err));
-  // });
   
 module.exports= router;

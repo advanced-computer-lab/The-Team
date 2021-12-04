@@ -82,9 +82,19 @@ router.route("/:id/delete").delete((req, res) => {
 router.route("/cancelledarr").patch((req, res) => {
   Flight.findById(req.body.Arr_Flight_id)
   .then(flights => {
-    flights.Economy_seats = Number(flights.Economy_seats+req.body.Arr_eSeats);
-    flights.Business_seats = Number(flights.Business_seats+req.body.Arr_bSeats);
-    flights.First_seats = Number(flights.First_seats+req.body.Arr_fSeats);
+
+    for (let i = 0; i < req.body.Arr_eSeats.length; i++) {
+      flights.Economy_seats.splice(req.body.Arr_eSeats, 1, 1);
+      console.log(flights.Economy_seats)
+    }
+
+    for (let i = 0; i < req.body.Arr_bSeats.length; i++) {
+      flights.Business_seats.splice(req.body.Arr_bSeats, 1, 1);
+    }
+
+    for (let i = 0; i < req.body.Arr_fSeats.length; i++) {
+      flights.First_seats.splice(req.body.Arr_fSeats, 1, 1);
+    }
 
     flights.save()
       .then(() => res.json('Flight updated!'))
@@ -97,9 +107,18 @@ router.route("/cancelledarr").patch((req, res) => {
 router.route("/cancelleddep").patch((req, res) => {
   Flight.findById(req.body.Dep_Flight_id)
   .then(flights => {
-    flights.Economy_seats = Number(flights.Economy_seats+req.body.Dep_eSeats);
-    flights.Business_seats = Number(flights.Business_seats+req.body.Dep_bSeats);
-    flights.First_seats = Number(flights.First_seats+req.body.Dep_fSeats);
+    for (let i = 0; i < req.body.Dep_eSeats.length; i++) {
+      flights.Economy_seats.splice(req.body.Dep_eSeats, 1, 1);
+      console.log(flights.Economy_seats)
+    }
+
+    for (let i = 0; i < req.body.Dep_bSeats.length; i++) {
+      flights.Business_seats.splice(req.body.Dep_bSeats, 1, 1);
+    }
+
+    for (let i = 0; i < req.body.Dep_fSeats.length; i++) {
+      flights.First_seats.splice(req.body.Dep_fSeats, 1, 1);
+    }
 
     flights.save()
       .then(() => res.json('Flight updated!'))

@@ -76,7 +76,7 @@ export default function UserCancelFlight() {
     console.log(err); //call working but overall not working
   });
 
-    }
+}
   };
 
 
@@ -91,6 +91,7 @@ export default function UserCancelFlight() {
   };
   return (
     <div>
+      <div>id</div>
       <div>{confirm && ( <AlertDialog d={decided}/> )}
       
        </div>
