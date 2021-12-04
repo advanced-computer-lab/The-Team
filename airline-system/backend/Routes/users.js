@@ -82,16 +82,24 @@ mailTransporter.sendMail(mailDetails, function(err, data) {
 
 
   router.route('/:id/reservations/delete').patch((req, res) => {
-    const conNumbers= req.body;
-    user.findById(req.params.id)
-      .then(users => {
-        users.Flights = users.Flights.filter(Flights => Flights !=req.body);
-        users.save()
-          .then(() => res.json('Reservation deleted!'))
-          .catch(err => res.status(400).json('Error: ' + err));
-      })
-      .catch(err => res.status(400).json('Error: ' + err));
+
+user.findById(req.params.id)
+.then(users => {
+  console.log(users.Flights)
+  var reser=users.Flights
+  var reserIndex=reser.indexOf(req.body.Confirmation_Number);
+  reser.splice(reserIndex, 1);
+  users.Flights=reser;
+  
+  users.save()
+    .then(() => res.json('reservations updated in user!'))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+     .catch(err => res.status(400).json('Error: ' + err));
+
   });
+
+
   
 
 

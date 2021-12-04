@@ -44,13 +44,13 @@ export default function UserCancelFlight() {
     if(data===true){
 
       axios
-      .post("http://localhost:5000/flights/cancelledarr", cancelled)
+      .patch("http://localhost:5000/flights/cancelledarr", cancelled)
       .catch((err)=>{
         console.log(err)
       });
 
       axios
-      .post("http://localhost:5000/flights/cancelleddep", cancelled)
+      .patch("http://localhost:5000/flights/cancelleddep", cancelled)
       .catch((err)=>{
         console.log(err)
       });
@@ -59,20 +59,21 @@ export default function UserCancelFlight() {
       .post("http://localhost:5000/users/"+id+"/cancelled", cancelled)
       .catch((err)=>{
         console.log(err)
-      }); //working
+      });
+      console.log(cancelled)
       
 
-
       axios
-  .delete("http://localhost:5000/reservations/"+id+"/reservations/delete",cancelled)
-  .catch((err) => {
-    console.log(err);
-  }); //not working
+      .delete("http://localhost:5000/reservations/"+id+"/reservations/delete",cancelled)
+       .catch((err) => {
+        console.log(err);
+  }); //call working but overall not working
+
 
   axios
   .patch("http://localhost:5000/users/"+id+"/reservations/delete",cancelled)
   .catch((err) => {
-    console.log(err); //not working
+    console.log(err); //call working but overall not working
   });
 
     }

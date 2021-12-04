@@ -42,11 +42,12 @@ router.route('/add').post((req, res)=>{
 
 
 router.route('/:id/reservations/delete').delete((req, res) => {
-    const userid= req.params.id;
-    const conNumbers= req.body;
-    console.log(conNumbers)
+    var userid= req.params.id;
+    var conNumbers= req.body.Confirmation_Number;
+    console.log(req.body)
     
-    reservation.findOne({ 
+    
+    reservation.findOne({
         userId: userid,
         Confirmation_Number: conNumbers
       })
