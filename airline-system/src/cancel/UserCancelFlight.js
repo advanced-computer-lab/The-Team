@@ -13,6 +13,11 @@ export default function UserCancelFlight() {
   const navigate = useNavigate();
   const [reservations, setReservations] = React.useState([]);
   const [cancelled, setCancelled] = React.useState({});
+  const [fname, setFname] = React.useState("");
+  const [lname, setLname] = React.useState("");
+  const [passport, setPassport] = React.useState("");
+  const [mail, setEmail] = React.useState("");
+
   var [confirm, setConfirm] = React.useState(false);
   var [decision, setDecision] = React.useState(false);
   var dec=false;
@@ -26,12 +31,27 @@ export default function UserCancelFlight() {
     .get("http://localhost:5000/reservations/"+id)
     .then((res)=> {
         setReservations(res.data)
-        console.log(reservations)
   
     })
     .catch((err) => {
       console.log(err);
     });
+
+    axios
+    .get("http://localhost:5000/users/"+id)
+    .then((res)=> {
+        setFname(res.data.Fname)
+        setLname(res.data.Lname)
+        setPassport(res.data.Passport_number)
+        setEmail(res.data.Email)
+
+  
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+
     
   },[reservations.length]);
   let {id}  = state;
@@ -90,11 +110,10 @@ export default function UserCancelFlight() {
   };
   return (
     <div>
-      <div>id</div>
+      <div>id: {id} , first name: {fname},last name: {lname},passport number: {passport},email: {mail}</div>
       <div>{confirm && ( <AlertDialog d={decided}/> )}
       
        </div>
-       <div>{id}</div>
       {reservations.length>0&&<ReservationsTable func={selected} rows={reservations} />}
       <div>
         <Button
