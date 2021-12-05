@@ -90,11 +90,12 @@ export default function Home(props) {
         setWarning(true);
       } else {
         let formatedData = {
-          departure:res.data.departure,
-          arrival:res.data.arrival,
-          cabin:cab,
-          children:children,
-          passengers:passengers,
+          departure: res.data.departure,
+          arrival: res.data.arrival,
+          cabin: cab,
+          children: children,
+          passengers: passengers,
+          userId: userId,
         };
         console.log(formatedData);
         navigate("/h/departure", { state: formatedData}); //TODO: need to fix path
