@@ -12,13 +12,11 @@ export default function AlertDialog(props) {
 
 
   const handleCloseDiscard = () => {
-    setOpen(false);
+props.appear(false)
   };
   const handleCloseDelete = () => { 
     props.d(true);
-
-
-    setOpen(false);
+    props.appear(false)
   };
 
   return (

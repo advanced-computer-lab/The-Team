@@ -20,6 +20,7 @@ export default function UserCancelFlight() {
 
   var [confirm, setConfirm] = React.useState(false);
   var [decision, setDecision] = React.useState(false);
+  var [clicked, setClicked] = React.useState(false);
   var dec=false;
 
 
@@ -58,6 +59,10 @@ export default function UserCancelFlight() {
 
   const selected = (data) => {
     setCancelled(data)
+  };
+
+  const click = (data) => {
+    setClicked(data)
   };
 
   const decided = (data) => {
@@ -111,15 +116,14 @@ export default function UserCancelFlight() {
   const handleChange = (event) => {
     if (cancelled !== {}) {
       setConfirm(true)
-      console.log(cancelled)
-      console.log(dec)
+      setClicked(true);
     }
     
   };
   return (
     <div>
       <div>id: {id} , first name: {fname},last name: {lname},passport number: {passport},email: {mail}</div>
-      <div>{confirm && ( <AlertDialog d={decided}/> )}
+      <div>{clicked&&confirm && ( <AlertDialog d={decided} appear={click}/> )}
       
        </div>
       {reservations.length>0&&<ReservationsTable func={selected} rows={reservations} />}
