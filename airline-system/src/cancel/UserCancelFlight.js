@@ -94,6 +94,14 @@ export default function UserCancelFlight() {
       .catch((err) => {
         console.log(err);
       });
+      axios
+        .get("http://localhost:5000/reservations/" + id)
+        .then((res) => {
+          setReservations(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
 }
   };
