@@ -5,21 +5,22 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 export default function UserProfile() {
   const { state } = useLocation();
-  const { userId } = state;
+  const { id } = state;
   const navigate = useNavigate();
 
   const handleEdit = () => {
     navigate("/h/profile/edit", {
       state: {
-        id: userId,
+        id: id,
       },
     });
   };
 
   const handleReserve = () => {
+     console.log(id);
     navigate("/h/profile/reservations", {
       state: {
-        id: userId,
+        id: id,
       },
     });
   };
