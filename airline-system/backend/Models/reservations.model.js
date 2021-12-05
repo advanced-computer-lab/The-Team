@@ -18,27 +18,52 @@ const reserveSchema = new Schema({
         required: true,
     },
 
-    Flight_no:{
+    Arr_Flight_no:{
         type: Number,
         required: true,
     },
 
-    Flight_id:{
+    Dep_Flight_id:{
         type: String,
         required: true,
     },
 
-    eSeats:{
+    Dep_Flight_no:{
+        type: Number,
+        required: true,
+    },
+
+    Arr_Flight_id:{
+        type: String,
+        required: true,
+    },
+
+    Arr_eSeats:{
         type: [Number],
         required: true,
     },
 
-    bSeats:{
+    Arr_bSeats:{
         type: [Number],
         required: true,
     },
 
-    fSeats:{
+    Arr_fSeats:{
+        type: [Number],
+        required: true,
+    },
+
+    Dep_eSeats:{
+        type: [Number],
+        required: true,
+    },
+
+    Dep_bSeats:{
+        type: [Number],
+        required: true,
+    },
+
+    Dep_fSeats:{
         type: [Number],
         required: true,
     }

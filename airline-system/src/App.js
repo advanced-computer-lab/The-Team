@@ -53,9 +53,12 @@ function App() {
           <Route exact path="/users/update" element={<Editprofile />} />
           <Route path="/h/departure" element={<Departure />} />
           <Route exact path="/h/return" element={<Return />} />
+
           <Route exact path="/h/seating" element={<Seating />} />
           <Route exact path="/h/summary" element={<Summary />} />
           <Route exact path="/h/cancel" element={<UserCancelFlight />} />
+
+
         </Routes>
       </Router>
     </div>

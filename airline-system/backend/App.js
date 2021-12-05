@@ -5,8 +5,6 @@ require('dotenv').config({ path: 'env' });
 
 
 
-
-
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -23,9 +21,12 @@ connection.once('open',()=> {
 
 const flightsRouter = require('./routes/flights');
 const usersRouter = require('./routes/users');
+const reservationsRouter = require('./routes/reservations');
 
 app.use('/flights', flightsRouter);
 app.use('/users',usersRouter);
+app.use('/reservations', reservationsRouter);
+
 
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);

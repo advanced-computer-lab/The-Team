@@ -1,5 +1,7 @@
 const router = require('express').Router();
+const nodemailer = require('nodemailer');
 let user = require('../models/users.model');
+  
 
 
 
@@ -42,29 +44,62 @@ router.route('/:id/reservations').get((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
   });
 
-// router.route('/:id/reservations/ww').get((req, res) => {
-//     user.findById(req.params.id)
-//       .then(users => res.json(users.Flights.filter(Flights => Flights < 13)))
-//       .catch(err => res.status(400).json('Error: ' + err));
-//   });
 
-  // router.route("/:id/reservations/delete").delete((req, res) => {
-  //   user.findById(req.params.id)
-  //     .then(users => res.json(users.Flights.splice(users.Flights.filter(Flights => Flights = 13))))
-  //     .catch(err => res.status(400).json('Error: ' + err));
-  // });
+
+
+
+ router.route('/:id/cancelled').post((req, res)=>{ 
+   user.findById(req.params.id)
+  .then(users => {
+   const mail=users.Email;
+
+  let mailTransporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: 'acltheteam@gmail.com',
+      pass: 'Damnpass456'
+  }
+});
+
+let mailDetails = {
+  from: 'acltheteam@gmail.com',
+  to: mail,
+  subject: 'Test mail',
+  text: 'Hello bro, thank you for using our services hope to see you soon buddy you jave back '+req.body.Price +' for your reservation with number' + req.body.Confirmation_Number +' Love you'
+};
+
+mailTransporter.sendMail(mailDetails, function(err, data) {
+  if(err) {
+      console.log('Error Occurs');
+  } else {
+      console.log('Email sent successfully');
+  }
+});
+
+ });});
+
+
 
 
   router.route('/:id/reservations/delete').patch((req, res) => {
-    user.findById(req.params.id)
-      .then(users => {
-        users.Flights = users.Flights.filter(Flights => Flights !=req.body);
-        users.save()
-          .then(() => res.json('Reservation deleted!'))
-          .catch(err => res.status(400).json('Error: ' + err));
-      })
-      .catch(err => res.status(400).json('Error: ' + err));
+
+user.findById(req.params.id)
+    .then(users => {
+  console.log(users.Flights)
+  var reser=users.Flights
+  var reserIndex=reser.indexOf(req.body.Confirmation_Number);
+  reser.splice(reserIndex, 1);
+  users.Flights=reser;
+  
+  users.save()
+    .then(() => res.json('reservations updated in user!'))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+     .catch(err => res.status(400).json('Error: ' + err));
+
   });
+
+
   
 
 
