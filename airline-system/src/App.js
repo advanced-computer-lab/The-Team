@@ -14,7 +14,7 @@ import Home from "./homepage/homepage";
 import Departure from "./Components/Departure";
 import Return from "./Components/Return";
 import Summary from "./Components/Summary";
-import Seating from "./Components/Seating";
+import Seating from "./Components/seating";
 import Login from "./login";
 import UserCancelFlight from "./cancel/UserCancelFlight";
 import UserProfile from "./UserProfile";
