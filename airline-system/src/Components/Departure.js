@@ -122,6 +122,7 @@ export default function Departure() {
   };
   return (
     <div>
+      <div>Choose departure flight</div>
       {change && (
         <WithCheckBoxes func={selected} rows={departure} cc={change} />
       )}

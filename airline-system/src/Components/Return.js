@@ -114,6 +114,7 @@ export default function Arrival(props) {
   };
   return (
     <div>
+       <div>Choose Arrival flight </div>
       {change && (<WithCheckBoxes func={selected} rows={arrival} />)}
       <div>
         <Button
