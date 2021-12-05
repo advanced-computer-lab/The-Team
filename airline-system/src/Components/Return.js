@@ -141,7 +141,7 @@ export default function Arrival(props) {
             <br />
             Duration :{row["Trip_duration"]}
             <br />
-            Cabin class :{row["Flight_no"]}
+            Cabin class :{cabin}
             <br />
             Baggage allowance :{row["Baggage_allowance"]}
           </DialogContentText>

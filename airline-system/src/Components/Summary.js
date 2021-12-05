@@ -32,6 +32,7 @@ export default function Summary() {
   } = state;
   useEffect(() => {
     async function fetchMyAPI() {
+        console.log(userId)
       var tot = children + passengers;
       var departure1 = await axios
         .get("http://localhost:5000/flights/" + departure)
@@ -76,6 +77,9 @@ export default function Summary() {
   }, [change]);
 
   const handleChange = () => {
+    if(userId ===""){
+    }
+    else{
     const data = {
       confirm: confirm,
     };
@@ -134,6 +138,7 @@ export default function Summary() {
       .catch((err) => {
         console.log(err);
       });
+    }
     navigate("/login");
   };
 
