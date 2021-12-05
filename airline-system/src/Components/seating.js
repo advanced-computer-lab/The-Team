@@ -7,6 +7,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 import Backdrop from "@mui/material/Backdrop";
+import { useNavigate } from "react-router-dom";
 
 export default function Seating() {
   const { state } = useLocation();
@@ -20,6 +21,7 @@ export default function Seating() {
   const [departure_seats1, setDeparture_seats] = React.useState([]);
   const [deptemp, setdeptemp] = React.useState([]);
   const [arrtemp, setarrtemp] = React.useState([]);
+  const navigate = useNavigate();
   var arrival_seats = [];
   var tot = children + passengers;
   var departure_seats = [];
@@ -117,6 +119,7 @@ export default function Seating() {
         arr.push(e);
         arrtemp.push(e);
         setChosena(arr);
+        
       } else {
         setAlert(true);
         setOpen(true);
@@ -134,6 +137,20 @@ export default function Seating() {
       setAlert(true);
       setOpen(true);
     } else {
+      navigate("/h/summary", {
+        state: {
+          departure:departure,
+          arrival:arrival,
+          cabin:cabin,
+          children:children,
+          passengers:passengers,
+          arrival_seats:arrtemp,
+          departure_seats:deptemp,
+          arrival_seats1:chosena,
+          departure_seats1:chosend,
+
+        },
+      });
 
     }
   };
