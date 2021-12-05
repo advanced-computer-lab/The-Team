@@ -24,7 +24,6 @@ export default function Departure() {
   const [openal, setOpenal] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
   const [row, setRow] = React.useState([]);
-  const [tableRow, settableRow] = React.useState([]);
   var tot = passengers + children;
   var removed = [];
 

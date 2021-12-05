@@ -127,6 +127,53 @@ router.route("/cancelleddep").patch((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 
 });
+router.route("/addedarr").patch((req, res) => {
+  Flight.findById(req.body.Arr_Flight_id)
+  .then(flights => {
+
+    for (let i = 0; i < req.body.Arr_eSeats.length; i++) {
+      flights.Economy_seats.splice(req.body.Arr_eSeats, 1, 0);
+      console.log(flights.Economy_seats)
+    }
+
+    for (let i = 0; i < req.body.Arr_bSeats.length; i++) {
+      flights.Business_seats.splice(req.body.Arr_bSeats, 1, 0);
+    }
+
+    for (let i = 0; i < req.body.Arr_fSeats.length; i++) {
+      flights.First_seats.splice(req.body.Arr_fSeats, 1, 0);
+    }
+
+    flights.save()
+      .then(() => res.json('Flight updated!'))
+      .catch(err => res.status(400).json('Error: ' + err));
+  })
+  .catch(err => res.status(400).json('Error: ' + err));
+
+});
+router.route("/addeddep").patch((req, res) => {
+  Flight.findById(req.body.Dep_Flight_id)
+  .then(flights => {
+    for (let i = 0; i < req.body.Dep_eSeats.length; i++) {
+      flights.Economy_seats.splice(req.body.Dep_eSeats, 1, 0);
+      console.log(flights.Economy_seats)
+    }
+
+    for (let i = 0; i < req.body.Dep_bSeats.length; i++) {
+      flights.Business_seats.splice(req.body.Dep_bSeats, 1, 0);
+    }
+
+    for (let i = 0; i < req.body.Dep_fSeats.length; i++) {
+      flights.First_seats.splice(req.body.Dep_fSeats, 1, 0);
+    }
+
+    flights.save()
+      .then(() => res.json('Flight updated!'))
+      .catch(err => res.status(400).json('Error: ' + err));
+  })
+  .catch(err => res.status(400).json('Error: ' + err));
+
+});
 
   router.route('/update').patch((req, res) => {
     Flight.findById(req.body.id)
