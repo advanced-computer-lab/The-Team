@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/advanced-computer-lab/The-Team/issues"
   },
-  "homepage": "https://github.com/advanced-computer-lab/The-Team#readme"
+  "homepage": "https://github.com/advanced-computer-lab/The-Team#readme",
+  "dependencies": {
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.2.2"
+  }
 }
