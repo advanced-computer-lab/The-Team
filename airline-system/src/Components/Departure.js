@@ -8,19 +8,29 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import { set } from "date-fns";
+import Backdrop from "@mui/material/Backdrop";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Collapse from "@mui/material/Collapse";
+
 
 export default function Departure() {
   const [change, setChange] = React.useState(false);
 
   const { state } = useLocation();
-  const { departure, arrival, cabin,children,passengers } = state;
+  const { departure, arrival, cabin, children, passengers } = state;
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+  const [openal, setOpenal] = React.useState(false);
+  const [alert, setAlert] = React.useState(false);
   const [row, setRow] = React.useState([]);
+  const [tableRow, settableRow] = React.useState([]);
+  var tot = passengers + children;
+  var removed = [];
 
   useEffect(() => {
     seat();
+    removeSeats();
   }, [change]);
 
   const handleClickToOpen = () => {
@@ -35,9 +45,18 @@ export default function Departure() {
     setRow(data);
     handleClickToOpen();
   };
+
+  const removeSeats = () => {
+    var temp = departure;
+    for (let index = 0; index < removed.length; index++) {
+      var inn = removed[index];
+      temp.splice(inn, 1);
+    }
+  };
+
   const seat = () => {
     var i = 0;
-    while (i < departure.length) {
+    while (departure.length > 0 && i < departure.length) {
       var y = 0;
       var availableSeats = 0;
       var eco = departure[i]["Economy_seats"];
@@ -51,9 +70,12 @@ export default function Departure() {
           }
           y++;
         }
-        departure[i] = Object.assign(departure[i], { Seats: availableSeats });
-        setChange(true);
 
+        if (availableSeats < tot) removed.push(i);
+
+        departure[i] = Object.assign(departure[i], { Seats: availableSeats });
+
+        setChange(true);
       } else if (cabin === "Business") {
         while (y < buss.length) {
           if (buss[y] == 1) {
@@ -61,7 +83,9 @@ export default function Departure() {
           }
           y++;
         }
+        if (availableSeats < tot) removed.push(i);
         departure[i] = Object.assign({ Seats: availableSeats }, departure[i]);
+
         setChange(true);
       } else {
         while (y < firs.length) {
@@ -70,7 +94,9 @@ export default function Departure() {
           }
           y++;
         }
+        if (availableSeats < tot) removed.push(i);
         departure[i] = Object.assign({ Seats: availableSeats }, departure[i]);
+
         setChange(true);
       }
       i++;
@@ -82,15 +108,18 @@ export default function Departure() {
       selected_departure: row["_id"],
       arrival: arrival,
       cabin: cabin,
-      children:children,
-      passengers:passengers,
+      children: children,
+      passengers: passengers,
     };
-    console.log(passengers)
-    navigate("/h/return", {
-      state: formatedData
-    });
+    if (row.length != 0) {
+      navigate("/h/return", {
+        state: formatedData,
+      });
+    } else {
+      setAlert(true);
+      setOpenal(true);
+    }
   };
-
   return (
     <div>
       {change && (
@@ -105,6 +134,7 @@ export default function Departure() {
           Proceed
         </Button>{" "}
       </div>
+
       <Dialog
         fullWidth={true}
         maxWidth={"xs"}
@@ -133,6 +163,26 @@ export default function Departure() {
           </Button>
         </DialogActions>
       </Dialog>
+      <div>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={openal}
+        >
+          <Collapse in={alert}>
+            <Alert
+              variant="filled"
+              severity="error"
+              onClose={() => {
+                setAlert(false);
+                setOpenal(false);
+              }}
+            >
+              <AlertTitle>Error</AlertTitle>
+              <strong>Please choose a flight</strong>
+            </Alert>
+          </Collapse>
+        </Backdrop>
+      </div>
     </div>
   );
 }

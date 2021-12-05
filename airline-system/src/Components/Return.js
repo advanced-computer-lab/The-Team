@@ -8,6 +8,10 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
+import Backdrop from "@mui/material/Backdrop";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Collapse from "@mui/material/Collapse";
 
 export default function Arrival(props) {
   var sel = {};
@@ -15,13 +19,18 @@ export default function Arrival(props) {
   const [change, setChange] = React.useState(false);
   const { selected_departure, arrival, cabin,children,passengers } = state;
   const [open, setOpen] = React.useState(false);
+  const [openal, setOpenal] = React.useState(false);
+  const [alert, setAlert] = React.useState(false);
   const [row, setRow] = React.useState([]);
   const navigate = useNavigate();
+  var tot=passengers+children;
+  var removed=[];
   const handleClickToOpen = () => {
     setOpen(true);
   };
   useEffect(() => {
     seat();
+    removeSeats();
   });
 
   const handleToClose = () => {
@@ -31,8 +40,16 @@ export default function Arrival(props) {
     setRow(data);
     handleClickToOpen();
   };
+  const removeSeats = () => {
+    var temp=arrival;
+    for (let index = 0; index < removed.length; index++) {
+      var inn=removed[index]
+      temp.splice(inn,1)
+    }
+  };
+
   const handleChange = (event) => {
-    console.log(passengers)
+    if (row.length!=0) {
     navigate("/h/seating", {
       state: {
         arrival: row["_id"],
@@ -42,6 +59,11 @@ export default function Arrival(props) {
         passengers: passengers,
       },
     });
+  }
+  else{
+    setAlert(true);
+    setOpenal(true);
+  }
   };
   const seat = () => {
     var i = 0;
@@ -59,6 +81,8 @@ export default function Arrival(props) {
           }
           y++;
         }
+        if(availableSeats<tot)
+          removed.push(i)
         arrival[i] = Object.assign(arrival[i], { Seats: availableSeats });
         setChange(true);
       } else if (cabin === "Business") {
@@ -68,6 +92,8 @@ export default function Arrival(props) {
           }
           y++;
         }
+        if(availableSeats<tot)
+          removed.push(i)
         arrival[i] = Object.assign({ Seats: availableSeats }, arrival[i]);
         setChange(true);
       } else {
@@ -77,6 +103,8 @@ export default function Arrival(props) {
           }
           y++;
         }
+        if(availableSeats<tot)
+          removed.push(i)
         arrival[i] = Object.assign({ Seats: availableSeats }, arrival[i]);
         setChange(true);
       }
@@ -85,7 +113,7 @@ export default function Arrival(props) {
   };
   return (
     <div>
-      {change && <WithCheckBoxes func={selected} rows={arrival} />}
+      {change && (<WithCheckBoxes func={selected} rows={arrival} />)}
       <div>
         <Button
           variant="contained"
@@ -123,6 +151,26 @@ export default function Arrival(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      <div>
+      <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={openal}
+        >
+          <Collapse in={alert}>
+            <Alert
+              variant="filled"
+              severity="error"
+              onClose={() => {
+                setAlert(false);
+                setOpenal(false);
+              }}
+            >
+              <AlertTitle>Error</AlertTitle>
+              <strong>Please choose a flight</strong>
+            </Alert>
+          </Collapse>
+          </Backdrop>
+      </div>
     </div>
   );
 }

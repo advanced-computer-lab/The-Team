@@ -45,6 +45,7 @@ export default function WithCheckBoxes(props) {
         pagesAmount={4}
         data={datatable}
         checkbox
+        searching={false}
         headCheckboxID="id2"
         bodyCheckboxID="checkboxes2"
         getValueCheckBox={(e) => {

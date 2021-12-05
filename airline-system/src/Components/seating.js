@@ -6,11 +6,13 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
+import Backdrop from "@mui/material/Backdrop";
 
 export default function Seating() {
   const { state } = useLocation();
   const { arrival, departure, cabin, children, passengers } = state;
   const [change, setChange] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const [chosend, setChosend] = React.useState([]);
   const [alert, setAlert] = React.useState(false);
   const [chosena, setChosena] = React.useState([]);
@@ -19,6 +21,7 @@ export default function Seating() {
   const [deptemp, setdeptemp] = React.useState([]);
   const [arrtemp, setarrtemp] = React.useState([]);
   var arrival_seats = [];
+  var tot = children + passengers;
   var departure_seats = [];
 
   useEffect(() => {
@@ -105,6 +108,7 @@ export default function Seating() {
         console.log(chosend);
       } else {
         setAlert(true);
+        setOpen(true);
       }
     } else {
       if (!arrtemp.includes(e)) {
@@ -115,19 +119,22 @@ export default function Seating() {
         setChosena(arr);
       } else {
         setAlert(true);
+        setOpen(true);
       }
     }
   };
   const handleClick = () => {
-    var tot = children + passengers;
+    
 
     if (deptemp.length != tot) {
       setAlert(true);
+      setOpen(true);
     }
     if (arrtemp.length != tot) {
       setAlert(true);
+      setOpen(true);
     } else {
-        
+
     }
   };
   const handleDelete = () => {
@@ -139,7 +146,7 @@ export default function Seating() {
 
   return (
     <div>
-      <div>Choose Departure Seat(s) :</div>
+      <div>Choose {tot} Departure Seat(s) :</div>
       <ButtonGroup disableElevation variant="contained">
         {departure_seats1.map((e) => (
           <Button
@@ -151,7 +158,7 @@ export default function Seating() {
         ))}
       </ButtonGroup>
       <div>
-        <div>Choose Arrival Seat(s) :</div>
+        <div>Choose {tot} Arrival Seat(s) :</div>
         <ButtonGroup disableElevation variant="contained">
           {arrival_seats1.map((e) => (
             <Button
@@ -170,24 +177,32 @@ export default function Seating() {
           </Button>
         </div>
         <div>
+      
           <Button variant="contained" onClick={() => handleDelete()}>
             Clear All
           </Button>
-
+          <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
           <Collapse in={alert}>
             <Alert
               variant="filled"
               severity="error"
               onClose={() => {
                 setAlert(false);
+                setOpen(false);
               }}
             >
               <AlertTitle>Error</AlertTitle>
-              <strong>Please Choose Right Number of Seats</strong>
+              <strong>Please choose right seats</strong>
             </Alert>
           </Collapse>
+          </Backdrop>
+          
         </div>
       </div>
     </div>
+    
   );
 }
