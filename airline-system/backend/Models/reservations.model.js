@@ -9,7 +9,7 @@ const reserveSchema = new Schema({
       },
 
     Confirmation_Number: {
-        type: Number,
+        type: String,
         required: true,
     },
 
