@@ -11,19 +11,19 @@ import AdminPanel from "./Components/AdminPanel";
 
 import Editprofile from "./Components/Editprofile";
 import Home from "./homepage/homepage";
-import Departure from "./Components/Departure"
-import Return from "./Components/Return"
-import Summary from "./Components/Summary"
-import Seating from "./Components/Seating"
+import Departure from "./Components/Departure";
+import Return from "./Components/Return";
+import Summary from "./Components/Summary";
+import Seating from "./Components/Seating";
 import Login from "./login";
-import UserCancelFlight from "./cancel/UserCancelFlight"
+import UserCancelFlight from "./cancel/UserCancelFlight";
+import UserProfile from "./UserProfile";
 
 const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
 const AllFlightElement = AllFlight;
 const CreateFlightElement = CreateFlight;
 const UpdateFlightElement = UpdateFlight;
-const EditprofileElement  =  Editprofile;
 
 function App() {
   return (
@@ -50,15 +50,24 @@ function App() {
             element={<UpdateFlightElement />}
           />
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/users/update" element={<Editprofile />} />
+
           <Route path="/h/departure" element={<Departure />} />
           <Route exact path="/h/return" element={<Return />} />
 
           <Route exact path="/h/seating" element={<Seating />} />
           <Route exact path="/h/summary" element={<Summary />} />
-          <Route exact path="/h/cancel" element={<UserCancelFlight />} />
-
-
+          
+          <Route
+            exact
+            path="/h/profile"
+            element={<UserProfile />}
+          />
+          <Route
+            exact
+            path="/h/profile/reservations"
+            element={<UserCancelFlight />}
+          />
+          <Route exact path="/h/profile/edit" element={<Editprofile />} />
         </Routes>
       </Router>
     </div>
