@@ -17,7 +17,7 @@ export default function Arrival(props) {
   var sel = {};
   const { state } = useLocation();
   const [change, setChange] = React.useState(false);
-  const { selected_departure, arrival, cabin,children,passengers } = state;
+  const { selected_departure, arrival, cabin,children,passengers,userId } = state;
   const [open, setOpen] = React.useState(false);
   const [openal, setOpenal] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
@@ -57,6 +57,7 @@ export default function Arrival(props) {
         cabin: cabin,
         children: children,
         passengers: passengers,
+        userId:userId,
       },
     });
   }

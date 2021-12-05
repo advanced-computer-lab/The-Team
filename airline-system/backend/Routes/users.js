@@ -111,7 +111,8 @@ router.route("/:id/reservation/add").patch((req, res) => {
   user
     .findById(req.params.id)
     .then((users) => {
-      users.Flights = users.Flights.push(req.body.confirm);
+
+      users.Flights[ users.Flights.push(req.body.confirm)];
       users
         .save()
         .then(() => res.json("user updated!"))

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Seating() {
   const { state } = useLocation();
-  const { arrival, departure, cabin, children, passengers } = state;
+  const { arrival, departure, cabin, children, passengers,userId } = state;
   const [change, setChange] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [chosend, setChosend] = React.useState([]);
@@ -148,6 +148,7 @@ export default function Seating() {
           departure_seats:deptemp,
           arrival_seats1:chosena,
           departure_seats1:chosend,
+          userId:userId,
 
         },
       });

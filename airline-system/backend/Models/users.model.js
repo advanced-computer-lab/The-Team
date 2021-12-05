@@ -49,7 +49,7 @@ const userSchema = new Schema({
     },
 
     Flights: {
-        type: [Number],
+        type: [String],
         required: true,
     }
 

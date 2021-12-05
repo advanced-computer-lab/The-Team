@@ -18,7 +18,7 @@ export default function Departure() {
   const [change, setChange] = React.useState(false);
 
   const { state } = useLocation();
-  const { departure, arrival, cabin, children, passengers } = state;
+  const { departure, arrival, cabin, children, passengers,userId} = state;
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [openal, setOpenal] = React.useState(false);
@@ -109,6 +109,7 @@ export default function Departure() {
       cabin: cabin,
       children: children,
       passengers: passengers,
+      userId:userId,
     };
     if (row.length != 0) {
       navigate("/h/return", {
