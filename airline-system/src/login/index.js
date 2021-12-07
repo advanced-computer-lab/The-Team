@@ -35,6 +35,22 @@ export default function Login() {
       },
     });
   };
+   const handleAdmin = () => {
+      setOpen(true);
+      axios
+        .get("http://localhost:5000/users")
+        .then((res) => {
+          var username = res.data[1]["Username"];
+          if(username==="ADmin"){
+            navigate("/home/adminpanel");
+          }
+          
+        })
+
+        .catch((err) => {
+          console.log(err);
+        });
+   };
   return (
     <div>
       <Box
@@ -80,6 +96,28 @@ export default function Login() {
           }}
         >
           Log in as guest user
+        </Button>
+      </Box>
+      <Box
+        sx={{
+          my: 2,
+          bgcolor: "#fa12",
+          boxShadow: 1,
+          borderRadius: 1,
+          p: 2,
+          minWidth: 300,
+        }}
+      >
+        <Button
+          onClick={handleAdmin}
+          key="login-user"
+          sx={{
+            alignItems: "center",
+            m: 3,
+            minWidth: { md: 350 },
+          }}
+        >
+          Log in as Admin
         </Button>
       </Box>
       <Backdrop
