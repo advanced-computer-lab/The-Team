@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const nodemailer = require("nodemailer");
+const bcrypt= require("bcrypt");
+
 let user = require("../models/users.model");
 
 router.route("/").get((req, res) => {
@@ -12,7 +14,7 @@ router.route("/").get((req, res) => {
 
 router.route("/add").post((req, res) => {
   const Username = req.body.Username;
-  const Password = req.body.Password;
+  var Password = req.body.Password;
   const Email = req.body.Email;
   const Passport_number = req.body.Passport_number;
   const Fname = req.body.Fname;
@@ -22,23 +24,32 @@ router.route("/add").post((req, res) => {
   const Telephone_number = req.body.Telephone_number;
   const Flights = req.body.Flights;
 
-  const newUser = new user({
-    Username,
-    Password,
-    Email,
-    Passport_number,
-    Fname,
-    Lname,
-    Home_address,
-    Country_code,
-    Telephone_number,
-    Flights,
-  });
+  bcrypt.genSalt(10,(err,salt)=>{
+    bcrypt.hash(Password,salt,(err,hash)=>{
+      if(err) throw err;
+      Password=hash;
 
-  newUser
-    .save()
-    .then(() => res.json("User Added!"))
-    .catch((err) => res.status(400).json("Error " + err));
+      const newUser = new user({
+        Username,
+        Password,
+        Email,
+        Passport_number,
+        Fname,
+        Lname,
+        Home_address,
+        Country_code,
+        Telephone_number,
+        Flights,
+      });
+
+      newUser
+      .save()
+      .then(() => res.json("User Added!"))
+      .catch((err) => res.status(400).json("Error " + err));
+
+
+    })
+  })
 });
 
 router.route("/:id").get((req, res) => {
