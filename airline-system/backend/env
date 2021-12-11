@@ -1,1 +1,3 @@
 ATLAS_URI=mongodb+srv://user1:ucBN7FacUZeJGZen@cluster0.slpol.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+ACCESS_TOKEN_SECRET=6ce8db087c069eb8a0586d38b7f72bb7f7db55be8e3aff62586cde2dee134070e5239c579a3060397580d6e8239c3cb7ae49523c9efd759b0a4458ddb1856739

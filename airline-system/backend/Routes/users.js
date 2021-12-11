@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const nodemailer = require("nodemailer");
 const bcrypt= require("bcrypt");
+require('dotenv').config({ path: '.env' });
+const jwt = require('jsonwebtoken');
 
 let user = require("../models/users.model");
 
@@ -50,6 +52,34 @@ router.route("/add").post((req, res) => {
 
     })
   })
+});
+
+router.route("/login").post((req,res)=>{
+
+  const mail=req.body.Email;
+
+  user.findOne({Email: mail}).then(match =>{
+    bcrypt.compare(req.body.Password, match.Password).then(correct =>{
+      console.log(correct)
+      if(correct){
+        const payload= {
+          passno:match.Passport_number,
+          email:match.Email
+        };
+        jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET,{expiresIn:3600}, (err,token)=>{
+          if(err){
+          return res.status(400).json({message:err});
+          }
+          return res.json({
+            message: "Success",
+            token: "Bearer "+ token
+          })
+        })
+
+      }
+    })
+  })
+
 });
 
 router.route("/:id").get((req, res) => {
