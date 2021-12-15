@@ -1,5 +1,5 @@
 const router = require("express").Router();
-let Flight = require("../models/flights.model");
+let Flight = require("../Models/flights.model");
 
 router.route("/search").post(async (req, res) => {
   const From = req.body.From;

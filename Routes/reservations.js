@@ -1,5 +1,5 @@
 const router = require('express').Router();
-let reservation = require('../models/reservations.model');
+let reservation = require('../Models/reservations.model');
 
 
 

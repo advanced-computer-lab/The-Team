@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const nodemailer = require("nodemailer");
-let user = require("../models/users.model");
+let user = require("../Models/users.model");
 
 router.route("/").get((req, res) => {
   console.log(req);
