@@ -19,9 +19,9 @@ connection.once('open',()=> {
     console.log("MongoDb database is succesfully established succesfully");
 });
 
-const flightsRouter = require('./routes/flights');
-const usersRouter = require('./routes/users');
-const reservationsRouter = require('./routes/reservations');
+const flightsRouter = require('./Routes/flights');
+const usersRouter = require('./Routes/users');
+const reservationsRouter = require('./Routes/reservations');
 
 app.use('/flights', flightsRouter);
 app.use('/users',usersRouter);
