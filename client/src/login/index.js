@@ -13,7 +13,7 @@ export default function Login() {
   const handleLogin = async () => {
     setOpen(true);
     axios
-      .get("http://localhost:5000/users")
+      .get("/users/")
       .then((res) => {
         var id = res.data[0]["_id"];
         var data = {
