@@ -5,10 +5,14 @@
   "main": "App.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon App.js"
+    "start": "nodemon App.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
+  "engines": {
+    "node": "14.15.4"
+  },
   "license": "ISC",
   "dependencies": {
     "@emotion/react": "^11.7.0",
