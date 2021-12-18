@@ -4,7 +4,7 @@
   "description": "",
   "main": "App.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon App.js"
   },
   "keywords": [],
@@ -25,5 +25,9 @@
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.14",
     "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "jest": "^25.5.4",
+    "supertest": "^6.1.6"
   }
 }
