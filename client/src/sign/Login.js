@@ -70,7 +70,7 @@ function Login(props) {
                     if(res.data.message=="Email and password do not match")
                     alert(res.data.message);
                     if(res.data.message=="Success"){
-                        //handel tokenn
+                        //handle token
                     goToLoginPage();}
                 })
         }

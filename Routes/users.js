@@ -4,6 +4,30 @@ let user = require("../Models/users.model");
 var bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
+const stripe = require("stripe")("sk_test_51K8tbEFK05i5y2oRLPqRDqxXrgjH1ExR5XaLJgH8DpkEby8cZEOb8oWKWQhKdVqaklFDaHcrIrqbtSDjAFeH0U6W00ejBG2mve");
+//const stripe = Stripe('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
+
+router.route("/pay").get((req, res) =>{
+  try {
+      stripe.user.create({
+        id: req.body.id,
+          name: req.body.name,
+          email: req.body.email,
+          source: req.body.stripeToken
+      }).then(user => stripe.charges.create({
+          amount: req.body.amount * 100,
+          currency: 'usd',
+          customer: customer.id,
+          description: 'Thank you for your generous donation.'
+      })).then(() => res.render('complete.html'))
+          .catch(err => console.log(err))
+  } catch (err) { res.send(err) }
+})
+
+
+
+
 router.route("/").get((req, res) => {
   console.log(req);
   user
@@ -73,6 +97,8 @@ router.route("/signup").post((req, res)=>{
         Flights,
       });
 
+      console.log("nn")
+
       newUser
       .save()
       .then(() => res.json("User Added!"))
@@ -104,7 +130,7 @@ router.route("/login").post((req,res)=>{
           if(err){
           return res.status(400).json({message:err});
           }
-          console.log("it worked")
+
           return res.json({
             message: "Success",
             token: "Bearer "+ token

@@ -6,6 +6,11 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+import {
+  useNavigate
+} from 'react-router-dom';
+import UserProfile from "../UserProfile";
+
 function Signup(props) {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
@@ -19,6 +24,9 @@ function Signup(props) {
 
 //   const { state } = useLocation();
 //   const { id } = state;
+
+const navigate = useNavigate();
+const goToLoginPage = () => navigate('/login');
 
   const handlePass = (event) => {
     setPassword(event.target.value);
@@ -51,9 +59,13 @@ function Signup(props) {
   const onSubmit = () => {
    // console.log(id);
 
+   var flag1 = false;
+   var flag2 = false;
+
    if(Username.length==0 || Password.length==0||Email.length==0||Passport_number.length==0||Fname.length==0||Lname.length==0||Home_address.length==0||Country_code.length==0||Telephone_number.length==0){
     alert("enter all fields please please");
    }
+   else {flag1=true;}
 
    if (typeof Email !== "undefined") {
 
@@ -62,10 +74,14 @@ function Signup(props) {
     if (!pattern.test(Email)) {
         alert("enter valid email");
     }
+    else {
+        flag2 = true;
+    }
   
   }
-    else{
 
+    if(flag1 && flag2){
+    
     const data = {
     //  id: id,
       Username: Username,
@@ -76,12 +92,13 @@ function Signup(props) {
       Lname: Lname,
       Home_address: Home_address,
       Country_code: Country_code,
-      Telephone_number: Telephone_number,
+      Telephone_number: Telephone_number
     };
     axios.post("http://localhost:5000/users/signup", data)
-    .then(res=>{
+     .then(res=>{
       console.log("success")
       alert("User created successfully");
+      goToLoginPage();
     })
 }};
 
