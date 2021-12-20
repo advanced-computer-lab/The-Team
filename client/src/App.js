@@ -18,6 +18,9 @@ import Seating from "./Components/seating";
 import Login from "./login";
 import UserCancelFlight from "./cancel/UserCancelFlight";
 import UserProfile from "./UserProfile";
+import Signup from "./sign/Signup";
+import ULogin from "./sign/Login";
+
 
 const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
@@ -68,6 +71,8 @@ function App() {
             element={<UserCancelFlight />}
           />
           <Route exact path="/h/profile/edit" element={<Editprofile />} />
+          <Route exact path="/h/signup" element={<Signup />} />
+          <Route exact path="/h/login" element={<ULogin />} />
         </Routes>
       </Router>
     </div>

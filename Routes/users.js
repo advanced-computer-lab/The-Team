@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const nodemailer = require("nodemailer");
 let user = require("../Models/users.model");
+var bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 
 router.route("/").get((req, res) => {
   console.log(req);
@@ -42,7 +44,82 @@ router.route("/add").post((req, res) => {
 });
 
 router.route("/signup").post((req, res)=>{
+  const Username = req.body.Username;
+  var Password = req.body.Password;
+  const Email = req.body.Email;
+  const Passport_number = req.body.Passport_number;
+  const Fname = req.body.Fname;
+  const Lname = req.body.Lname;
+  const Home_address = req.body.Home_address;
+  const Country_code = req.body.Country_code;
+  const Telephone_number = req.body.Telephone_number;
+  const Flights = [];
+
+  bcrypt.genSalt(10,(err,salt)=>{
+    bcrypt.hash(Password,salt,(err,hash)=>{
+      if(err) throw err;
+      Password=hash;
+
+      const newUser = new user({
+        Username,
+        Password,
+        Email,
+        Passport_number,
+        Fname,
+        Lname,
+        Home_address,
+        Country_code,
+        Telephone_number,
+        Flights,
+      });
+
+      newUser
+      .save()
+      .then(() => res.json("User Added!"))
+      .catch((err) => res.status(400).json("Error " + err));
+
+
+    })
+  })
   
+});
+
+router.route("/login").post((req,res)=>{
+
+  const mail=req.body.Email;
+
+  user.findOne({Email: mail},function(err, match){
+    if(!match){
+      return res.json({
+        message: "Email not found",
+      })
+    }
+    bcrypt.compare(req.body.Password, match.Password).then(correct =>{
+      if(correct){
+        const payload= {
+          passno:match.Passport_number,
+          email:match.Email
+        };
+        jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:3600}, (err,token)=>{
+          if(err){
+          return res.status(400).json({message:err});
+          }
+          console.log("it worked")
+          return res.json({
+            message: "Success",
+            token: "Bearer "+ token
+          })
+        })
+
+      }
+      else{
+        return res.json({
+          message: "Email and password do not match",
+        })
+      }
+    })
+  })
+
 });
 
 router.route("/:id").get((req, res) => {
