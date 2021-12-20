@@ -97,7 +97,7 @@ router.route("/signup").post((req, res)=>{
         Flights,
       });
 
-      console.log("nn")
+     
 
       newUser
       .save()
