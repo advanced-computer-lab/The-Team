@@ -41,6 +41,10 @@ router.route("/add").post((req, res) => {
     .catch((err) => res.status(400).json("Error " + err));
 });
 
+router.route("/signup").post((req, res)=>{
+  
+});
+
 router.route("/:id").get((req, res) => {
   user
     .findById(req.params.id)
