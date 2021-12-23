@@ -4,34 +4,33 @@ let user = require("../Models/users.model");
 var bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const stripe = require("stripe")(
-  "sk_test_51K8tbEFK05i5y2oRLPqRDqxXrgjH1ExR5XaLJgH8DpkEby8cZEOb8oWKWQhKdVqaklFDaHcrIrqbtSDjAFeH0U6W00ejBG2mve"
-);
-//const stripe = Stripe('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
-router.route("/pay").get((req, res) => {
-  try {
-    stripe.user
-      .create({
-        id: req.body.id,
-        name: req.body.name,
-        email: req.body.email,
-        source: req.body.stripeToken,
-      })
-      .then((user) =>
-        stripe.charges.create({
-          amount: req.body.amount * 100,
-          currency: "usd",
-          customer: customer.id,
-          description: "Thank you for your generous donation.",
-        })
-      )
-      .then(() => res.render("complete.html"))
-      .catch((err) => console.log(err));
-  } catch (err) {
-    res.send(err);
-  }
-});
+const stripe = require("stripe")('sk_test_51K8tbEFK05i5y2oRLPqRDqxXrgjH1ExR5XaLJgH8DpkEby8cZEOb8oWKWQhKdVqaklFDaHcrIrqbtSDjAFeH0U6W00ejBG2mve');
+
+//const stripe = Stripe('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+//app.use(express.json());
+
+
+router.route("/create-payment-intent").post( async (req, res) =>{
+
+
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 140,
+    currency: "eur",
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+
+
+
+
+
 
 async function verifyToken(token) {
   var returnData = {};
