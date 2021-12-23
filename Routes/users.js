@@ -1,10 +1,12 @@
 const router = require("express").Router();
 const nodemailer = require("nodemailer");
 let user = require("../Models/users.model");
-var bcrypt = require('bcrypt');
+var bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+
 const stripe = require("stripe")('sk_test_51K8tbEFK05i5y2oRLPqRDqxXrgjH1ExR5XaLJgH8DpkEby8cZEOb8oWKWQhKdVqaklFDaHcrIrqbtSDjAFeH0U6W00ejBG2mve');
+
 //const stripe = Stripe('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 //app.use(express.json());
 
@@ -29,11 +31,57 @@ router.route("/create-payment-intent").post( async (req, res) =>{
 
 
 
-})
 
+async function verifyToken(token) {
+  var returnData = {};
+  jwt.verify(token, process.env.JWT_SECRET, (err, authData) => {
+    //console.log(authData);
+    if (err) {
 
+      returnData = {
+        password: "",
+      };
+    } else {
+      returnData = authData;
+    }
+  });
+  //console.log(returnData);
+  return returnData;
+}
 
-
+router.post("/password", async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const userData={};
+  userData.data =await verifyToken(token);
+  console.log(userData.data);
+  if (userData.password == "") {
+    res.sendStatus(403);
+  } else {
+    console.log(req.body.old);
+    console.log(userData.data.password);
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.compare(req.body.old, userData.data.password).then((correct) => {
+        if (correct) {
+          bcrypt.hash(req.body.password, salt, (err, hash) => {
+             console.log(req.body.password);
+             console.log(hash);
+            if (err) {
+              res.send(err);
+            } else {
+              console.log(userData.data.email);
+              console.log(userData.data.password)
+              user
+                .findOneAndUpdate({ Email: userData.data.email }, { Password: hash })
+                .then(res.send(200, "Password changed successfully"));
+            }
+          });
+        } else {
+          res.sendStatus(403);
+        }
+      });
+    });
+  }
+});
 router.route("/").get((req, res) => {
   console.log(req);
   user
@@ -73,7 +121,7 @@ router.route("/add").post((req, res) => {
     .catch((err) => res.status(400).json("Error " + err));
 });
 
-router.route("/signup").post((req, res)=>{
+router.route("/signup").post((req, res) => {
   const Username = req.body.Username;
   var Password = req.body.Password;
   const Email = req.body.Email;
@@ -85,10 +133,10 @@ router.route("/signup").post((req, res)=>{
   const Telephone_number = req.body.Telephone_number;
   const Flights = [];
 
-  bcrypt.genSalt(10,(err,salt)=>{
-    bcrypt.hash(Password,salt,(err,hash)=>{
-      if(err) throw err;
-      Password=hash;
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(Password, salt, (err, hash) => {
+      if (err) throw err;
+      Password = hash;
 
       const newUser = new user({
         Username,
@@ -103,55 +151,52 @@ router.route("/signup").post((req, res)=>{
         Flights,
       });
 
-     
-
       newUser
-      .save()
-      .then(() => res.json("User Added!"))
-      .catch((err) => res.status(400).json("Error " + err));
-
-
-    })
-  })
-  
+        .save()
+        .then(() => res.json("User Added!"))
+        .catch((err) => res.status(400).json("Error " + err));
+    });
+  });
 });
 
-router.route("/login").post((req,res)=>{
+router.route("/login").post((req, res) => {
+  const mail = req.body.Email;
 
-  const mail=req.body.Email;
-
-  user.findOne({Email: mail},function(err, match){
-    if(!match){
+  user.findOne({ Email: mail }, function (err, match) {
+    if (!match) {
       return res.json({
         message: "Email not found",
-      })
+      });
     }
-    bcrypt.compare(req.body.Password, match.Password).then(correct =>{
-      if(correct){
-        const payload= {
-          passno:match.Passport_number,
-          email:match.Email
+    bcrypt.compare(req.body.Password, match.Password).then((correct) => {
+      if (correct) {
+        const payload = {
+          passno: match.Passport_number,
+          email: match.Email,
+          password: match.Password,
         };
-        jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:3600}, (err,token)=>{
-          if(err){
-          return res.status(400).json({message:err});
+        jwt.sign(
+          payload,
+          process.env.JWT_SECRET,
+          { expiresIn: 3600 },
+          (err, token) => {
+            if (err) {
+              return res.status(400).json({ message: err });
+            }
+
+            return res.json({
+              message: "Success",
+              token: token,
+            });
           }
-
-          return res.json({
-            message: "Success",
-            token: "Bearer "+ token
-          })
-        })
-
-      }
-      else{
+        );
+      } else {
         return res.json({
           message: "Email and password do not match",
-        })
+        });
       }
-    })
-  })
-
+    });
+  });
 });
 
 router.route("/:id").get((req, res) => {
