@@ -21,6 +21,9 @@ import UserProfile from "./UserProfile";
 import Signup from "./sign/Signup";
 import ULogin from "./sign/Login";
 import Password from "./passwordEdit";
+import Pay from "./homepage/Payment/Pay";
+import CheckoutForm from "./homepage/Payment/CheckoutForm";
+
 
 const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
@@ -71,6 +74,8 @@ function App() {
 
           <Route exact path="/h/signup" element={<Signup />} />
           <Route exact path="/h/login" element={<ULogin />} />
+          <Route exact path="/pay" element={<Pay />} />
+          <Route exact path="/r" element={<CheckoutForm />} />
         </Routes>
       </Router>
     </div>
