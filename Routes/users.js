@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const nodemailer = require("nodemailer");
 let user = require("../Models/users.model");
-var bcrypt = require("bcrypt");
+var bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
 
@@ -13,19 +13,17 @@ const stripe = require("stripe")('sk_test_51K8tbEFK05i5y2oRLPqRDqxXrgjH1ExR5XaLJ
 
 router.route("/create-payment-intent").post( async (req, res) =>{
 
-
-
   const paymentIntent = await stripe.paymentIntents.create({
     amount: 140,
     currency: "eur",
     automatic_payment_methods: {
       enabled: true,
     },
-  });
+  }); 
 
   res.send({
     clientSecret: paymentIntent.client_secret,
-  });
+  }); });
 
 
 
@@ -48,7 +46,6 @@ async function verifyToken(token) {
   //console.log(returnData);
   return returnData;
 }
-
 router.post("/password", async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData={};
