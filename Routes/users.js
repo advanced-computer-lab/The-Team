@@ -33,37 +33,53 @@ router.route("/pay").get((req, res) => {
   }
 });
 
-function verifyToken(token) {
+async function verifyToken(token) {
+  var returnData = {};
   jwt.verify(token, process.env.JWT_SECRET, (err, authData) => {
+    //console.log(authData);
     if (err) {
-      return false;
+
+      returnData = {
+        password: "",
+      };
     } else {
-      return authData;
+      returnData = authData;
     }
   });
+  //console.log(returnData);
+  return returnData;
 }
 
-router.route("/password").post((req, res) => {
+router.post("/password", async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
-  const userData = verifyToken(token);
-  if (!userData) {
+  const userData={};
+  userData.data =await verifyToken(token);
+  console.log(userData.data);
+  if (userData.password == "") {
     res.sendStatus(403);
   } else {
-    bcrypt.compare(req.body.old, userData.Password).then((correct) => {
-      if (correct) {
-        bcrypt.hash(req.body.password, salt, (err, hash) => {
-          if (err) {
-            res.send(err);
-          } else {
-            user.findOneAndUpdate(
-              { Email: userData.email },
-              { Password: hash }
-            ).then(res.send(200,"Password changed successfully"));
-          }
-        });
-      } else {
-        res.sendStatus(403);
-      }
+    console.log(req.body.old);
+    console.log(userData.data.password);
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.compare(req.body.old, userData.data.password).then((correct) => {
+        if (correct) {
+          bcrypt.hash(req.body.password, salt, (err, hash) => {
+             console.log(req.body.password);
+             console.log(hash);
+            if (err) {
+              res.send(err);
+            } else {
+              console.log(userData.data.email);
+              console.log(userData.data.password)
+              user
+                .findOneAndUpdate({ Email: userData.data.email }, { Password: hash })
+                .then(res.send(200, "Password changed successfully"));
+            }
+          });
+        } else {
+          res.sendStatus(403);
+        }
+      });
     });
   }
 });
@@ -171,7 +187,7 @@ router.route("/login").post((req, res) => {
 
             return res.json({
               message: "Success",
-              token: "Bearer " + token,
+              token: token,
             });
           }
         );
