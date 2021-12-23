@@ -20,6 +20,7 @@ import UserCancelFlight from "./cancel/UserCancelFlight";
 import UserProfile from "./UserProfile";
 import Signup from "./sign/Signup";
 import ULogin from "./sign/Login";
+import Password from "./passwordEdit";
 import Pay from "./homepage/Payment/Pay";
 import CheckoutForm from "./homepage/Payment/CheckoutForm";
 
@@ -61,18 +62,16 @@ function App() {
 
           <Route exact path="/h/seating" element={<Seating />} />
           <Route exact path="/h/summary" element={<Summary />} />
-          
-          <Route
-            exact
-            path="/h/profile"
-            element={<UserProfile />}
-          />
+
+          <Route exact path="/h/profile" element={<UserProfile />} />
           <Route
             exact
             path="/h/profile/reservations"
             element={<UserCancelFlight />}
           />
           <Route exact path="/h/profile/edit" element={<Editprofile />} />
+          <Route exact path="/h/profile/password" element={<Password />} />
+
           <Route exact path="/h/signup" element={<Signup />} />
           <Route exact path="/h/login" element={<ULogin />} />
           <Route exact path="/pay" element={<Pay />} />

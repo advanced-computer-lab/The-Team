@@ -15,6 +15,13 @@ export default function UserProfile() {
       },
     });
   };
+    const handlePassword = () => {
+      navigate("/h/profile/password", {
+        state: {
+          id: id,
+        },
+      });
+    };
 
   const handleReserve = () => {
      console.log(id);
@@ -69,6 +76,29 @@ export default function UserProfile() {
           }}
         >
           Edit Profile
+        </Button>
+      </Box>
+      <br></br>
+      <Box
+        sx={{
+          my: 2,
+          bgcolor: "#fa12",
+          boxShadow: 1,
+          borderRadius: 1,
+          p: 2,
+          minWidth: 300,
+        }}
+      >
+        <Button
+          onClick={handlePassword}
+          key="edit-pass"
+          sx={{
+            alignItems: "center",
+            m: 3,
+            minWidth: { md: 350 },
+          }}
+        >
+        Change Password
         </Button>
       </Box>
     </div>
