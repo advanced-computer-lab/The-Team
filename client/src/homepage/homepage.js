@@ -161,7 +161,7 @@ export default function Home(props) {
             padding:'24px 12px',
             borderRadius:15,
             boxShadow:"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-            background:'#FDFAF6',
+            background:'white',
             gap: 3
           }}>
       <div>
