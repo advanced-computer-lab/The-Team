@@ -46,7 +46,7 @@ export default function Pay() {
     
     <Grid container spacing={2} justify="center" class="wrapper">
 
-    <div className="rer" id="foog">
+    <div className="rer" id="foog" align="center">
       
  
       {clientSecret && (
