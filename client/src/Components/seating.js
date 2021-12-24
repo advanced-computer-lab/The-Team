@@ -10,6 +10,8 @@ import Backdrop from "@mui/material/Backdrop";
 import { useNavigate } from "react-router-dom";
 import { getContrastRatio } from "@material-ui/core";
 import EventSeatIcon from '@mui/icons-material/EventSeat';
+import DeleteIcon from '@mui/icons-material/Delete';
+import NextPlanIcon from '@mui/icons-material/NextPlan';
 
 
 export default function Seating() {
@@ -221,7 +223,7 @@ export default function Seating() {
         <div>Departure Seats : {chosend}</div>
         <div>Arrival Seats : {chosena}</div>
         <div>
-          <Button variant="contained" onClick={() => handleClick()}>
+          <Button variant="contained" endIcon={<NextPlanIcon/>} onClick={() => handleClick()}>
             Procced
           </Button>
         </div>
@@ -229,7 +231,7 @@ export default function Seating() {
      padding:"15px 13px"
       }} >
       
-          <Button variant="contained"  onClick={() => handleDelete()}>
+          <Button variant="contained"  endIcon={<DeleteIcon/>} onClick={() => handleDelete() }>
             Clear All
           </Button>
           <Backdrop
