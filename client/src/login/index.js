@@ -43,7 +43,7 @@ export default function Login() {
         .get("http://localhost:5000/users")
         .then((res) => {
           var username = res.data[1]["Username"];
-          if(username==="ADmin"){
+          if(username==="Admin"){
             navigate("/home/adminpanel");
           }
           
