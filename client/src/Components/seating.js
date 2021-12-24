@@ -8,6 +8,9 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 import Backdrop from "@mui/material/Backdrop";
 import { useNavigate } from "react-router-dom";
+import { getContrastRatio } from "@material-ui/core";
+import EventSeatIcon from '@mui/icons-material/EventSeat';
+
 
 export default function Seating() {
   const { state } = useLocation();
@@ -163,18 +166,45 @@ export default function Seating() {
   };
 
   return (
-    <div>
+    <div  style={{
+      
+        display: "flex",
+        gap: 24,
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        align:"center",
+        width: "30vw",
+        backgroundColor:"blue",
+        
+      border: "1px solid grey",
+      padding: "23px 10px",
+      marginLeft:"530px",
+      marginTop:"150px",
+      fontSize: 18,
+      fontStyle:"italic",
+
+      borderRadius: 12,
+      boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+      background: "#FDFAF6",
+      gridTemplateColumns: "300px 300px",
+     
+    }}>
       <div>Choose {tot} Departure Seat(s) :</div>
+      
       <ButtonGroup disableElevation variant="contained">
         {departure_seats1.map((e) => (
           <Button
             onClick={() => handleChange(e, "departure")}
             variant="contained"
+            startIcon={<EventSeatIcon/>}
           >
-            Seat {e}
-          </Button>
+             {e}
+          </Button> 
+          
         ))}
       </ButtonGroup>
+      
       <div>
         <div>Choose {tot} Arrival Seat(s) :</div>
         <ButtonGroup disableElevation variant="contained">
@@ -182,8 +212,9 @@ export default function Seating() {
             <Button
               onClick={() => handleChange(e, "arrival")}
               variant="contained"
+              startIcon={<EventSeatIcon/>}
             >
-              Seat {e}
+              {e}
             </Button>
           ))}
         </ButtonGroup>
@@ -194,9 +225,11 @@ export default function Seating() {
             Procced
           </Button>
         </div>
-        <div>
+        <div style={ {
+     padding:"15px 13px"
+      }} >
       
-          <Button variant="contained" onClick={() => handleDelete()}>
+          <Button variant="contained"  onClick={() => handleDelete()}>
             Clear All
           </Button>
           <Backdrop
