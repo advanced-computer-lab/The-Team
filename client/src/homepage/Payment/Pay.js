@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from '@stripe/react-stripe-js';
+import Grid from '@mui/material/Grid';
 
 import CheckoutForm from "./CheckoutForm";
-import "./Appp.css";
+import der from "./Appp.css";
+import { textAlign } from "@mui/material/node_modules/@mui/system";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -11,6 +13,9 @@ import "./Appp.css";
 // To avoid exposing it, don't submit any personally identifiable information through requests with this API key.
 // Sign in to see your own test API key embedded in code samples.
 const stripePromise = loadStripe("pk_test_51K8tbEFK05i5y2oRylgHkKJzaWXhhRVsLXaaQxPqaaFQKdAZoLbKWrA4iD7F9yzvMu0ag8BIdHTgAWeifKZVdVbO00NBJFKuXF");
+
+
+
 
 export default function Pay() {
   const [clientSecret, setClientSecret] = useState("");
@@ -33,14 +38,24 @@ export default function Pay() {
     clientSecret,
     appearance,
   };
+  
+
+ 
 
   return (
-    <div className="Appp">
+    
+    <Grid container spacing={2} justify="center" class="wrapper">
+
+    <div className="rer" id="foog">
+      
+ 
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm />
         </Elements>
       )}
+  
     </div>
+    </Grid>
   );
 }
