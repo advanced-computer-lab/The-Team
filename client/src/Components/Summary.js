@@ -143,7 +143,33 @@ export default function Summary() {
   };
 
   return (
+
+    
     <div>
+      <div style={{
+        fontSize:30,
+        marginTop:"50px",
+        fontStyle:"normal"
+
+      }}>Summary</div>
+      <div style={{
+      display: "inherit",
+      align:"center",
+      width: "30vw",
+      marginLeft:"530px",
+      marginTop:"40px",
+      fontSize: 18,
+      fontStyle:"italic",
+      border: "1px solid grey",
+      padding: "40px 12px" ,
+      borderRadius: 12,
+      boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+      background: "#FDFAF6",
+      gridTemplateColumns: "300px 300px",
+      gap: 12,
+    }
+      
+    }>
       <div>Confirmation number : {confirm}</div>
       <div>Departure flight number : {flightd}</div>
       <div>Return flight number : {flighta}</div>
@@ -161,11 +187,18 @@ export default function Summary() {
       <div>Departure Flight Price : ${priced}</div>
       <div>Arrival Flight Price : ${pricea}</div>
       <div>Total Price : ${pricea + priced}</div>
-      <div>
-        <Button onClick={() => handleChange()} variant="contained">
+      </div>
+      <div style={{ 
+        padding:"20px"
+      }}>
+        <Button color="primary" onClick={() => handleChange()} variant="contained">
           Confirm Pay
         </Button>
       </div>
     </div>
+
+    
+   
   );
+  
 }
