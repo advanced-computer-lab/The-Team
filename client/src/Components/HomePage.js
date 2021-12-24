@@ -59,6 +59,15 @@ about
     </Toolbar>
 </AppBar>
 
+<h1 style={{
+            
+
+            fontSize:25
+        }}>Welcome to Kabab Air
+
+        
+        </h1>
+
         
           
         <view>
@@ -74,14 +83,7 @@ about
             
 
 </view>
-              <h1 style={{
-            
-
-            fontSize:25
-        }}>Welcome to Kabab Air
-
-        
-        </h1>
+             
 
             <br/>
             
