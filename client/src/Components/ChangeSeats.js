@@ -101,7 +101,7 @@ export default function ChangeSeats() {
 
   const handleChange = (e, dep) => {
     if (dep === "departure") {
-      if (!deptemp.includes(e)) {
+      if (deptemp<seats &&!deptemp.includes(e)) {
         var arr = [chosend];
         arr.push(" Seat ");
         arr.push(e);
@@ -113,7 +113,7 @@ export default function ChangeSeats() {
         setOpen(true);
       }
     } else {
-      if (!arrtemp.includes(e)) {
+      if (arrtemp<seats && !arrtemp.includes(e)) {
         var arr = [chosena];
         arr.push(" Seat ");
         arr.push(e);
@@ -137,21 +137,7 @@ export default function ChangeSeats() {
       setAlert(true);
       setOpen(true);
     } else {
-    //   navigate("/h/summary", {
-    //     state: {
-    //       departure:departure,
-    //       arrival:arrival,
-    //       cabin:cabin,
-    //       children:children,
-    //       passengers:passengers,
-    //       arrival_seats:arrtemp,
-    //       departure_seats:deptemp,
-    //       arrival_seats1:chosena,
-    //       departure_seats1:chosend,
-    //       userId:userId,
-
-    //     },
-      //});
+    
 
     }
   };

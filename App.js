@@ -5,6 +5,10 @@ const mongoose= require('mongoose');
 const path = require("path");
 require('dotenv').config({ path: '.env' });
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 const app = express();
 const port = process.env.PORT || 5000;
