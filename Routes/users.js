@@ -321,6 +321,9 @@ router.route("/forget").post((req, res) => {
         user
           .findOneAndUpdate({ Email: mail }, { Password: hash })
           .then((users) => {
+            if(!users){
+                res.status(400).json("Error: " + err);
+            }
             let mailTransporter = nodemailer.createTransport({
               service: "gmail",
               auth: {
@@ -339,6 +342,7 @@ router.route("/forget").post((req, res) => {
             mailTransporter.sendMail(mailDetails, function (err, data) {
               if (err) {
                 console.log("Error Occurs");
+                res.status(400).json("Error: " + err);
               } else {
                 console.log("Email sent successfully");
                 res.json("Email sent successfully");
