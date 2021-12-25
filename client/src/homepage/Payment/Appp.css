@@ -31,6 +31,9 @@
  #payment-element {
 	 margin-bottom: 24px;
 }
+.mdb-dataTable-head{
+	background:"red";
+}
 .rer  button {
 	 background: #5469d4;
 	 font-family: Arial, sans-serif;

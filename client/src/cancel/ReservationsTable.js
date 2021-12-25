@@ -90,6 +90,7 @@ export default function ReservationsTable(props) {
     <>
       <MDBDataTableV5
         hover
+        
         entriesOptions={[5, 20, 25]}
         entries={5}
         pagesAmount={4}
@@ -101,6 +102,10 @@ export default function ReservationsTable(props) {
           showLogs2(e);
           props.func(e);
         }}
+        style={{
+          textalign:"center",
+          width:"100%",
+          backgroundColor:"black",}}
       />{" "}
     </>
   );
