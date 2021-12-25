@@ -197,22 +197,33 @@ router.route("/login").post((req, res) => {
   });
 });
 
-router.route("/:id").get((req, res) => {
+router.route("/getuser").get((req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const userData = {};
+  userData.data = await verifyToken(token);
+
   user
-    .findById(req.params.id)
+    .findById(userData.data.id)
     .then((users) => res.json(users))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/:id/reservations").get((req, res) => {
+router.route("/reservations").get((req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const userData = {};
+  userData.data = await verifyToken(token);
+
   user
-    .findById(req.params.id)
+    .findById(userData.data.id)
     .then((users) => res.json(users.Flights))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/:id/cancelled").post((req, res) => {
-  user.findById(req.params.id).then((users) => {
+router.route("/cancelled").post((req, res) => {
+   const token = req.headers.authorization.split(" ")[1];
+   const userData = {};
+   userData.data = await verifyToken(token);
+  user.findById(userData.data.id).then((users) => {
     const mail = users.Email;
 
     let mailTransporter = nodemailer.createTransport({
@@ -245,9 +256,12 @@ router.route("/:id/cancelled").post((req, res) => {
   });
 });
 
-router.route("/:id/reservations/delete").patch((req, res) => {
+router.route("/reservations/delete").patch((req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const userData = {};
+  userData.data = await verifyToken(token);
   user
-    .findById(req.params.id)
+    .findById(userData.data.id)
     .then((users) => {
       console.log(users.Flights);
       var reser = users.Flights;
@@ -263,9 +277,12 @@ router.route("/:id/reservations/delete").patch((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/:id/reservation/add").patch((req, res) => {
+router.route("/reservation/add").patch((req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const userData = {};
+  userData.data = await verifyToken(token);
   user
-    .findById(req.params.id)
+    .findById(userData.data.id)
     .then((users) => {
       users.Flights = users.Flights.push(req.body.confirm);
       users
@@ -277,8 +294,11 @@ router.route("/:id/reservation/add").patch((req, res) => {
 });
 
 router.route("/update").patch((req, res) => {
+ const token = req.headers.authorization.split(" ")[1];
+ const userData = {};
+ userData.data = await verifyToken(token);
   user
-    .findById(req.body.id)
+    .findById(userData.data.id)
     .then((users) => {
       users.Username = req.body.Username;
       users.Password = req.body.Password;
