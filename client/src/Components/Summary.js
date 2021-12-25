@@ -174,7 +174,7 @@ export default function Summary() {
     }
     var mon=pricea + priced
     let formatedData={
-      money:mon
+      money:mon*100
 
     }
     navigate("/pay", {
