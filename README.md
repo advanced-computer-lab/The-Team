@@ -29,6 +29,13 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+This project is a part of the Advanced computer lab course.
+We implemeneted a fully functional airline reserevation system.
+* User Auth experience (login, signup, forget password, reset password)
+* Payment gateway integeration
+* NOSQL database integration for great performance
+* Search functionality and applying filters to ease reservation process.
+
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -83,7 +90,9 @@ This section lists major frameworks/libraries used.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
+<!-- STYLE -->
+## Code Style
+Followed Google's Javascript style [guide](https://google.github.io/styleguide/jsguide.html) to provide a clean, dry and comprenhendable code matching today's industry standards.
 
 
 
@@ -94,4 +103,5 @@ Resources found helpful and would like to give credit to.
 * [bcrypt](https://www.npmjs.com/package/bcrypt)
 * [MUI](https://mui.com/)
 * [JWT.io](https://jwt.io/)
+* [Stripe](https://stripe.com)
 <p align="right">(<a href="#top">back to top</a>)</p>
