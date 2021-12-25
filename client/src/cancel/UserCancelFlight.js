@@ -5,6 +5,11 @@ import Button from "@mui/material/Button";
 import React, { useState, useEffect } from 'react';
 import AlertDialog from "./AlertDialog";
 import axios from 'axios'
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { fontStyle } from "@mui/system";
 
 
 export default function UserCancelFlight() {
@@ -193,11 +198,47 @@ export default function UserCancelFlight() {
   };
   return (
     <div>
-      <div> first name: {fname},last name: {lname},passport number: {passport},email: {mail}</div>
+
+<AppBar position="static" sx={{
+    backgroundColor:"#006fa2"
+}}>
+        <Toolbar>
+        <Button href="/" variant="text" sx={{
+    color:"white"
+    
+}} >
+Home
+    </Button>
+
+    <IconButton style={{
+      marginLeft:"1400px"
+    }}
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+                href="/h/profile"
+              >
+                <AccountCircle />
+              </IconButton>
+
+
+        </Toolbar>
+      </AppBar>
+      <h1> Hello  {fname} {lname} </h1>  
+         
+      
       <div>{clicked&&confirm && ( <AlertDialog d={decided} appear={click}/> )}
       
        </div>
       {reservations.length>0&&<ReservationsTable func={selected} rows={reservations} />}
+
+      <div style={{
+        display:"flex",
+        fontSize:18,
+        fontStyle:"normal"
+      }}>Passport Number: {passport} Email: {mail}</div>
       <div>
         <Button
           variant="contained"

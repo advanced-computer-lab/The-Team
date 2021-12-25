@@ -17,9 +17,22 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import "../App.css";
+import { makeStyles } from "@material-ui/core";
 
+
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    "& .MuiPaper-root": {
+      backgroundColor: "#006fa2"
+    }
+  }
+}));
 
 export default function Departure() {
+
+  const classes = useStyles();
   const [change, setChange] = React.useState(false);
 
   const { state } = useLocation();
@@ -126,12 +139,12 @@ export default function Departure() {
     }
   };
   return (
-    <div>
+    <div className={classes.root}>
       <AppBar position="static" sx={{
     backgroundColor:"#006fa2"
 }}>
         <Toolbar>
-        <Button href="/login" variant="text" sx={{
+        <Button href="/" variant="text" sx={{
     color:"white"
     
 }} >
@@ -146,6 +159,7 @@ Home
                 aria-label="account of current user"
                 aria-haspopup="true"
                 color="inherit"
+                href="/h/profile"
               >
                 <AccountCircle />
               </IconButton>
@@ -170,12 +184,15 @@ Home
         </Button>{" "}
       </div>
 
+      
+
       <Dialog
         fullWidth={true}
         maxWidth={"xs"}
         open={open}
         onClose={handleToClose}
       >
+        
         <DialogTitle>{"Flight Details"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
