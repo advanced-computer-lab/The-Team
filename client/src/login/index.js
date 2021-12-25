@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import axios from "axios";
 
 export default function Login() {
   const [open, setOpen] = React.useState(false);
+  const [isAuthenticated, userHasAuthenticated] = React.useState(false);
 
   const navigate = useNavigate();
 
@@ -51,6 +52,36 @@ export default function Login() {
           console.log(err);
         });
    };
+
+
+
+
+   useEffect(() => {
+    onLoad();
+  }, []);
+
+  async function onLoad() {
+    try {
+      console.log(localStorage.getItem("token"));
+      axios({
+        method: "get", //you can set what request you want to be
+        url: "http://localhost:5000/users/isAdmin",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        
+      })
+
+    } catch (e) {
+      alert("nenenen");
+      
+    }
+  }
+
+
+
+
+
   return (
     <div className="nnn" >
       <Box

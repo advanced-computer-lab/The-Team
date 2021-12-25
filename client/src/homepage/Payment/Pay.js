@@ -47,8 +47,6 @@ export default function Pay() {
     <Grid container spacing={2} justify="center" class="wrapper">
 
     <div className="rer" id="foog" align="center">
-      
- 
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm />

@@ -26,10 +26,6 @@ router.route("/create-payment-intent").post( async (req, res) =>{
   }); });
 
 
-
-
-
-
 async function verifyToken(token) {
   var returnData = {};
   jwt.verify(token, process.env.JWT_SECRET, (err, authData) => {
@@ -46,6 +42,26 @@ async function verifyToken(token) {
   //console.log(returnData);
   return returnData;
 }
+
+router.route("/isAdmin").get(async (req, res) => {
+
+  const token = req.headers.authorization.split(" ")[1];
+  const userData={};
+  userData.data =await verifyToken(token);
+
+  if (userData.password == "") {
+    res.sendStatus(403);
+  }
+
+  else {
+    if(userData.Username=="ADmin"){
+      res.send(200, "Password changed successfully")
+      return true;
+    }
+    return false
+  }
+});
+
 router.post("/password", async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData={};
@@ -53,7 +69,8 @@ router.post("/password", async (req, res) => {
   console.log(userData.data);
   if (userData.password == "") {
     res.sendStatus(403);
-  } else {
+  } 
+  else {
     console.log(req.body.old);
     console.log(userData.data.password);
     bcrypt.genSalt(10, (err, salt) => {
@@ -171,6 +188,7 @@ router.route("/login").post((req, res) => {
           passno: match.Passport_number,
           email: match.Email,
           password: match.Password,
+          username: match.Username
         };
         jwt.sign(
           payload,
