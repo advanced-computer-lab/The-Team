@@ -21,7 +21,6 @@ import ChangeArrival from "./Components/ChangeArr";
 import Return from "./Components/Return";
 import Summary from "./Components/Summary";
 import Seating from "./Components/seating";
-import Login from "./login";
 import UserCancelFlight from "./cancel/UserCancelFlight";
 import UserProfile from "./UserProfile";
 import Signup from "./sign/Signup";
@@ -31,7 +30,6 @@ import Pay from "./homepage/Payment/Pay";
 import CheckoutForm from "./homepage/Payment/CheckoutForm";
 
 
-const HomePageElement = HomePage();
 const AdminPanelElement = AdminPanel();
 const AllFlightElement = AllFlight;
 const CreateFlightElement = CreateFlight;
@@ -42,8 +40,8 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
+          <Route exact path="/" element={<HomePage/>} />
           <Route exact path="/h" element={<Home />} />
-          <Route exact path="/home" element={HomePageElement} />
           <Route exact path="/home/adminpanel" element={AdminPanelElement} />
           <Route exact path="/home/adminpanel/search" element={Search()} />
           <Route
@@ -61,8 +59,6 @@ function App() {
             path="/home/adminpanel/flights/update"
             element={<UpdateFlightElement />}
           />
-          <Route exact path="/login" element={<Login />} />
-
           <Route path="/h/departure" element={<Departure />} />
           <Route path="/h/changedep" element={<ChangeDeparture />} />
           <Route path="/h/changeres" element={<ChangeReservation />} />
@@ -84,8 +80,8 @@ function App() {
           <Route exact path="/h/profile/edit" element={<Editprofile />} />
           <Route exact path="/h/profile/password" element={<Password />} />
 
-          <Route exact path="/h/signup" element={<Signup />} />
-          <Route exact path="/h/login" element={<ULogin />} />
+          <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/signin" element={<ULogin />} />
           <Route exact path="/pay" element={<Pay />} />
           <Route exact path="/r" element={<CheckoutForm />} />
         </Routes>
