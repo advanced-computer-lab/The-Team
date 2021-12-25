@@ -234,11 +234,19 @@ Home
        </div>
       {reservations.length>0&&<ReservationsTable func={selected} rows={reservations} />}
 
+     
+
       <div style={{
         display:"flex",
         fontSize:18,
         fontStyle:"normal"
-      }}>Passport Number: {passport} Email: {mail}</div>
+      }}>Passport Number: {passport}</div>
+      <div  style={{
+        display:"flex",
+        fontSize:18,
+        fontStyle:"normal"
+      }}> Email: {mail}</div>
+     
       <div>
         <Button
           variant="contained"
