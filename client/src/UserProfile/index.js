@@ -1,34 +1,24 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
-  const { state } = useLocation();
-  const { id } = state;
   const navigate = useNavigate();
 
   const handleEdit = () => {
     navigate("/h/profile/edit", {
-      state: {
-        id: id,
-      },
     });
   };
     const handlePassword = () => {
       navigate("/h/profile/password", {
-        state: {
-          id: id,
-        },
+        
       });
     };
 
   const handleReserve = () => {
-     console.log(id);
     navigate("/h/profile/reservations", {
-      state: {
-        id: id,
-      },
+     
     });
   };
   return (
