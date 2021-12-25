@@ -14,7 +14,6 @@ export default function NavBar(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isloggedIn = props.isLogged;
-  const userId = props.userId;
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,7 +24,7 @@ export default function NavBar(props) {
   };
   const handleNavigate = () => {
     if (isloggedIn) {
-      navigate("/h/profile", { state: { id: userId } }); //TODO: need to fix path
+      navigate("/h/profile"); //TODO: need to fix path
     } else {
       navigate("/login");
     }

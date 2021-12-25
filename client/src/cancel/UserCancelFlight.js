@@ -26,7 +26,6 @@ export default function UserCancelFlight() {
 
   useEffect(() => {
 
-    let {id}  = state;
 
     axios({
       method: "get", //you can set what request you want to be
@@ -72,7 +71,6 @@ export default function UserCancelFlight() {
 
     
   },[reservations.length]);
-  let {id}  = state;
 
   const selected = (data) => {
     setCancelled(data)
