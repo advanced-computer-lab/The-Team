@@ -10,6 +10,7 @@ export default function Summary() {
   const [priced, setPriced] = React.useState(0);
   const [pricea, setPricea] = React.useState(0);
   const [confirm, setConfirm] = React.useState("");
+  const [caby, setCaby] = React.useState("");
   const [addedarr, setAddedarr] = React.useState({});
   const [addeddep, setAddeddepp] = React.useState({});
   const [flightd, setFlightd] = React.useState(0);
@@ -48,10 +49,13 @@ export default function Summary() {
       var temp1 = arrival1.data["Price"];
       if (cabin == "Economy") {
         setPriced(temp[0] * tot);
+        setCaby("eco");
       } else if (cabin == "Business") {
         setPriced(temp[1] * tot);
+        setCaby("bus");
       } else {
         setPriced(temp[2] * tot);
+        setCaby("fir");
       }
       if (cabin == "Economy") {
         setPricea(temp1[0] * tot);
@@ -66,7 +70,7 @@ export default function Summary() {
       setTimea(arrival1.data["Dep_time"]);
       setDated(departure1.data["Dep_date"]);
       setDatea(arrival1.data["Dep_date"]);
-      setConfirm(userId + departure1.data["Flight_no"] +arrival1.data["Flight_no"]);
+      setConfirm(userId + departure1.data["Flight_no"] +arrival1.data["Flight_no"]+caby+arrival_seats[0]+departure_seats[0]);
       setAddeddepp(departure1);
       setAddedarr(arrival1);
     }

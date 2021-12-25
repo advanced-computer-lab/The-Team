@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
 import React, { useState, useEffect } from 'react';
 import AlertDialog from "./AlertDialog";
-import { Alert } from "@mui/material";
 import axios from 'axios'
 
 
@@ -120,6 +119,33 @@ export default function UserCancelFlight() {
     }
     
   };
+  const handleUpdate = (event) => {
+    let formatedData = {
+      id: cancelled["id"],
+      userId:cancelled["userId"],
+      Confirmation_Number:cancelled["Confirmation_Number"],
+      price:cancelled["Price"],
+      Arr_Flight_no:cancelled["Arr_Flight_no"],
+      Arr_Flight_id:cancelled["Arr_Flight_id"],
+      Dep_Flight_no:cancelled["Dep_Flight_no"],
+      Dep_Flight_id:cancelled["Dep_Flight_id"],
+      Arr_eSeats:cancelled["Arr_eSeats"],
+      Arr_bSeats:cancelled["Arr_bSeats"],
+      Arr_fSeats:cancelled["Arr_fSeats"],
+      Dep_eSeats:cancelled["Dep_eSeats"],
+      Dep_bSeats:cancelled["Dep_bSeats"],
+      Dep_fSeats:cancelled["Arr_fSeats"],
+    };
+    if (cancelled !== {}) {
+      navigate("/h/changeres", {
+        state: formatedData,
+      });
+    }
+    else{
+      //to be done
+    }
+    
+  };
   return (
     <div>
       <div>id: {id} , first name: {fname},last name: {lname},passport number: {passport},email: {mail}</div>
@@ -134,6 +160,13 @@ export default function UserCancelFlight() {
           style={{ marginLeft: "5px" }}
         >
           Delete
+        </Button>{" "}
+        <Button
+          variant="contained"
+          onClick={handleUpdate}
+          style={{ marginLeft: "5px" }}
+        >
+          Change Reservation
         </Button>{" "}
       </div>
     </div>
