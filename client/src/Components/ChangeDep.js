@@ -13,11 +13,17 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 
-
 export default function ChangeDeparture() {
   const [change, setChange] = React.useState(false);
   const { state } = useLocation();
-  const { departure, cabin,price, seats} = state;
+  const {
+    departure,
+    cabin,
+    price,
+    seats,
+    id,
+
+  } = state;
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [openal, setOpenal] = React.useState(false);
@@ -69,11 +75,9 @@ export default function ChangeDeparture() {
         }
 
         if (availableSeats < seats) removed.push(i);
-        var tempPrice=((departure[i]["Price"][0])*seats)-price;
-        departure[i] = Object.assign( { PriceDif: tempPrice },departure[i]);
-        departure[i] = Object.assign( { Seats: availableSeats },departure[i]);
-        
-
+        var tempPrice = departure[i]["Price"][0] * seats - price;
+        departure[i] = Object.assign({ PriceDif: tempPrice }, departure[i]);
+        departure[i] = Object.assign({ Seats: availableSeats }, departure[i]);
 
         setChange(true);
       } else if (cabin === "Business") {
@@ -84,8 +88,8 @@ export default function ChangeDeparture() {
           y++;
         }
         if (availableSeats < seats) removed.push(i);
-        var tempPrice=((departure[i]["Price"][1])*seats)-price;
-        departure[i] = Object.assign( { PriceDif: tempPrice },departure[i]);
+        var tempPrice = departure[i]["Price"][1] * seats - price;
+        departure[i] = Object.assign({ PriceDif: tempPrice }, departure[i]);
         departure[i] = Object.assign({ Seats: availableSeats }, departure[i]);
 
         setChange(true);
@@ -97,8 +101,8 @@ export default function ChangeDeparture() {
           y++;
         }
         if (availableSeats < seats) removed.push(i);
-        var tempPrice=((departure[i]["Price"][2])*seats)-price;
-        departure[i] = Object.assign( { PriceDif: tempPrice },departure[i]);
+        var tempPrice = departure[i]["Price"][2] * seats - price;
+        departure[i] = Object.assign({ PriceDif: tempPrice }, departure[i]);
         departure[i] = Object.assign({ Seats: availableSeats }, departure[i]);
 
         setChange(true);
@@ -108,17 +112,20 @@ export default function ChangeDeparture() {
   };
 
   const handleChange = () => {
-    console.log(row["PriceDif"]);
+    console.log(id);
     let formatedData = {
-      departure:  row["_id"],
+      id: id,
+      departure: row["_id"],
+      departure_no: row["Flight_no"],
       cabin: cabin,
-      seats:seats,
-      money:row["PriceDif"]
+      seats: seats,
+      money: row["PriceDif"],
     };
     if (row.length != 0) {
       navigate("/h/seatingdep", {
         state: formatedData,
-      });}
+      });
+    }
     // } else {
     //   setAlert(true);
     //   setOpenal(true);

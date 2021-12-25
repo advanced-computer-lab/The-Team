@@ -10,10 +10,12 @@ import Backdrop from "@mui/material/Backdrop";
 import { useNavigate } from "react-router-dom";
 
 export default function SeatingDeparture() {
+  const [reservations, setReservations] = React.useState([]);
   const { state } = useLocation();
-  const { departure, cabin, seats, money } = state;
+  const { departure, cabin, seats, money, id,departure_no } = state;
   const [change, setChange] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+ 
   const [alert, setAlert] = React.useState(false);
   const [chosend, setChosend] = React.useState([]);
   const [departure_seats1, setDeparture_seats] = React.useState([]);
@@ -76,21 +78,87 @@ export default function SeatingDeparture() {
       setOpen(true);
     }
   };
-  const handleClick = () => {
+  const handleClick =async  () => {
     if (deptemp.length != tot) {
       setAlert(true);
       setOpen(true);
     } else {
-      if ((money = 0)) {
+      await axios
+        .get("http://localhost:5000/reservations/"+ id + "/reservations")
+        .then((res) => {
+          setReservations(res.data);
 
-      } else if(money<0){
+          console.log(reservations);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        console.log(reservations);
+        
 
+      await axios
+        .patch("http://localhost:5000/flights/cancelleddep", reservations)
+        .catch((err) => {
+          console.log(err);
+        });
+      await axios({
+        method: "patch", //you can set what request you want to be
+        url: "http://localhost:5000/reservations/reservations/delete",
+        data: reservations,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }).catch((err) => {
+        console.log(err);
+      });
+      var Dep_eSeats=[];
+      var Dep_bSeats=[];
+      var Dep_fSeats=[];
+      if (cabin === "Economy"){
+        Dep_eSeats=deptemp;
+      }else if(cabin === "Business"){
+        Dep_bSeats=deptemp;
+      }else{
+        Dep_fSeats=deptemp;
       }
-      else {
-        let formatedData = {
-          money: money,
-        };
-
+      
+      const reservation1 = {
+        userId: reservations.userId,
+        Confirmation_Number: reservations.Confirmation_Number,
+        Price: money,
+        Arr_Flight_no: reservations.Arr_Flight_no,
+        Arr_Flight_id: reservations.Arr_Flight_id,
+        Dep_Flight_no: departure_no,
+        Dep_Flight_id:departure,
+        Arr_eSeats: reservations.Arr_eSeats,
+        Arr_bSeats: reservations.Arr_bSeats,
+        Arr_fSeats: reservations.Arr_fSeats,
+        Dep_eSeats: Dep_eSeats,
+        Dep_bSeats: Dep_bSeats,
+        Dep_fSeats:Dep_fSeats ,
+      };
+      await axios
+        .patch("http://localhost:5000/flights/addeddep", reservation1)
+        .catch((err) => {
+          console.log(err);
+        });
+      await axios({
+        method: "post", //you can set what request you want to be
+        url: "http://localhost:5000/reservations/add",
+        data: reservation1,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }).catch((err) => {
+        console.log(err);
+      });
+      let formatedData = {
+        money: money,
+      };
+      if ((money = 0)) {
+      } else if (money < 0) {
+        console.log("send mail");
+      } else {
         navigate("/pay", { state: formatedData });
       }
     }

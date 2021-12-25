@@ -18,6 +18,7 @@ export default function Summary() {
   const [dated, setDated] = React.useState("");
   const [datea, setDatea] = React.useState("");
   const [timea, setTimea] = React.useState("");
+  const [userId, setUserId] = React.useState("");
   const [timed, setTimed] = React.useState("");
   const {
     arrival,
@@ -29,11 +30,25 @@ export default function Summary() {
     departure_seats,
     arrival_seats1,
     departure_seats1,
-    userId,
+    
   } = state;
   useEffect(() => {
     async function fetchMyAPI() {
       var tot = children + passengers;
+        axios({
+        method: "get", //you can set what request you want to be
+        url: "http://localhost:5000/users/getuser/",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((res)=> {
+        setUserId(res.data._id);
+      console.log(res.data)})
+        .catch((err) => {
+          console.log(err);
+        });
+        console.log(userId);
       var departure1 = await axios
         .get("http://localhost:5000/flights/" + departure)
         .catch((err) => {
@@ -48,13 +63,13 @@ export default function Summary() {
       var temp1 = arrival1.data["Price"];
       if (cabin == "Economy") {
         setPriced(temp[0] * tot);
-        setCaby("eco");
+        setCaby("e");
       } else if (cabin == "Business") {
         setPriced(temp[1] * tot);
-        setCaby("bus");
+        setCaby("b");
       } else {
         setPriced(temp[2] * tot);
-        setCaby("fir");
+        setCaby("f");
       }
       if (cabin == "Economy") {
         setPricea(temp1[0] * tot);
@@ -69,16 +84,17 @@ export default function Summary() {
       setTimea(arrival1.data["Dep_time"]);
       setDated(departure1.data["Dep_date"]);
       setDatea(arrival1.data["Dep_date"]);
-      var rand=Math.floor((Math.random() * 1000) + 1);
+      var rand=Math.floor((Math.random() * 10) + 1);
       setConfirm(userId + departure1.data["Flight_no"] +arrival1.data["Flight_no"]+caby+arrival_seats[0]+departure_seats[0]+rand);
       setAddeddepp(departure1);
       setAddedarr(arrival1);
+      
     }
 
     fetchMyAPI();
     
     setChange(true);
-  }, [change]);
+  }, [userId]);
 
   const handleChange = () => {
     if(userId ===""){
@@ -93,8 +109,7 @@ export default function Summary() {
     var Dep_eSeats = [];
     var Dep_bSeats = [];
     var Dep_fSeats = [];
-    console.log(data)
-
+  
     if (cabin == "Economy") {
       Arr_eSeats = arrival_seats;
       Dep_eSeats = departure_seats;
@@ -120,7 +135,7 @@ export default function Summary() {
       Dep_bSeats: Dep_bSeats,
       Dep_fSeats: Dep_fSeats,
     };
-    console.log(reservation)
+   
     axios
       .patch("http://localhost:5000/flights/addedarr", reservation)
       .catch((err) => {

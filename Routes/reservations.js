@@ -101,7 +101,7 @@ router.route("/reservations/delete").patch(async(req, res) => {
 router.route("/:id/reservations").get((req, res) => {
   reservation
     .findById(req.params.id)
-    .then((users) => res.json(users.Flights))
+    .then((reservations) => res.json(reservations))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 

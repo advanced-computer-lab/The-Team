@@ -6,17 +6,19 @@ import Dropdown from "../homepage/DropDown";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import Backdrop from "@mui/material/Backdrop";
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AlertTitle from "@mui/material/AlertTitle";
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import Collapse from "@mui/material/Collapse";
 import React, { useEffect } from "react";
 export default function ChangeReservation() {
   const { state } = useLocation();
   const {
+    id,
+    Confirmation_Number,
     price,
     Dep_Flight_id,
     Dep_eSeats,
@@ -36,31 +38,29 @@ export default function ChangeReservation() {
   const navigate = useNavigate();
   var cab = "";
 
-
   function formatDate(date) {
-      var day = date.getDate();
-      if (day < 10) {
-        day = "0" + day;
-      }
-      var month = date.getMonth() + 1;
-      var year = date.getFullYear();
-      var st = "" + day + "-" + month + "-" + year;
+    var day = date.getDate();
+    if (day < 10) {
+      day = "0" + day;
+    }
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    var st = "" + day + "-" + month + "-" + year;
     return st;
   }
-  
+
   const handleDep = async () => {
     var temp = Dep_eSeats.length + Dep_bSeats.length + Dep_fSeats.length;
     if (cab === "") {
       setCabinError(true);
       setOpen(true);
       setAlert(true);
-    }if (value === null) {
+    }
+    if (value === null) {
       setDateError(true);
       setOpen(true);
       setAlert(true);
-    }
-    
-     else {
+    } else {
       var res0 = await axios
         .get("http://localhost:5000/flights/" + Dep_Flight_id)
         .catch((err) => {
@@ -73,8 +73,7 @@ export default function ChangeReservation() {
         To: res0.data.To,
         DepartureDate: formatedDate,
       };
-      console.log('feuihfa');
-      console.log(queryData);
+          
       var res = await axios
         .post("http://localhost:5000/flights/search/dep", queryData)
         .catch((err) => {
@@ -83,10 +82,10 @@ export default function ChangeReservation() {
       if (res.status === 204) {
         setWarning(true);
         setOpen(true);
-      } 
-       else {
-        console.log( res.data.departure);
+      } else {
+        console.log(res.data.departure);
         let formatedData = {
+          id: id,
           departure: res.data.departure,
           cabin: cab,
           price: price,
@@ -103,11 +102,12 @@ export default function ChangeReservation() {
       setCabinError(true);
       setOpen(true);
       setAlert(true);
-    } if (value === null) {
+    }
+    if (value === null) {
       setOpen(true);
       setDateError(true);
       setAlert(true);
-    }else {
+    } else {
       var res0 = await axios
         .get("http://localhost:5000/flights/" + Arr_Flight_id)
         .catch((err) => {
@@ -128,10 +128,9 @@ export default function ChangeReservation() {
       if (res.status === 204) {
         setWarning(true);
         setOpen(true);
-        
-      }
-       else {
+      } else {
         let formatedData = {
+          id: id,
           arrival: res.data.arrival,
           cabin: cab,
           price: price,
@@ -145,7 +144,9 @@ export default function ChangeReservation() {
   const handleSeat = async () => {
     var temp = Arr_eSeats.length + Arr_bSeats.length + Arr_fSeats.length;
     let formatedData = {
-      departure:Dep_Flight_id,
+      id: id,
+      Confirmation_Number: Confirmation_Number,
+      departure: Dep_Flight_id,
       arrival: Arr_Flight_id,
       cabin: cab,
       seats: temp,
@@ -158,7 +159,7 @@ export default function ChangeReservation() {
   };
   const handleChange = (data) => {
     setValue(data);
-  }
+  };
 
   return (
     <div>
@@ -169,14 +170,14 @@ export default function ChangeReservation() {
             <Dropdown func={cabin} error={cabinError} />
           </div>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DesktopDatePicker
-          label="Date desktop"
-          inputFormat="yyyy/MM/dd"
-          value={value}
-          onChange={handleChange}
-          renderInput={(params) => <TextField {...params} />}
-        />
-        </LocalizationProvider>
+            <DesktopDatePicker
+              label="Date desktop"
+              inputFormat="yyyy/MM/dd"
+              value={value}
+              onChange={handleChange}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
           <br />
         </div>
         <Button
@@ -201,40 +202,40 @@ export default function ChangeReservation() {
           Change Seat
         </Button>{" "}
       </div>
-      
+
       <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-        >
-          <Collapse in={alert}>
-            <Alert
-              variant="filled"
-              severity="error"
-              onClose={() => {
-                setOpen(!open);
-                setAlert(false);
-                setDateError(false);
-                setCabinError(false);
-              }}
-            >
-              <AlertTitle>Error</AlertTitle>
-              <strong>Please Enter valid data</strong>
-            </Alert>
-          </Collapse>
-          <Collapse in={warning}>
-            <Alert
-              variant="filled"
-              severity="warning"
-              onClose={() => {
-                setOpen(!open);
-                setWarning(false);
-              }}
-            >
-              <AlertTitle>Warning</AlertTitle>
-              <strong>No avaliable flights matching</strong>
-            </Alert>
-          </Collapse>
-        </Backdrop>
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <Collapse in={alert}>
+          <Alert
+            variant="filled"
+            severity="error"
+            onClose={() => {
+              setOpen(!open);
+              setAlert(false);
+              setDateError(false);
+              setCabinError(false);
+            }}
+          >
+            <AlertTitle>Error</AlertTitle>
+            <strong>Please Enter valid data</strong>
+          </Alert>
+        </Collapse>
+        <Collapse in={warning}>
+          <Alert
+            variant="filled"
+            severity="warning"
+            onClose={() => {
+              setOpen(!open);
+              setWarning(false);
+            }}
+          >
+            <AlertTitle>Warning</AlertTitle>
+            <strong>No avaliable flights matching</strong>
+          </Alert>
+        </Collapse>
+      </Backdrop>
     </div>
   );
 }

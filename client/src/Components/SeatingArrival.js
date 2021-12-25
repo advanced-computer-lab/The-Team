@@ -11,7 +11,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function SeatingArrival() {
   const { state } = useLocation();
-  const { arrival, cabin, seats,money } = state;
+  const { arrival, cabin, seats,money,id,arrival_no } = state;
+  const [reservations, setReservations] = React.useState([]);
   const [change, setChange] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
@@ -80,19 +81,91 @@ export default function SeatingArrival() {
         setOpen(true);
       }
   };
-  const handleClick = () => {
+  const handleClick =async() => {
     
     if (arrtemp.length != tot) {
       setAlert(true);
       setOpen(true);
     } else {
-      let formatedData = {
-        money:money
-       };
  
-     
-       navigate("/pay", { state: formatedData,
-       });
+      await axios
+        .get("http://localhost:5000/reservations/"+ id + "/reservations")
+        .then((res) => {
+          setReservations(res.data);
+
+          console.log(reservations);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        console.log(reservations);
+        
+
+      await axios
+        .patch("http://localhost:5000/flights/cancelledarr", reservations)
+        .catch((err) => {
+          console.log(err);
+        });
+      await axios({
+        method: "patch", //you can set what request you want to be
+        url: "http://localhost:5000/reservations/reservations/delete",
+        data: reservations,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }).catch((err) => {
+        console.log(err);
+      });
+      var Arr_eSeats=[];
+      var Arr_bSeats=[];
+      var Arr_fSeats=[];
+      if (cabin === "Economy"){
+        Arr_eSeats=arrtemp;
+      }else if(cabin === "Business"){
+        Arr_bSeats=arrtemp;
+      }else{
+        Arr_fSeats=arrtemp;
+      }
+      
+      const reservation1 = {
+        userId: reservations.userId,
+        Confirmation_Number: reservations.Confirmation_Number,
+        Price: money,
+        Dep_Flight_no: reservations.Dep_Flight_no,
+        Dep_Flight_id: reservations.Dep_Flight_id,
+        Arr_Flight_no: arrival_no,
+        Arr_Flight_id:arrival,
+        Dep_eSeats: reservations.Dep_eSeats,
+        Dep_bSeats: reservations.Dep_bSeats,
+        Dep_fSeats: reservations.Dep_fSeats,
+        Arr_eSeats: Arr_eSeats,
+        Arr_bSeats: Arr_bSeats,
+        Arr_fSeats:Arr_fSeats ,
+      };
+      await axios
+        .patch("http://localhost:5000/flights/addedarr", reservation1)
+        .catch((err) => {
+          console.log(err);
+        });
+      await axios({
+        method: "post", //you can set what request you want to be
+        url: "http://localhost:5000/reservations/add",
+        data: reservation1,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }).catch((err) => {
+        console.log(err);
+      });
+      let formatedData = {
+        money: money,
+      };
+      if ((money = 0)) {
+      } else if (money < 0) {
+        console.log("send mail");
+      } else {
+        navigate("/pay", { state: formatedData });
+      }
 
     }
   };
