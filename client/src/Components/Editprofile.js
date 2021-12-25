@@ -17,8 +17,6 @@ function Editprofile(props) {
   const [Country_code, setCountry_code] = useState("");
   const [Telephone_number, setTelephone_number] = useState("");
 
-  const { state } = useLocation();
-  const { id } = state;
 
   const handlePass = (event) => {
     setPassword(event.target.value);
@@ -49,11 +47,9 @@ function Editprofile(props) {
   };
 
   const onSubmit = () => {
-    console.log(id);
     console.log(Username);
 
     const data = {
-      id: id,
       Username: Username,
       Password: Password,
       Email: Email,
