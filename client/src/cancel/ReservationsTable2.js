@@ -95,7 +95,7 @@ export default function ReservationsTable(props) {
         entries={5}
         pagesAmount={4}
         data={datatable}
-        checkbox
+        searching={false}
         headCheckboxID="id2"
         bodyCheckboxID="checkboxes2"
         getValueCheckBox={(e) => {

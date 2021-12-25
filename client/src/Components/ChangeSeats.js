@@ -8,15 +8,10 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 import Backdrop from "@mui/material/Backdrop";
 import { useNavigate } from "react-router-dom";
-import { getContrastRatio } from "@material-ui/core";
-import EventSeatIcon from '@mui/icons-material/EventSeat';
-import DeleteIcon from '@mui/icons-material/Delete';
-import NextPlanIcon from '@mui/icons-material/NextPlan';
 
-
-export default function Seating() {
+export default function ChangeSeats() {
   const { state } = useLocation();
-  const { arrival, departure, cabin, children, passengers,userId } = state;
+  const { arrival, departure, cabin, seats } = state;
   const [change, setChange] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [chosend, setChosend] = React.useState([]);
@@ -28,7 +23,7 @@ export default function Seating() {
   const [arrtemp, setarrtemp] = React.useState([]);
   const navigate = useNavigate();
   var arrival_seats = [];
-  var tot = children + passengers;
+  var tot = seats;
   var departure_seats = [];
 
   useEffect(() => {
@@ -106,20 +101,18 @@ export default function Seating() {
 
   const handleChange = (e, dep) => {
     if (dep === "departure") {
-      if(deptemp.length<tot && !deptemp.includes(e)){
-      
+      if (!deptemp.includes(e)) {
         var arr = [chosend];
         arr.push(" Seat ");
         arr.push(e);
         deptemp.push(e);
         setChosend(arr);
         console.log(chosend);
-       }else {
+      } else {
         setAlert(true);
         setOpen(true);
       }
     } else {
-      if(arrtemp.length<tot){
       if (!arrtemp.includes(e)) {
         var arr = [chosena];
         arr.push(" Seat ");
@@ -127,7 +120,7 @@ export default function Seating() {
         arrtemp.push(e);
         setChosena(arr);
         
-      }} else {
+      } else {
         setAlert(true);
         setOpen(true);
       }
@@ -144,21 +137,21 @@ export default function Seating() {
       setAlert(true);
       setOpen(true);
     } else {
-      navigate("/h/summary", {
-        state: {
-          departure:departure,
-          arrival:arrival,
-          cabin:cabin,
-          children:children,
-          passengers:passengers,
-          arrival_seats:arrtemp,
-          departure_seats:deptemp,
-          arrival_seats1:chosena,
-          departure_seats1:chosend,
-          userId:userId,
+    //   navigate("/h/summary", {
+    //     state: {
+    //       departure:departure,
+    //       arrival:arrival,
+    //       cabin:cabin,
+    //       children:children,
+    //       passengers:passengers,
+    //       arrival_seats:arrtemp,
+    //       departure_seats:deptemp,
+    //       arrival_seats1:chosena,
+    //       departure_seats1:chosend,
+    //       userId:userId,
 
-        },
-      });
+    //     },
+      //});
 
     }
   };
@@ -170,45 +163,18 @@ export default function Seating() {
   };
 
   return (
-    <div  style={{
-      
-        display: "flex",
-        gap: 24,
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        align:"center",
-        width: "30vw",
-        backgroundColor:"blue",
-        
-      border: "1px solid grey",
-      padding: "23px 10px",
-      marginLeft:"530px",
-      marginTop:"150px",
-      fontSize: 18,
-      fontStyle:"italic",
-
-      borderRadius: 12,
-      boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-      background: "white",
-      gridTemplateColumns: "300px 300px",
-     
-    }}>
+    <div>
       <div>Choose {tot} Departure Seat(s) :</div>
-      
       <ButtonGroup disableElevation variant="contained">
         {departure_seats1.map((e) => (
           <Button
             onClick={() => handleChange(e, "departure")}
             variant="contained"
-            startIcon={<EventSeatIcon/>}
           >
-             {e}
-          </Button> 
-          
+            Seat {e}
+          </Button>
         ))}
       </ButtonGroup>
-      
       <div>
         <div>Choose {tot} Arrival Seat(s) :</div>
         <ButtonGroup disableElevation variant="contained">
@@ -216,24 +182,21 @@ export default function Seating() {
             <Button
               onClick={() => handleChange(e, "arrival")}
               variant="contained"
-              startIcon={<EventSeatIcon/>}
             >
-              {e}
+              Seat {e}
             </Button>
           ))}
         </ButtonGroup>
         <div>Departure Seats : {chosend}</div>
         <div>Arrival Seats : {chosena}</div>
         <div>
-          <Button variant="contained" endIcon={<NextPlanIcon/>} onClick={() => handleClick()}>
+          <Button variant="contained" onClick={() => handleClick()}>
             Procced
           </Button>
         </div>
-        <div style={ {
-     padding:"15px 13px"
-      }} >
+        <div>
       
-          <Button variant="contained"  endIcon={<DeleteIcon/>} onClick={() => handleDelete() }>
+          <Button variant="contained" onClick={() => handleDelete()}>
             Clear All
           </Button>
           <Backdrop
@@ -250,7 +213,7 @@ export default function Seating() {
               }}
             >
               <AlertTitle>Error</AlertTitle>
-              <strong>Please choose correct seats</strong>
+              <strong>Please choose right seats</strong>
             </Alert>
           </Collapse>
           </Backdrop>

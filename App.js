@@ -1,9 +1,12 @@
+var http = require("http");
 const express= require('express');
 const cors = require('cors');
 const mongoose= require('mongoose');
 const path = require("path");
 require('dotenv').config({ path: '.env' });
+
 const request = require("supertest");
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,7 +31,7 @@ app.use('/users',usersRouter);
 app.use('/reservations', reservationsRouter);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  res.redirect("https://" + req.headers.host + req.url);;
 });
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);

@@ -12,7 +12,7 @@ function UpdateFlight(props) {
   const [First_seats, setFirst_seats] = useState('');
   
   const { state } = useLocation();
-  const {id} = state 
+  const {id} = state
 
   const onChangeFrom = (e) => {
     setFrom(e.target.value);
@@ -43,7 +43,7 @@ function UpdateFlight(props) {
 
   const onSubmit = e => {
     e.preventDefault();
-
+//error!!!!
     const data = {
       id: id,
       From: From,

@@ -1,27 +1,24 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
-  const { state } = useLocation();
-  const { id } = state;
   const navigate = useNavigate();
 
   const handleEdit = () => {
     navigate("/h/profile/edit", {
-      state: {
-        id: id,
-      },
     });
   };
+    const handlePassword = () => {
+      navigate("/h/profile/password", {
+        
+      });
+    };
 
   const handleReserve = () => {
-     console.log(id);
     navigate("/h/profile/reservations", {
-      state: {
-        id: id,
-      },
+     
     });
   };
   return (
@@ -69,6 +66,29 @@ export default function UserProfile() {
           }}
         >
           Edit Profile
+        </Button>
+      </Box>
+      <br></br>
+      <Box
+        sx={{
+          my: 2,
+          bgcolor: "#fa12",
+          boxShadow: 1,
+          borderRadius: 1,
+          p: 2,
+          minWidth: 300,
+        }}
+      >
+        <Button
+          onClick={handlePassword}
+          key="edit-pass"
+          sx={{
+            alignItems: "center",
+            m: 3,
+            minWidth: { md: 350 },
+          }}
+        >
+        Change Password
         </Button>
       </Box>
     </div>
