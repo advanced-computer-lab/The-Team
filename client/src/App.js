@@ -86,6 +86,7 @@ function App() {
           <Route exact path="/pay" element={<Pay />} />
           <Route exact path="/r" element={<CheckoutForm />} />
           <Route exact path="/forget" element={<Forget />} />
+
         </Routes>
       </Router>
     </div>
