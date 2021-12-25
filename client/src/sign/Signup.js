@@ -26,7 +26,7 @@ function Signup(props) {
 //   const { id } = state;
 
 const navigate = useNavigate();
-const goToLoginPage = () => navigate('/login');
+const goToLoginPage = () => navigate('/signin');
 
   const handlePass = (event) => {
     setPassword(event.target.value);
@@ -93,7 +93,7 @@ const goToLoginPage = () => navigate('/login');
       Home_address: Home_address,
       Country_code: Country_code,
       Telephone_number: Telephone_number
-    };
+    }
     axios.post("http://localhost:5000/users/signup", data)
      .then(res=>{
       console.log("success")
