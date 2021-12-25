@@ -13,6 +13,12 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import "../App.css";
+
 export default function Arrival(props) {
   var sel = {};
   const { state } = useLocation();
@@ -114,7 +120,37 @@ export default function Arrival(props) {
   };
   return (
     <div>
-       <div>Choose Arrival flight </div>
+
+<AppBar position="static" sx={{
+    backgroundColor:"#006fa2"
+}}>
+        <Toolbar>
+        <Button href="/login" variant="text" sx={{
+          
+          color:"white"
+    }} >
+         Home
+    </Button>
+
+    <IconButton style={{
+      marginLeft:"1400px"
+    }}
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+
+
+        </Toolbar>
+      </AppBar>
+       <div style={{
+        fontStyle:"oblique",
+        fontSize:30}}
+        >Choose Arrival flight </div>
       {change && (<WithCheckBoxes func={selected} rows={arrival} />)}
       <div>
         <Button
