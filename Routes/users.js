@@ -323,7 +323,6 @@ router.route("/update").patch(async(req, res) => {
     .findById(userData.data.id)
     .then((users) => {
       users.Username = req.body.Username;
-      users.Password = req.body.Password;
       users.Email = req.body.Email;
       users.Passport_number = req.body.Passport_number;
       users.Fname = req.body.Fname;
