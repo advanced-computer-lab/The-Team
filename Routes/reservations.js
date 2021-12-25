@@ -1,6 +1,8 @@
 const router = require("express").Router();
 let reservation = require("../Models/reservations.model");
 let user = require("../Models/users.model");
+var bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 
 router.route("/").get((req, res) => {
   console.log(req);
@@ -10,7 +12,7 @@ router.route("/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/userreservations").get((req, res) => {
+router.route("/userreservations").get(async(req, res) => {
    const token = req.headers.authorization.split(" ")[1];
    const userData = {};
    userData.data = await verifyToken(token);
@@ -22,7 +24,7 @@ router.route("/userreservations").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/add").post((req, res) => {
+router.route("/add").post(async(req, res) => {
    const token = req.headers.authorization.split(" ")[1];
    const userData = {};
    userData.data = await verifyToken(token);
@@ -79,7 +81,7 @@ async function verifyToken(token) {
   return returnData;
 }
 
-router.route("/reservations/delete").patch((req, res) => {
+router.route("/reservations/delete").patch(async(req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData = {};
   userData.data = await verifyToken(token);

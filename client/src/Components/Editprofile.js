@@ -64,11 +64,26 @@ function Editprofile(props) {
       Country_code: Country_code,
       Telephone_number: Telephone_number,
     };
-    axios.patch("http://localhost:5000/users/update", data)
+
+
+
+    axios({
+      method: "patch", //you can set what request you want to be
+      url: "http://localhost:5000/users/update",
+      data:data,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+
     .then(res=>{
       console.log("success")
       alert("User info updated successfully");
     })
+
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
