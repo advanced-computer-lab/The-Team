@@ -163,6 +163,10 @@ function Login(props) {
             submit
           </Button>
         </div>
+        <br></br>
+        <Button href="/forget" variant="contained">
+          Forgot Password?
+        </Button>
       </div>
     </div>
   );

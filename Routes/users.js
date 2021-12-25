@@ -1,62 +1,53 @@
 const router = require("express").Router();
 const nodemailer = require("nodemailer");
 let user = require("../Models/users.model");
-var bcrypt = require('bcrypt');
+var bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
-const stripe = require("stripe")('sk_test_51K8tbEFK05i5y2oRLPqRDqxXrgjH1ExR5XaLJgH8DpkEby8cZEOb8oWKWQhKdVqaklFDaHcrIrqbtSDjAFeH0U6W00ejBG2mve');
+const stripe = require("stripe")(
+  "sk_test_51K8tbEFK05i5y2oRLPqRDqxXrgjH1ExR5XaLJgH8DpkEby8cZEOb8oWKWQhKdVqaklFDaHcrIrqbtSDjAFeH0U6W00ejBG2mve"
+);
 
 //const stripe = Stripe('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 //app.use(express.json());
 
 router.route("/isAdmin").get(async (req, res) => {
-
   const token = req.headers.authorization.split(" ")[1];
-  const userData={};
-  userData.data =await verifyToken(token);
+  const userData = {};
+  userData.data = await verifyToken(token);
 
   if (userData.password == "") {
     res.sendStatus(403);
-  }
-
-  else {
+  } else {
     console.log(userData.data.type);
-    if(userData.data.type=="Admin"){
-      res.send(200, "Admin")
-    }
-    else{
-      res.send(200, "Not")
+    if (userData.data.type == "Admin") {
+      res.send(200, "Admin");
+    } else {
+      res.send(200, "Not");
     }
   }
 });
 
-
-router.route("/create-payment-intent").post( async (req, res) =>{
-var r=req.body.money;
+router.route("/create-payment-intent").post(async (req, res) => {
+  var r = req.body.money;
   const paymentIntent = await stripe.paymentIntents.create({
     amount: r,
     currency: "eur",
     automatic_payment_methods: {
       enabled: true,
     },
-  }); 
+  });
 
   res.send({
     clientSecret: paymentIntent.client_secret,
-  }); });
-
-
-
-
-
+  });
+});
 
 async function verifyToken(token) {
   var returnData = {};
   jwt.verify(token, process.env.JWT_SECRET, (err, authData) => {
     //console.log(authData);
     if (err) {
-
       returnData = {
         password: "",
       };
@@ -69,8 +60,8 @@ async function verifyToken(token) {
 }
 router.post("/password", async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
-  const userData={};
-  userData.data =await verifyToken(token);
+  const userData = {};
+  userData.data = await verifyToken(token);
   console.log(userData.data);
   if (userData.password == "") {
     res.sendStatus(403);
@@ -81,15 +72,18 @@ router.post("/password", async (req, res) => {
       bcrypt.compare(req.body.old, userData.data.password).then((correct) => {
         if (correct) {
           bcrypt.hash(req.body.password, salt, (err, hash) => {
-             console.log(req.body.password);
-             console.log(hash);
+            console.log(req.body.password);
+            console.log(hash);
             if (err) {
               res.send(err);
             } else {
               console.log(userData.data.email);
-              console.log(userData.data.password)
+              console.log(userData.data.password);
               user
-                .findOneAndUpdate({ Email: userData.data.email }, { Password: hash })
+                .findOneAndUpdate(
+                  { Email: userData.data.email },
+                  { Password: hash }
+                )
                 .then(res.send(200, "Password changed successfully"));
             }
           });
@@ -219,7 +213,7 @@ router.route("/login").post((req, res) => {
   });
 });
 
-router.route("/getuser").get(async(req, res) => {
+router.route("/getuser").get(async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData = {};
   userData.data = await verifyToken(token);
@@ -230,7 +224,7 @@ router.route("/getuser").get(async(req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/reservations").get(async(req, res) => {
+router.route("/reservations").get(async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData = {};
   userData.data = await verifyToken(token);
@@ -241,10 +235,10 @@ router.route("/reservations").get(async(req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/cancelled").post(async(req, res) => {
-   const token = req.headers.authorization.split(" ")[1];
-   const userData = {};
-   userData.data = await verifyToken(token);
+router.route("/cancelled").post(async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const userData = {};
+  userData.data = await verifyToken(token);
   user.findById(userData.data.id).then((users) => {
     const mail = users.Email;
 
@@ -278,7 +272,7 @@ router.route("/cancelled").post(async(req, res) => {
   });
 });
 
-router.route("/reservations/delete").patch(async(req, res) => {
+router.route("/reservations/delete").patch(async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData = {};
   userData.data = await verifyToken(token);
@@ -299,7 +293,7 @@ router.route("/reservations/delete").patch(async(req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/reservation/add").patch(async(req, res) => {
+router.route("/reservation/add").patch(async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData = {};
   userData.data = await verifyToken(token);
@@ -315,10 +309,54 @@ router.route("/reservation/add").patch(async(req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/update").patch(async(req, res) => {
- const token = req.headers.authorization.split(" ")[1];
- const userData = {};
- userData.data = await verifyToken(token);
+router.route("/forget").post((req, res) => {
+  const mail = req.body.email;
+  const newpass = Math.random().toString(36).slice(-8);
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(newpass, salt, (err, hash) => {
+      console.log(hash);
+      if (err) {
+        res.send(err);
+      } else {
+        user
+          .findOneAndUpdate({ Email: mail }, { Password: hash })
+          .then((users) => {
+            let mailTransporter = nodemailer.createTransport({
+              service: "gmail",
+              auth: {
+                user: "acltheteam@gmail.com",
+                pass: "Damnpass456",
+              },
+            });
+
+            let mailDetails = {
+              from: "acltheteam@gmail.com",
+              to: mail,
+              subject: "your new password",
+              text: "Your new password " + newpass,
+            };
+
+            mailTransporter.sendMail(mailDetails, function (err, data) {
+              if (err) {
+                console.log("Error Occurs");
+              } else {
+                console.log("Email sent successfully");
+                res.json("Email sent successfully");
+              }
+            });
+          })
+          .catch((err) => {
+            res.status(400).json("Error: " + err);
+          });
+      }
+    });
+  });
+});
+
+router.route("/update").patch(async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const userData = {};
+  userData.data = await verifyToken(token);
   user
     .findById(userData.data.id)
     .then((users) => {

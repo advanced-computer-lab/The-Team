@@ -8,6 +8,7 @@ import CreateFlight from "./Components/CreateFlight";
 import UpdateFlight from "./Components/UpdateFlight";
 import HomePage from "./Components/HomePage";
 import AdminPanel from "./Components/AdminPanel";
+import Forget from "./Components/Forget";
 
 import Editprofile from "./Components/Editprofile";
 import Home from "./homepage/homepage";
@@ -40,7 +41,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route exact path="/" element={<HomePage/>} />
+          <Route exact path="/" element={<HomePage />} />
           <Route exact path="/h" element={<Home />} />
           <Route exact path="/home/adminpanel" element={AdminPanelElement} />
           <Route exact path="/home/adminpanel/search" element={Search()} />
@@ -84,6 +85,7 @@ function App() {
           <Route exact path="/signin" element={<ULogin />} />
           <Route exact path="/pay" element={<Pay />} />
           <Route exact path="/r" element={<CheckoutForm />} />
+          <Route exact path="/forget" element={<Forget />} />
         </Routes>
       </Router>
     </div>
