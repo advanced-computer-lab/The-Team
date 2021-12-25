@@ -72,8 +72,8 @@ This section lists major frameworks/libraries used.
    ```
 4. Install Frontend packages
   ```sh
-  cd client
-  npm install
+    cd client
+    npm install
    ```
 5. Create .env file and add your variables
    ```js
