@@ -5,7 +5,7 @@ export default function ReservationsTable(props) {
     columns: [
       {
         label: "id",
-        field: "_id",
+        field: "id",
         width: 100,
       },
       {
@@ -20,7 +20,7 @@ export default function ReservationsTable(props) {
       },
       {
         label: "Price",
-        field: "Price",
+        field: "price",
         width: 100,
       },
       {

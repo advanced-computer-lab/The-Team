@@ -179,7 +179,7 @@ export default function UserCancelFlight() {
       Arr_fSeats:cancelled["Arr_fSeats"],
       Dep_eSeats:cancelled["Dep_eSeats"],
       Dep_bSeats:cancelled["Dep_bSeats"],
-      Dep_fSeats:cancelled["Arr_fSeats"],
+      Dep_fSeats:cancelled["Dep_fSeats"],
     };
     if (cancelled !== {}) {
       navigate("/h/changeres", {
