@@ -31,11 +31,17 @@
 .MuiButton-root{
   color:white
 }
-.th.sorting , th {
+.tr, th {
   white-space: nowrap;
   padding: 1rem;
-  text-align: right;
+  text-align: left;
   background-color: #fff0f0;
+}
+
+.MuiPaper-root {
+  color: rgb(0 0 0 / 87%);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-color: #006fa2;
 }
 
 @keyframes App-logo-spin {

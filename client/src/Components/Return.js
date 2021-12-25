@@ -125,7 +125,7 @@ export default function Arrival(props) {
     backgroundColor:"#006fa2"
 }}>
         <Toolbar>
-        <Button href="/login" variant="text" sx={{
+        <Button href="/h" variant="text" sx={{
           
           color:"white"
     }} >
@@ -140,6 +140,7 @@ export default function Arrival(props) {
                 aria-label="account of current user"
                 aria-haspopup="true"
                 color="inherit"
+                href="/h/profile"
               >
                 <AccountCircle />
               </IconButton>

@@ -13,6 +13,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 
+
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -127,11 +128,11 @@ export default function Departure() {
   };
   return (
     <div>
-      <AppBar position="static" sx={{
+      <AppBar  position="static" sx={{
     backgroundColor:"#006fa2"
 }}>
         <Toolbar>
-        <Button href="/login" variant="text" sx={{
+        <Button href="/h" variant="text" sx={{
     color:"white"
     
 }} >
@@ -146,6 +147,7 @@ Home
                 aria-label="account of current user"
                 aria-haspopup="true"
                 color="inherit"
+                href="/h/profile"
               >
                 <AccountCircle />
               </IconButton>
@@ -171,6 +173,8 @@ Home
       </div>
 
       <Dialog
+      
+      
         fullWidth={true}
         maxWidth={"xs"}
         open={open}
