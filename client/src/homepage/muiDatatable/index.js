@@ -1,37 +1,63 @@
-import React, {useState, useEffect} from 'react'
-import {DataGrid} from '@material-ui/data-grid'
-import Axios from 'axios'
+import React from "react";
+import { MDBDataTableV5 } from "mdbreact";
+export default function WithCheckBoxes(props) {
 
-const columns = [
-  {field: 'From', headerName: 'From',width: 300},
-  {field: 'To', headerName: 'To', width: 300},
-  {field: 'Flight_date', headerName: 'Flight_date', width: 200},
-  {field: 'Economy_seats', headerName: 'Economy_seats', width: 200},
-  {field: 'Business_seats', headerName: 'Business_seats', width: 200},
-  {field: 'First_seats', headerName: 'First_seats', width: 200},
-]
+ 
+  const [datatable, setDatatable] = React.useState({
+    columns: [
+      {
+        label: "From",
+        field: "From",
+        width: 150,
+      },
+      {
+        label: "To",
+        field: "To",
+        width: 270,
+      },
+      {
+        label: "Flight_date",
+        field: "Dep_date",
+        width: 260,
+      },
+      {
+        label: "Seats",
+        field: "Seats",
+        width: 280,
+      },
+      {
+        label: "Price Difference",
+        field: "PriceDif",
+        width: 280,
+      },
+     
+    ],
+    rows: props.rows,
+  });
 
-const DataTable = (props) => {
+  const [checkbox1, setCheckbox1] = React.useState("");
 
-
-  const [tableData, setTableData] = useState([])
-
-  useEffect(() => {
-    setTableData(props.rows)
-  })
+  const showLogs2 = (e) => {
+    setCheckbox1(e);
+  };
 
   return (
-    <div style={{height: 700, width: '100%'}}>
-      <DataGrid 
-       getRowId={(row) => row._id}
-        rows={tableData}
-        columns={columns}
-        pageSize={12}
-        checkboxSelection
-      />
-    </div>
-  )
+    <>
+      <MDBDataTableV5
+        hover
+        entriesOptions={[5, 20, 25]}
+        entries={5}
+        pagesAmount={4}
+        data={datatable}
+        checkbox
+        searching={false}
+        headCheckboxID="id2"
+        bodyCheckboxID="checkboxes2"
+        getValueCheckBox={(e) => {
+          showLogs2(e);
+          props.func(e);
+        }}
+      />{" "}
+    </>
+  );
 }
-
-export default DataTable
- 
