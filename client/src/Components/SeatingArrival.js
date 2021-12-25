@@ -145,8 +145,37 @@ export default function SeatingArrival() {
         money: money*100,
       };
       if (money === 0) {
+        await axios({
+          method: "post", //you can set what request you want to be
+          url: "http://localhost:5000/users/moneydiff",
+          data: formatedData,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }).catch((err) => {
+          console.log(err);
+        });
+
+        alert("We sen you a mail sent for confirmation");
+        navigate("/h/profile/reservations");
+
       } else if (money < 0) {
         console.log("send mail");
+        await axios({
+          method: "post", //you can set what request you want to be
+          url: "http://localhost:5000/users/moneydiff",
+          data: formatedData,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }).catch((err) => {
+          console.log(err);
+        });
+
+        alert("We sen you a mail sent for confirmation");
+        navigate("/h/profile/reservations");
+
+
       } else {
         navigate("/pay", { state: formatedData });
       }
