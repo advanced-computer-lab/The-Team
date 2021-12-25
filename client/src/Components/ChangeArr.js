@@ -18,7 +18,7 @@ import Collapse from "@mui/material/Collapse";
 export default function ChangeArrival() {
     const [change, setChange] = React.useState(false);
     const { state } = useLocation();
-    const { arrival, cabin,price, seats} = state;
+    const { arrival, cabin,price, seats,id} = state;
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [openal, setOpenal] = React.useState(false);
@@ -110,7 +110,9 @@ export default function ChangeArrival() {
   
     const handleChange = () => {
       let formatedData = {
+        id: id,
         arrival:  row["_id"],
+        arrival_no: row["Flight_no"],
         cabin: cabin,
         seats:seats,
         money:row["PriceDif"]

@@ -40,6 +40,7 @@ export default function UserCancelFlight() {
       .catch((err) => {
         console.log(err);
       });
+      
 
 
       axios({
@@ -163,8 +164,9 @@ export default function UserCancelFlight() {
     
   };
   const handleUpdate = (event) => {
+    
     let formatedData = {
-      id: cancelled["id"],
+      id: cancelled["_id"],
       userId:cancelled["userId"],
       Confirmation_Number:cancelled["Confirmation_Number"],
       price:cancelled["Price"],
