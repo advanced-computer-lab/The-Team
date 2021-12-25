@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 
 function Editprofile(props) {
   const [Username, setUsername] = useState("");
-  const [Password, setPassword] = useState("");
   const [Fname, setFname] = useState("");
   const [Lname, setLname] = useState("");
   const [Passport_number, setPassport_number] = useState("");
@@ -18,9 +17,7 @@ function Editprofile(props) {
   const [Telephone_number, setTelephone_number] = useState("");
 
 
-  const handlePass = (event) => {
-    setPassword(event.target.value);
-  };
+
   const handleUser = (event) => {
     setUsername(event.target.value);
   };
@@ -51,7 +48,6 @@ function Editprofile(props) {
 
     const data = {
       Username: Username,
-      Password: Password,
       Email: Email,
       Passport_number: Passport_number,
       Fname: Fname,
@@ -130,15 +126,6 @@ function Editprofile(props) {
                 label="Username"
                 variant="outlined"
                 onChange={handleUser}
-              />
-            </div>
-
-            <div className="form-group">
-              <TextField
-                id="outlined-basic"
-                label="Password"
-                variant="outlined"
-                onChange={handlePass}
               />
             </div>
 
