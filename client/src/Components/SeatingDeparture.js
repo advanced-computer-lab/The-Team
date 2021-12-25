@@ -186,6 +186,8 @@ export default function SeatingDeparture() {
 
 
       } else {
+        var ff=money*100
+        localStorage.setItem("monney",ff)
         navigate("/pay", { state: formatedData });
       }
     }
