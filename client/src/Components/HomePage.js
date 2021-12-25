@@ -24,14 +24,7 @@ export default function HomePage() {
         }}
       >
         <Toolbar>
-          <Button
-            variant="text"
-            sx={{
-              color: "white",
-            }}
-          >
-            about
-          </Button>
+
 
           <Button
             variant="text"
