@@ -10,6 +10,27 @@ const stripe = require("stripe")('sk_test_51K8tbEFK05i5y2oRLPqRDqxXrgjH1ExR5XaLJ
 //const stripe = Stripe('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 //app.use(express.json());
 
+router.route("/isAdmin").get(async (req, res) => {
+
+  const token = req.headers.authorization.split(" ")[1];
+  const userData={};
+  userData.data =await verifyToken(token);
+
+  if (userData.password == "") {
+    res.sendStatus(403);
+  }
+
+  else {
+    console.log(userData.data.type);
+    if(userData.data.type=="Admin"){
+      res.send(200, "Admin")
+    }
+    else{
+      res.send(200, "Not")
+    }
+  }
+});
+
 
 router.route("/create-payment-intent").post( async (req, res) =>{
 var r=req.body.money;
@@ -172,6 +193,7 @@ router.route("/login").post((req, res) => {
           email: match.Email,
           password: match.Password,
           id: match._id,
+          type: match.Username,
         };
         jwt.sign(
           payload,
