@@ -21,14 +21,16 @@ const stripePromise = loadStripe("pk_test_51K8tbEFK05i5y2oRylgHkKJzaWXhhRVsLXaaQ
 export default function Pay() {
   const [clientSecret, setClientSecret] = useState("");
   const { state } = useLocation();
-  const { money} = state;
+ const {money} = state;
+  
 
   useEffect(() => {
+
     // Create PaymentIntent as soon as the page loads
     fetch("http://localhost:5000/users/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ money: money }),
+      body: JSON.stringify({ money:money }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
