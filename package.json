@@ -29,5 +29,8 @@
     "nodemon": "^2.0.14",
     "stripe": "^8.195.0",
     "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "supertest": "^6.1.6"
   }
 }
