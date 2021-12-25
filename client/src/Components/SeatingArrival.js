@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function SeatingArrival() {
   const { state } = useLocation();
-  const { arrival, cabin, seats } = state;
+  const { arrival, cabin, seats,money } = state;
   const [change, setChange] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
@@ -67,7 +67,8 @@ export default function SeatingArrival() {
   }, [change]);
 
   const handleChange = (e) => {
-      if (!arrtemp.includes(e)) {
+    if(arrtemp.length<seats && !arrtemp.includes(e)){
+       
         var arr = [chosena];
         arr.push(" Seat ");
         arr.push(e);
@@ -85,8 +86,13 @@ export default function SeatingArrival() {
       setAlert(true);
       setOpen(true);
     } else {
-      navigate("/h/summary", {
-      });
+      let formatedData = {
+        money:money
+       };
+ 
+     
+       navigate("/pay", { state: formatedData,
+       });
 
     }
   };

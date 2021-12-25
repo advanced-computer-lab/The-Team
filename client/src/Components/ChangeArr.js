@@ -113,6 +113,7 @@ export default function ChangeArrival() {
         arrival:  row["_id"],
         cabin: cabin,
         seats:seats,
+        money:row["PriceDif"]
       };
       if (row.length != 0) {
         navigate("/h/seatingarr", {

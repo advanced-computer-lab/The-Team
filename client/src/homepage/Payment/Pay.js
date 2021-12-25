@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from '@stripe/react-stripe-js';
 import Grid from '@mui/material/Grid';
+import { useLocation } from "react-router-dom";
 
 import CheckoutForm from "./CheckoutForm";
 import der from "./Appp.css";
@@ -19,13 +20,15 @@ const stripePromise = loadStripe("pk_test_51K8tbEFK05i5y2oRylgHkKJzaWXhhRVsLXaaQ
 
 export default function Pay() {
   const [clientSecret, setClientSecret] = useState("");
+  const { state } = useLocation();
+  const { money} = state;
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     fetch("http://localhost:5000/users/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+      body: JSON.stringify({ money: money }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));

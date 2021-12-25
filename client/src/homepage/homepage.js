@@ -112,7 +112,7 @@ export default function Home(props) {
       }
       var month = d.getMonth() + 1;
       var year = d.getFullYear();
-      var st = "" + year + "-" + month + "-" + day;
+      var st = "" + day + "-" + month + "-" + year;
       returnDate.push(st);
     }
     return returnDate;

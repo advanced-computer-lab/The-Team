@@ -4,18 +4,18 @@ let Flight = require("../Models/flights.model");
 router.route("/search").post(async (req, res) => {
   const From = req.body.From;
   const To = req.body.To;
-  const DepartureDate = req.body.DepartureDate;
-  const ReturnDate = req.body.ReturnDate;
+  const Dep_date = req.body.DepartureDate;
+  const Arr_date = req.body.ReturnDate;
   const docs = await Flight.find({
     From: From,
     To: To,
-    Flight_date: DepartureDate,
+    Dep_date: Dep_date,
   }).exec();
   if (docs.length>0) {
     const docs2 = await Flight.find({
       From: To,
       To: From,
-      Flight_date: ReturnDate,
+      Arr_date: Arr_date,
     }).exec();
     if (docs2.length>0) {
       res.json(
@@ -27,6 +27,45 @@ router.route("/search").post(async (req, res) => {
     } else {
       res.sendStatus(204);
     }
+  } else {
+    res.sendStatus(204);
+  }
+});
+router.route("/search/dep").post(async (req, res) => {
+  const From = req.body.From;
+  const To = req.body.To;
+  const DepartureDate = req.body.DepartureDate;
+  const docs = await Flight.find({
+    From: From,
+    To: To,
+    Dep_date: DepartureDate,
+  }).exec();
+  if (docs.length>0) {
+    
+    res.json(
+      {
+        departure: docs,
+       }
+      );
+  } else {
+    res.sendStatus(204);
+  }
+});
+router.route("/search/arr").post(async (req, res) => {
+  const From = req.body.From;
+  const To = req.body.To;
+  const ArrivalDate = req.body.ArrivalDate;
+  const docs = await Flight.find({
+    From: From,
+    To: To,
+    Arr_date: ArrivalDate,
+  }).exec();
+  if (docs.length>0) {
+    res.json(
+      {
+        arrival: docs,
+       }
+      );
   } else {
     res.sendStatus(204);
   }
