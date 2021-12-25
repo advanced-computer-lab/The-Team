@@ -28,7 +28,7 @@ app.use('/users',usersRouter);
 app.use('/reservations', reservationsRouter);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  res.redirect("https://" + req.headers.host + req.url);;
 });
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);
