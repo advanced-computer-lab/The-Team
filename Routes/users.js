@@ -197,7 +197,7 @@ router.route("/login").post((req, res) => {
   });
 });
 
-router.route("/getuser").get((req, res) => {
+router.route("/getuser").get(async(req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData = {};
   userData.data = await verifyToken(token);
@@ -208,7 +208,7 @@ router.route("/getuser").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/reservations").get((req, res) => {
+router.route("/reservations").get(async(req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData = {};
   userData.data = await verifyToken(token);
@@ -219,7 +219,7 @@ router.route("/reservations").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/cancelled").post((req, res) => {
+router.route("/cancelled").post(async(req, res) => {
    const token = req.headers.authorization.split(" ")[1];
    const userData = {};
    userData.data = await verifyToken(token);
@@ -256,7 +256,7 @@ router.route("/cancelled").post((req, res) => {
   });
 });
 
-router.route("/reservations/delete").patch((req, res) => {
+router.route("/reservations/delete").patch(async(req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData = {};
   userData.data = await verifyToken(token);
@@ -277,7 +277,7 @@ router.route("/reservations/delete").patch((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/reservation/add").patch((req, res) => {
+router.route("/reservation/add").patch(async(req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const userData = {};
   userData.data = await verifyToken(token);
@@ -293,7 +293,7 @@ router.route("/reservation/add").patch((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/update").patch((req, res) => {
+router.route("/update").patch(async(req, res) => {
  const token = req.headers.authorization.split(" ")[1];
  const userData = {};
  userData.data = await verifyToken(token);

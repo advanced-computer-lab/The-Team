@@ -132,16 +132,30 @@ export default function Summary() {
         console.log(err);
       });
 
-    axios
-      .patch("http://localhost:5000/users/" + userId + "/reservation/add", data)
-      .catch((err) => {
-        console.log(err);
-      });
-    axios
-      .post("http://localhost:5000/reservations/add", reservation)
-      .catch((err) => {
-        console.log(err);
-      });
+      axios({
+        method: "patch", //you can set what request you want to be
+        url: "http://localhost:5000/users/reservation/add",
+        data:data,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+        .catch((err) => {
+          console.log(err);
+        });
+
+        axios({
+          method: "post", //you can set what request you want to be
+          url: "http://localhost:5000/reservations/add",
+          data:reservation,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+          .catch((err) => {
+            console.log(err);
+          });
+
     }
     navigate("/login");
   };

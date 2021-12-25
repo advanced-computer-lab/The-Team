@@ -27,29 +27,47 @@ export default function UserCancelFlight() {
   useEffect(() => {
 
     let {id}  = state;
-     axios
-    .get("http://localhost:5000/reservations/"+id)
-    .then((res)=> {
-        setReservations(res.data)
-  
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 
-    axios
-    .get("http://localhost:5000/users/"+id)
+    axios({
+      method: "get", //you can set what request you want to be
+      url: "http://localhost:5000/reservations/userreservations",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
     .then((res)=> {
+      setReservations(res.data)})
+
+      .catch((err) => {
+        console.log(err);
+      });
+
+
+      axios({
+        method: "get", //you can set what request you want to be
+        url: "http://localhost:5000/users/getuser/",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((res)=> {
         setFname(res.data.Fname)
         setLname(res.data.Lname)
         setPassport(res.data.Passport_number)
-        setEmail(res.data.Email)
+        setEmail(res.data.Email)})
+  
+        .catch((err) => {
+          console.log(err);
+        });
+
+
+
+      
+
+
+    
 
   
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 
 
     
@@ -79,33 +97,60 @@ export default function UserCancelFlight() {
         console.log(err)
       });
 
-      axios
-      .post("http://localhost:5000/users/"+id+"/cancelled", cancelled)
-      .catch((err)=>{
-        console.log(err)
-      });
-      
-
-      axios 
-      .patch("http://localhost:5000/reservations/"+id+"/reservations/delete",cancelled)
-       .catch((err) => {
-        console.log(err);
-      }); 
-
-
-      axios
-      .patch("http://localhost:5000/users/"+id+"/reservations/delete",cancelled)
-      .catch((err) => {
-        console.log(err);
-      });
-      axios
-        .get("http://localhost:5000/reservations/" + id)
-        .then((res) => {
-          setReservations(res.data);
-        })
+      axios({
+        method: "post", //you can set what request you want to be
+        url: "http://localhost:5000/users/cancelled",
+        data: cancelled,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
         .catch((err) => {
           console.log(err);
         });
+
+
+
+        axios({
+          method: "patch", //you can set what request you want to be
+          url: "http://localhost:5000/reservations/reservations/delete",
+          data: cancelled,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+          .catch((err) => {
+            console.log(err);
+          });
+
+
+          axios({
+            method: "patch", //you can set what request you want to be
+            url: "http://localhost:5000/users/reservations/delete",
+            data: cancelled,
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
+            .catch((err) => {
+              console.log(err);
+            });
+
+
+            axios({
+              method: "get", //you can set what request you want to be
+              url: "http://localhost:5000/reservations/userreservations",
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            })
+            .then((res) => {
+              setReservations(res.data);
+            })
+              .catch((err) => {
+                console.log(err);
+              });
+
 
 }
   };
@@ -148,7 +193,7 @@ export default function UserCancelFlight() {
   };
   return (
     <div>
-      <div>id: {id} , first name: {fname},last name: {lname},passport number: {passport},email: {mail}</div>
+      <div> first name: {fname},last name: {lname},passport number: {passport},email: {mail}</div>
       <div>{clicked&&confirm && ( <AlertDialog d={decided} appear={click}/> )}
       
        </div>
