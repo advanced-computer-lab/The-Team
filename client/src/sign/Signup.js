@@ -6,8 +6,14 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-function Editprofile(props) {
+import {
+  useNavigate
+} from 'react-router-dom';
+import UserProfile from "../UserProfile";
+
+function Signup(props) {
   const [Username, setUsername] = useState("");
+  const [Password, setPassword] = useState("");
   const [Fname, setFname] = useState("");
   const [Lname, setLname] = useState("");
   const [Passport_number, setPassport_number] = useState("");
@@ -16,8 +22,15 @@ function Editprofile(props) {
   const [Country_code, setCountry_code] = useState("");
   const [Telephone_number, setTelephone_number] = useState("");
 
+//   const { state } = useLocation();
+//   const { id } = state;
 
+const navigate = useNavigate();
+const goToLoginPage = () => navigate('/signin');
 
+  const handlePass = (event) => {
+    setPassword(event.target.value);
+  };
   const handleUser = (event) => {
     setUsername(event.target.value);
   };
@@ -44,42 +57,53 @@ function Editprofile(props) {
   };
 
   const onSubmit = () => {
-    console.log(Username);
+   // console.log(id);
 
+   var flag1 = false;
+   var flag2 = false;
+
+   if(Username.length==0 || Password.length==0||Email.length==0||Passport_number.length==0||Fname.length==0||Lname.length==0||Home_address.length==0||Country_code.length==0||Telephone_number.length==0){
+    alert("enter all fields please please");
+   }
+   else {flag1=true;}
+
+   if (typeof Email !== "undefined") {
+
+    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+  
+    if (!pattern.test(Email)) {
+        alert("enter valid email");
+    }
+    else {
+        flag2 = true;
+    }
+  
+  }
+
+    if(flag1 && flag2){
+    
     const data = {
+    //  id: id,
       Username: Username,
+      Password: Password,
       Email: Email,
       Passport_number: Passport_number,
       Fname: Fname,
       Lname: Lname,
       Home_address: Home_address,
       Country_code: Country_code,
-      Telephone_number: Telephone_number,
-    };
-
-
-
-    axios({
-      method: "patch", //you can set what request you want to be
-      url: "http://localhost:5000/users/update",
-      data:data,
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-
-    .then(res=>{
+      Telephone_number: Telephone_number
+    }
+    axios.post("http://localhost:5000/users/signup", data)
+     .then(res=>{
       console.log("success")
-      alert("User info updated successfully");
+      alert("User created successfully");
+      goToLoginPage();
     })
-
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+}};
 
   return (
-    <div className="Editprofile">
+    <div className="Sign Up">
       <div className="container">
         <div className="row">
           <div className="col-md-8 m-auto">
@@ -91,7 +115,7 @@ function Editprofile(props) {
                 color: "rgb(51,51,51)",
               }}
             >
-              Edit Profile
+              Create your profile
             </h1>
           </div>
         </div>
@@ -126,6 +150,16 @@ function Editprofile(props) {
                 label="Username"
                 variant="outlined"
                 onChange={handleUser}
+              />
+            </div>
+
+            <div className="form-group">
+              <TextField
+              input type="password"
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                onChange={handlePass}
               />
             </div>
 
@@ -203,4 +237,4 @@ function Editprofile(props) {
   );
 }
 
-export default Editprofile;
+export default Signup;

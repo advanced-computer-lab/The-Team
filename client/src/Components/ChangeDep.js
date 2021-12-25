@@ -1,85 +1,70 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import WithCheckBoxes from "../homepage/muiDatatable/index2.js";
+import WithCheckBoxes from "../homepage/muiDatatable/index.js";
 import { useLocation } from "react-router-dom";
+import Button from "@mui/material/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import Button from "@material-ui/core/Button";
 import Backdrop from "@mui/material/Backdrop";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import "../App.css";
-
-export default function Arrival(props) {
-  var sel = {};
-  const { state } = useLocation();
+export default function ChangeDeparture() {
   const [change, setChange] = React.useState(false);
-  const { selected_departure, arrival, cabin,children,passengers,userId } = state;
+  const { state } = useLocation();
+  const {
+    departure,
+    cabin,
+    price,
+    seats,
+    id,
+
+  } = state;
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [openal, setOpenal] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
   const [row, setRow] = React.useState([]);
-  const navigate = useNavigate();
-  var tot=passengers+children;
-  var removed=[];
-  const handleClickToOpen = () => {
-    setOpen(true);
-  };
+  var removed = [];
+
   useEffect(() => {
     seat();
     removeSeats();
-  });
+  }, [change]);
+
+  const handleClickToOpen = () => {
+    setOpen(true);
+  };
 
   const handleToClose = () => {
     setOpen(false);
   };
+
   const selected = (data) => {
     setRow(data);
     handleClickToOpen();
   };
+
   const removeSeats = () => {
-    var temp=arrival;
+    var temp = departure;
     for (let index = 0; index < removed.length; index++) {
-      var inn=removed[index]
-      temp.splice(inn,1)
+      var inn = removed[index];
+      temp.splice(inn, 1);
     }
   };
 
-  const handleChange = (event) => {
-    if (row.length!=0) {
-    navigate("/h/seating", {
-      state: {
-        arrival: row["_id"],
-        departure: selected_departure,
-        cabin: cabin,
-        children: children,
-        passengers: passengers,
-        userId:userId,
-      },
-    });
-  }
-  else{
-    setAlert(true);
-    setOpenal(true);
-  }
-  };
   const seat = () => {
     var i = 0;
-    while (i < arrival.length) {
+    while (departure.length > 0 && i < departure.length) {
       var y = 0;
       var availableSeats = 0;
-      var eco = arrival[i]["Economy_seats"];
-      var buss = arrival[i]["Business_seats"];
-      var firs = arrival[i]["First_seats"];
+      var eco = departure[i]["Economy_seats"];
+      var buss = departure[i]["Business_seats"];
+      var firs = departure[i]["First_seats"];
 
       if (cabin === "Economy") {
         while (y < eco.length) {
@@ -88,9 +73,12 @@ export default function Arrival(props) {
           }
           y++;
         }
-        if(availableSeats<tot)
-          removed.push(i)
-        arrival[i] = Object.assign(arrival[i], { Seats: availableSeats });
+
+        if (availableSeats < seats) removed.push(i);
+        var tempPrice = departure[i]["Price"][0] * seats - price;
+        departure[i] = Object.assign({ PriceDif: tempPrice }, departure[i]);
+        departure[i] = Object.assign({ Seats: availableSeats }, departure[i]);
+
         setChange(true);
       } else if (cabin === "Business") {
         while (y < buss.length) {
@@ -99,9 +87,11 @@ export default function Arrival(props) {
           }
           y++;
         }
-        if(availableSeats<tot)
-          removed.push(i)
-        arrival[i] = Object.assign({ Seats: availableSeats }, arrival[i]);
+        if (availableSeats < seats) removed.push(i);
+        var tempPrice = departure[i]["Price"][1] * seats - price;
+        departure[i] = Object.assign({ PriceDif: tempPrice }, departure[i]);
+        departure[i] = Object.assign({ Seats: availableSeats }, departure[i]);
+
         setChange(true);
       } else {
         while (y < firs.length) {
@@ -110,48 +100,43 @@ export default function Arrival(props) {
           }
           y++;
         }
-        if(availableSeats<tot)
-          removed.push(i)
-        arrival[i] = Object.assign({ Seats: availableSeats }, arrival[i]);
+        if (availableSeats < seats) removed.push(i);
+        var tempPrice = departure[i]["Price"][2] * seats - price;
+        departure[i] = Object.assign({ PriceDif: tempPrice }, departure[i]);
+        departure[i] = Object.assign({ Seats: availableSeats }, departure[i]);
+
         setChange(true);
       }
       i++;
     }
   };
+
+  const handleChange = () => {
+    console.log(id);
+    let formatedData = {
+      id: id,
+      departure: row["_id"],
+      departure_no: row["Flight_no"],
+      cabin: cabin,
+      seats: seats,
+      money: row["PriceDif"],
+    };
+    if (row.length != 0) {
+      navigate("/h/seatingdep", {
+        state: formatedData,
+      });
+    }
+    // } else {
+    //   setAlert(true);
+    //   setOpenal(true);
+    // }
+  };
   return (
     <div>
-
-<AppBar position="static" sx={{
-    backgroundColor:"#006fa2"
-}}>
-        <Toolbar>
-        <Button href="/login" variant="text" sx={{
-          
-          color:"white"
-    }} >
-         Home
-    </Button>
-
-    <IconButton style={{
-      marginLeft:"1400px"
-    }}
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-haspopup="true"
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-
-
-        </Toolbar>
-      </AppBar>
-       <div style={{
-        fontStyle:"oblique",
-        fontSize:30}}
-        >Choose Arrival flight </div>
-      {change && (<WithCheckBoxes func={selected} rows={arrival} />)}
+      <div>Choose a new departure flight</div>
+      {change && (
+        <WithCheckBoxes func={selected} rows={departure} cc={change} />
+      )}
       <div>
         <Button
           variant="contained"
@@ -161,6 +146,7 @@ export default function Arrival(props) {
           Proceed
         </Button>{" "}
       </div>
+
       <Dialog
         fullWidth={true}
         maxWidth={"xs"}
@@ -190,7 +176,7 @@ export default function Arrival(props) {
         </DialogActions>
       </Dialog>
       <div>
-      <Backdrop
+        <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={openal}
         >
@@ -207,7 +193,7 @@ export default function Arrival(props) {
               <strong>Please choose a flight</strong>
             </Alert>
           </Collapse>
-          </Backdrop>
+        </Backdrop>
       </div>
     </div>
   );

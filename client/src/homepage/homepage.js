@@ -1,7 +1,6 @@
 import * as React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import DatePicker from "./DatePicker";
 import Asynchronous from "./ComboBox";
 import Dropdown from "./DropDown";
@@ -27,9 +26,7 @@ export default function Home(props) {
   const [alert, setAlert] = React.useState(false);
   const [warning, setWarning] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
-  const { state } = useLocation();
-  let { isLogged, userId } = state;
-
+  
   const navigate = useNavigate();
   var from = "";
   var to = "";
@@ -95,7 +92,6 @@ export default function Home(props) {
           cabin: cab,
           children: children,
           passengers: passengers,
-          userId: userId,
         };
         console.log(formatedData);
         navigate("/h/departure", { state: formatedData}); //TODO: need to fix path
@@ -112,7 +108,7 @@ export default function Home(props) {
       }
       var month = d.getMonth() + 1;
       var year = d.getFullYear();
-      var st = "" + year + "-" + month + "-" + day;
+      var st = "" + day + "-" + month + "-" + year;
       returnDate.push(st);
     }
     return returnDate;
@@ -144,7 +140,7 @@ export default function Home(props) {
   return (
     <div>
       <div>
-        <NavBar isLogged={isLogged} userId={userId} />
+        <NavBar isLogged={true}  />
       </div>
 
       <div className="col-md-8 m-auto" style={{

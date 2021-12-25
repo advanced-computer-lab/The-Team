@@ -10,6 +10,7 @@ export default function Summary() {
   const [priced, setPriced] = React.useState(0);
   const [pricea, setPricea] = React.useState(0);
   const [confirm, setConfirm] = React.useState("");
+  const [caby, setCaby] = React.useState("");
   const [addedarr, setAddedarr] = React.useState({});
   const [addeddep, setAddeddepp] = React.useState({});
   const [flightd, setFlightd] = React.useState(0);
@@ -17,6 +18,7 @@ export default function Summary() {
   const [dated, setDated] = React.useState("");
   const [datea, setDatea] = React.useState("");
   const [timea, setTimea] = React.useState("");
+  const [userId, setUserId] = React.useState("");
   const [timed, setTimed] = React.useState("");
   const {
     arrival,
@@ -28,12 +30,25 @@ export default function Summary() {
     departure_seats,
     arrival_seats1,
     departure_seats1,
-    userId,
+    
   } = state;
   useEffect(() => {
     async function fetchMyAPI() {
-        console.log(userId)
       var tot = children + passengers;
+        axios({
+        method: "get", //you can set what request you want to be
+        url: "http://localhost:5000/users/getuser/",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((res)=> {
+        setUserId(res.data._id);
+      console.log(res.data)})
+        .catch((err) => {
+          console.log(err);
+        });
+        console.log(userId);
       var departure1 = await axios
         .get("http://localhost:5000/flights/" + departure)
         .catch((err) => {
@@ -48,10 +63,13 @@ export default function Summary() {
       var temp1 = arrival1.data["Price"];
       if (cabin == "Economy") {
         setPriced(temp[0] * tot);
+        setCaby("e");
       } else if (cabin == "Business") {
         setPriced(temp[1] * tot);
+        setCaby("b");
       } else {
         setPriced(temp[2] * tot);
+        setCaby("f");
       }
       if (cabin == "Economy") {
         setPricea(temp1[0] * tot);
@@ -66,15 +84,17 @@ export default function Summary() {
       setTimea(arrival1.data["Dep_time"]);
       setDated(departure1.data["Dep_date"]);
       setDatea(arrival1.data["Dep_date"]);
-      setConfirm(userId + departure1.data["Flight_no"] +arrival1.data["Flight_no"]);
+      var rand=Math.floor((Math.random() * 10) + 1);
+      setConfirm(userId + departure1.data["Flight_no"] +arrival1.data["Flight_no"]+caby+arrival_seats[0]+departure_seats[0]+rand);
       setAddeddepp(departure1);
       setAddedarr(arrival1);
+      
     }
 
     fetchMyAPI();
     
     setChange(true);
-  }, [change]);
+  }, [userId]);
 
   const handleChange = () => {
     if(userId ===""){
@@ -89,8 +109,7 @@ export default function Summary() {
     var Dep_eSeats = [];
     var Dep_bSeats = [];
     var Dep_fSeats = [];
-    console.log(data)
-
+  
     if (cabin == "Economy") {
       Arr_eSeats = arrival_seats;
       Dep_eSeats = departure_seats;
@@ -116,7 +135,7 @@ export default function Summary() {
       Dep_bSeats: Dep_bSeats,
       Dep_fSeats: Dep_fSeats,
     };
-    console.log(reservation)
+   
     axios
       .patch("http://localhost:5000/flights/addedarr", reservation)
       .catch((err) => {
@@ -128,22 +147,62 @@ export default function Summary() {
         console.log(err);
       });
 
-    axios
-      .patch("http://localhost:5000/users/" + userId + "/reservation/add", data)
-      .catch((err) => {
-        console.log(err);
-      });
-    axios
-      .post("http://localhost:5000/reservations/add", reservation)
-      .catch((err) => {
-        console.log(err);
-      });
+      axios({
+        method: "patch", //you can set what request you want to be
+        url: "http://localhost:5000/users/reservation/add",
+        data:data,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+        .catch((err) => {
+          console.log(err);
+        });
+
+        axios({
+          method: "post", //you can set what request you want to be
+          url: "http://localhost:5000/reservations/add",
+          data:reservation,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+          .catch((err) => {
+            console.log(err);
+          });
+
     }
     navigate("/login");
   };
 
   return (
+
+    
     <div>
+      <div style={{
+        fontSize:30,
+        marginTop:"50px",
+        fontStyle:"normal"
+
+      }}>Summary</div>
+      <div style={{
+      display: "inherit",
+      align:"center",
+      width: "30vw",
+      marginLeft:"530px",
+      marginTop:"40px",
+      fontSize: 18,
+      fontStyle:"italic",
+      border: "1px solid grey",
+      padding: "40px 12px" ,
+      borderRadius: 12,
+      boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+      background: "#FDFAF6",
+      gridTemplateColumns: "300px 300px",
+      gap: 12,
+    }
+      
+    }>
       <div>Confirmation number : {confirm}</div>
       <div>Departure flight number : {flightd}</div>
       <div>Return flight number : {flighta}</div>
@@ -161,11 +220,18 @@ export default function Summary() {
       <div>Departure Flight Price : ${priced}</div>
       <div>Arrival Flight Price : ${pricea}</div>
       <div>Total Price : ${pricea + priced}</div>
-      <div>
-        <Button onClick={() => handleChange()} variant="contained">
+      </div>
+      <div style={{ 
+        padding:"20px"
+      }}>
+        <Button color="primary" onClick={() => handleChange()} variant="contained">
           Confirm Pay
         </Button>
       </div>
     </div>
+
+    
+   
   );
+  
 }

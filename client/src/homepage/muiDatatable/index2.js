@@ -1,14 +1,25 @@
 import React from "react";
 import { MDBDataTableV5 } from "mdbreact";
+import "../Payment/Appp.css";
+
+
 export default function WithCheckBoxes(props) {
 
  
   const [datatable, setDatatable] = React.useState({
+
     columns: [
       {
         label: "From",
         field: "From",
         width: 150,
+        justifyContent: "center",
+          alignItems: "center",
+          alignContent:"center",
+          alignSelf:"center",
+          //padding:"300px 120px"
+        
+        
       },
       {
         label: "To",
@@ -40,7 +51,7 @@ export default function WithCheckBoxes(props) {
     <>
       <MDBDataTableV5
         hover
-        entriesOptions={[5, 20, 25]}
+        
         entries={5}
         pagesAmount={4}
         data={datatable}
@@ -51,6 +62,16 @@ export default function WithCheckBoxes(props) {
         getValueCheckBox={(e) => {
           showLogs2(e);
           props.func(e);
+        }}
+
+        style={{
+          width:"100%",
+          backgroundColor:"black",
+          justifyContent: "center",
+          alignItems: "center",
+          alignContent:"center",
+          alignSelf:"center",
+
         }}
       />{" "}
     </>
