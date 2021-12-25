@@ -12,9 +12,9 @@ const stripe = require("stripe")('sk_test_51K8tbEFK05i5y2oRLPqRDqxXrgjH1ExR5XaLJ
 
 
 router.route("/create-payment-intent").post( async (req, res) =>{
-
+var r=req.body.money;
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: 140,
+    amount: r,
     currency: "eur",
     automatic_payment_methods: {
       enabled: true,

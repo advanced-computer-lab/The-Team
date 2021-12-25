@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function SeatingDeparture() {
   const { state } = useLocation();
-  const { departure, cabin, seats } = state;
+  const { departure, cabin, seats, money } = state;
   const [change, setChange] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
@@ -20,17 +20,16 @@ export default function SeatingDeparture() {
   const [deptemp, setDeptemp] = React.useState([]);
   const navigate = useNavigate();
   var departure_seats = [];
-  var tot =seats;
+  var tot = seats;
 
   useEffect(() => {
     async function fetchMyAPI() {
-
       var departure1 = await axios
         .get("http://localhost:5000/flights/" + departure)
         .catch((err) => {
           console.log(err);
         });
-     
+
       var y = 0;
       var eco1 = departure1.data["Economy_seats"];
       var buss1 = departure1.data["Business_seats"];
@@ -61,35 +60,39 @@ export default function SeatingDeparture() {
         setChange(true);
       }
       setDeparture_seats(departure_seats);
-    
     }
     fetchMyAPI();
   }, [change]);
 
   const handleChange = (e) => {
-      if (!deptemp.includes(e)) {
-        var dep = [chosend];
-        dep.push(" Seat ");
-        dep.push(e);
-        deptemp.push(e);
-        setChosend(dep);
-        
-      } else {
-        setAlert(true);
-        setOpen(true);
-      }
+    if (!deptemp.includes(e) && deptemp.length < seats) {
+      var dep = [chosend];
+      dep.push(" Seat ");
+      dep.push(e);
+      deptemp.push(e);
+      setChosend(dep);
+    } else {
+      setAlert(true);
+      setOpen(true);
+    }
   };
   const handleClick = () => {
-    
     if (deptemp.length != tot) {
       setAlert(true);
       setOpen(true);
     } else {
+      if ((money = 0)) {
 
-    
-      navigate("/h/summary", {
-      });
+      } else if(money<0){
 
+      }
+      else {
+        let formatedData = {
+          money: money,
+        };
+
+        navigate("/pay", { state: formatedData });
+      }
     }
   };
   const handleDelete = () => {
@@ -99,29 +102,25 @@ export default function SeatingDeparture() {
 
   return (
     <div>
-        <div>Choose {tot} Departure Seat(s) :</div>
-        <ButtonGroup disableElevation variant="contained">
-          {departure_seats1.map((e) => (
-            <Button
-              onClick={() => handleChange(e)}
-              variant="contained"
-            >
-              Seat {e}
-            </Button>
-          ))}
-        </ButtonGroup>
-        <div>Departure Seats : {chosend}</div>
-        <div>
-          <Button variant="contained" onClick={() => handleClick()}>
-            Procced
+      <div>Choose {tot} Departure Seat(s) :</div>
+      <ButtonGroup disableElevation variant="contained">
+        {departure_seats1.map((e) => (
+          <Button onClick={() => handleChange(e)} variant="contained">
+            Seat {e}
           </Button>
-        </div>
-        <div>
-      
-          <Button variant="contained" onClick={() => handleDelete()}>
-            Clear All
-          </Button>
-          <Backdrop
+        ))}
+      </ButtonGroup>
+      <div>Departure Seats : {chosend}</div>
+      <div>
+        <Button variant="contained" onClick={() => handleClick()}>
+          Procced
+        </Button>
+      </div>
+      <div>
+        <Button variant="contained" onClick={() => handleDelete()}>
+          Clear All
+        </Button>
+        <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={open}
         >
@@ -138,10 +137,8 @@ export default function SeatingDeparture() {
               <strong>Please choose right seats</strong>
             </Alert>
           </Collapse>
-          </Backdrop>
-          
-        </div>
+        </Backdrop>
       </div>
-    
+    </div>
   );
 }

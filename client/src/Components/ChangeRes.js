@@ -1,10 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import ReservationsTable from "../cancel/ReservationsTable";
+import ReservationsTable from "../cancel/ReservationsTable2";
 import { useLocation } from "react-router-dom";
 import DatePicker from "../homepage/DatePicker";
 import Dropdown from "../homepage/DropDown";
 import axios from "axios";
 import Button from "@mui/material/Button";
+import Backdrop from "@mui/material/Backdrop";
+import TextField from '@mui/material/TextField';
+import Alert from "@mui/material/Alert";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AlertTitle from "@mui/material/AlertTitle";
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import Collapse from "@mui/material/Collapse";
 import React, { useEffect } from "react";
 export default function ChangeReservation() {
   const { state } = useLocation();
@@ -20,54 +28,64 @@ export default function ChangeReservation() {
     Arr_fSeats,
   } = state;
   const [cabinError, setCabinError] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const [dateError, setDateError] = React.useState(false);
+  const [alert, setAlert] = React.useState(false);
+  const [warning, setWarning] = React.useState(false);
+  const [value, setValue] = React.useState(new Date(2018, 11, 24));
   const navigate = useNavigate();
   var cab = "";
-  var date = [];
 
-  const getDate = (data) => {
-    date = data;
-  };
+
   function formatDate(date) {
-    var returnDate = [];
-    for (const d of date) {
-      var day = d.getDate();
+      var day = date.getDate();
       if (day < 10) {
         day = "0" + day;
       }
-      var month = d.getMonth() + 1;
-      var year = d.getFullYear();
-      var st = "" + year + "-" + month + "-" + day;
-      returnDate.push(st);
-    }
-    return returnDate;
+      var month = date.getMonth() + 1;
+      var year = date.getFullYear();
+      var st = "" + day + "-" + month + "-" + year;
+    return st;
   }
-  const handleDep = async (event) => {
+  
+  const handleDep = async () => {
     var temp = Dep_eSeats.length + Dep_bSeats.length + Dep_fSeats.length;
     if (cab === "") {
       setCabinError(true);
-    } else {
+      setOpen(true);
+      setAlert(true);
+    }if (value === null) {
+      setDateError(true);
+      setOpen(true);
+      setAlert(true);
+    }
+    
+     else {
       var res0 = await axios
         .get("http://localhost:5000/flights/" + Dep_Flight_id)
         .catch((err) => {
           console.log(err);
         });
 
-      var formatedDate = formatDate(date);
+      var formatedDate = formatDate(value);
       var queryData = {
         From: res0.data.From,
         To: res0.data.To,
-        cabin: cab,
-        DepartureDate: formatedDate[0],
-        ReturnDate: formatedDate[1],
+        DepartureDate: formatedDate,
       };
+      console.log('feuihfa');
+      console.log(queryData);
       var res = await axios
-        .post("http://localhost:5000/flights/search", queryData)
+        .post("http://localhost:5000/flights/search/dep", queryData)
         .catch((err) => {
           console.log(err);
         });
       if (res.status === 204) {
-      } else {
+        setWarning(true);
+        setOpen(true);
+      } 
+       else {
+        console.log( res.data.departure);
         let formatedData = {
           departure: res.data.departure,
           cabin: cab,
@@ -83,28 +101,36 @@ export default function ChangeReservation() {
     var temp = Arr_eSeats.length + Arr_bSeats.length + Arr_fSeats.length;
     if (cab === "") {
       setCabinError(true);
-    } else {
+      setOpen(true);
+      setAlert(true);
+    } if (value === null) {
+      setOpen(true);
+      setDateError(true);
+      setAlert(true);
+    }else {
       var res0 = await axios
         .get("http://localhost:5000/flights/" + Arr_Flight_id)
         .catch((err) => {
           console.log(err);
         });
 
-      var formatedDate = formatDate(date);
+      var formatedDate = formatDate(value);
       var queryData = {
         From: res0.data.From,
         To: res0.data.To,
-        cabin: cab,
-        DepartureDate: formatedDate[0],
-        ReturnDate: formatedDate[1],
+        ReturnDate: formatedDate,
       };
       var res = await axios
-        .post("http://localhost:5000/flights/search", queryData)
+        .post("http://localhost:5000/flights/search/arr", queryData)
         .catch((err) => {
           console.log(err);
         });
       if (res.status === 204) {
-      } else {
+        setWarning(true);
+        setOpen(true);
+        
+      }
+       else {
         let formatedData = {
           arrival: res.data.arrival,
           cabin: cab,
@@ -130,6 +156,9 @@ export default function ChangeReservation() {
   const cabin = (data) => {
     cab = data;
   };
+  const handleChange = (data) => {
+    setValue(data);
+  }
 
   return (
     <div>
@@ -139,7 +168,15 @@ export default function ChangeReservation() {
           <div style={{ width: "25%" }}>
             <Dropdown func={cabin} error={cabinError} />
           </div>
-          <DatePicker func={getDate} error={dateError} />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DesktopDatePicker
+          label="Date desktop"
+          inputFormat="yyyy/MM/dd"
+          value={value}
+          onChange={handleChange}
+          renderInput={(params) => <TextField {...params} />}
+        />
+        </LocalizationProvider>
           <br />
         </div>
         <Button
@@ -164,6 +201,40 @@ export default function ChangeReservation() {
           Change Seat
         </Button>{" "}
       </div>
+      
+      <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <Collapse in={alert}>
+            <Alert
+              variant="filled"
+              severity="error"
+              onClose={() => {
+                setOpen(!open);
+                setAlert(false);
+                setDateError(false);
+                setCabinError(false);
+              }}
+            >
+              <AlertTitle>Error</AlertTitle>
+              <strong>Please Enter valid data</strong>
+            </Alert>
+          </Collapse>
+          <Collapse in={warning}>
+            <Alert
+              variant="filled"
+              severity="warning"
+              onClose={() => {
+                setOpen(!open);
+                setWarning(false);
+              }}
+            >
+              <AlertTitle>Warning</AlertTitle>
+              <strong>No avaliable flights matching</strong>
+            </Alert>
+          </Collapse>
+        </Backdrop>
     </div>
   );
 }

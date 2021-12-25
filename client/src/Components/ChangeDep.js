@@ -108,10 +108,12 @@ export default function ChangeDeparture() {
   };
 
   const handleChange = () => {
+    console.log(row["PriceDif"]);
     let formatedData = {
       departure:  row["_id"],
       cabin: cabin,
       seats:seats,
+      money:row["PriceDif"]
     };
     if (row.length != 0) {
       navigate("/h/seatingdep", {

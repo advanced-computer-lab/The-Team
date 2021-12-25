@@ -106,18 +106,20 @@ export default function Seating() {
 
   const handleChange = (e, dep) => {
     if (dep === "departure") {
-      if (!deptemp.includes(e)) {
+      if(deptemp.length<tot && !deptemp.includes(e)){
+      
         var arr = [chosend];
         arr.push(" Seat ");
         arr.push(e);
         deptemp.push(e);
         setChosend(arr);
         console.log(chosend);
-      } else {
+       }else {
         setAlert(true);
         setOpen(true);
       }
     } else {
+      if(arrtemp.length<tot){
       if (!arrtemp.includes(e)) {
         var arr = [chosena];
         arr.push(" Seat ");
@@ -125,7 +127,7 @@ export default function Seating() {
         arrtemp.push(e);
         setChosena(arr);
         
-      } else {
+      }} else {
         setAlert(true);
         setOpen(true);
       }
@@ -248,7 +250,7 @@ export default function Seating() {
               }}
             >
               <AlertTitle>Error</AlertTitle>
-              <strong>Please choose right seats</strong>
+              <strong>Please choose correct seats</strong>
             </Alert>
           </Collapse>
           </Backdrop>

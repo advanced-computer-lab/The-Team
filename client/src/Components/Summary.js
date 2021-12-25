@@ -33,7 +33,6 @@ export default function Summary() {
   } = state;
   useEffect(() => {
     async function fetchMyAPI() {
-        console.log(userId)
       var tot = children + passengers;
       var departure1 = await axios
         .get("http://localhost:5000/flights/" + departure)
@@ -70,7 +69,8 @@ export default function Summary() {
       setTimea(arrival1.data["Dep_time"]);
       setDated(departure1.data["Dep_date"]);
       setDatea(arrival1.data["Dep_date"]);
-      setConfirm(userId + departure1.data["Flight_no"] +arrival1.data["Flight_no"]+caby+arrival_seats[0]+departure_seats[0]);
+      var rand=Math.floor((Math.random() * 1000) + 1);
+      setConfirm(userId + departure1.data["Flight_no"] +arrival1.data["Flight_no"]+caby+arrival_seats[0]+departure_seats[0]+rand);
       setAddeddepp(departure1);
       setAddedarr(arrival1);
     }
