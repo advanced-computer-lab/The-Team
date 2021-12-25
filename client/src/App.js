@@ -12,6 +12,12 @@ import AdminPanel from "./Components/AdminPanel";
 import Editprofile from "./Components/Editprofile";
 import Home from "./homepage/homepage";
 import Departure from "./Components/Departure";
+import SeatingArrival from "./Components/SeatingArrival";
+import SeatingDeparture from "./Components/SeatingDeparture";
+import ChangeReservation from "./Components/ChangeRes";
+import ChangeDeparture from "./Components/ChangeDep";
+import ChangeSeats from "./Components/ChangeSeats";
+import ChangeArrival from "./Components/ChangeArr";
 import Return from "./Components/Return";
 import Summary from "./Components/Summary";
 import Seating from "./Components/seating";
@@ -58,9 +64,15 @@ function App() {
           <Route exact path="/login" element={<Login />} />
 
           <Route path="/h/departure" element={<Departure />} />
+          <Route path="/h/changedep" element={<ChangeDeparture />} />
+          <Route path="/h/changeres" element={<ChangeReservation />} />
+          <Route path="/h/changeseats" element={<ChangeSeats />} />
+          <Route path="/h/changearr" element={<ChangeArrival />} />
           <Route exact path="/h/return" element={<Return />} />
 
           <Route exact path="/h/seating" element={<Seating />} />
+          <Route exact path="/h/seatingarr" element={<SeatingArrival />} />
+          <Route exact path="/h/seatingdep" element={<SeatingDeparture />} />
           <Route exact path="/h/summary" element={<Summary />} />
 
           <Route exact path="/h/profile" element={<UserProfile />} />
