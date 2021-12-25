@@ -59,7 +59,7 @@ function Login(props) {
         Email: Email,
       };
 
-      axios.post("http://localhost:5000/users/login", data).then((res) => {
+      axios.post("/users/login", data).then((res) => {
         if (res.data.message === "Email not found") alert(res.data.message);
         else if (res.data.message === "Email and password do not match")
           alert(res.data.message);
@@ -72,7 +72,7 @@ function Login(props) {
 
           axios({
             method: "get", //you can set what request you want to be
-            url: "http://localhost:5000/users/isAdmin",
+            url: "/users/isAdmin",
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
             },
