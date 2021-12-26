@@ -34,7 +34,7 @@ export default function ChangeReservation() {
   const [dateError, setDateError] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
   const [warning, setWarning] = React.useState(false);
-  const [value, setValue] = React.useState(new Date(2018, 11, 24));
+  const [value, setValue] = React.useState(new Date(2021, 12, 27));
   const navigate = useNavigate();
   var cab = "";
 
@@ -73,6 +73,7 @@ export default function ChangeReservation() {
         To: res0.data.To,
         DepartureDate: formatedDate,
       };
+      console.log(queryData);
           
       var res = await axios
         .post("http://localhost:5000/flights/search/dep", queryData)
@@ -90,6 +91,7 @@ export default function ChangeReservation() {
           cabin: cab,
           price: price,
           seats: temp,
+          reservation:state
         };
 
         navigate("/h/changedep", { state: formatedData }); //TODO: need to fix path
@@ -115,13 +117,14 @@ export default function ChangeReservation() {
         });
 
       var formatedDate = formatDate(value);
-      var queryData = {
-        From: res0.data.From,
+      var queryData1 = {
+        From:res0.data.From ,
         To: res0.data.To,
-        ReturnDate: formatedDate,
+        ArrivalDate: formatedDate,
       };
+      console.log(queryData1);
       var res = await axios
-        .post("http://localhost:5000/flights/search/arr", queryData)
+        .post("http://localhost:5000/flights/search/arr", queryData1)
         .catch((err) => {
           console.log(err);
         });
@@ -135,6 +138,7 @@ export default function ChangeReservation() {
           cabin: cab,
           price: price,
           seats: temp,
+          reservation:state
         };
 
         navigate("/h/changearr", { state: formatedData }); //TODO: need to fix path
@@ -150,6 +154,7 @@ export default function ChangeReservation() {
       arrival: Arr_Flight_id,
       cabin: cab,
       seats: temp,
+      reservation:state
     };
 
     navigate("/h/changeseats", { state: formatedData });

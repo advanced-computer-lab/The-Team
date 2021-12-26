@@ -84,7 +84,7 @@ export default function Summary() {
       setTimea(arrival1.data["Dep_time"]);
       setDated(departure1.data["Dep_date"]);
       setDatea(arrival1.data["Dep_date"]);
-      var rand=Math.floor((Math.random() * 10) + 1);
+      var rand=Math.floor((Math.random() * 100) + 1);
       setConfirm(userId + departure1.data["Flight_no"] +arrival1.data["Flight_no"]+caby+arrival_seats[0]+departure_seats[0]+rand);
       setAddeddepp(departure1);
       setAddedarr(arrival1);
