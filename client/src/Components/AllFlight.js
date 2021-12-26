@@ -6,10 +6,25 @@ const Flight = props => (
   <tr>
     <td>{props.flight.From}</td>
     <td>{props.flight.To}</td>
-    <td>{props.flight.Flight_date}</td>
+    <td>{props.flight.Dep_date}</td>
+    <td>{props.flight.Arr_date}</td>
+    <td>{props.flight.Dep_time}</td>
+    <td>{props.flight.Arr_time}</td>
     <td>{props.flight.Economy_seats}</td>
     <td>{props.flight.Business_seats}</td>
     <td>{props.flight.First_seats}</td>
+    <td>{props.flight.First_no}</td>
+    <td>{props.flight.Baggage_allowance}</td>
+    <td>{props.flight.Price}</td>
+    <td>{props.flight.Dep_terminal}</td>
+    <td>{props.flight.Arr_terminal}</td>
+    <td>{props.flight.Trip_duration}</td>
+
+
+
+
+
+
     <td>
       <Link
         to='/home/adminpanel/flights/update'
@@ -81,10 +96,19 @@ class AllFlight extends Component {
             <tr>
               <th>From</th>
               <th>To</th>
-              <th>Flight date</th>
-              <th>Economy</th>
-              <th>Business class</th>
-              <th>First class</th>
+              <th>Dep_date</th>
+              <th>Arr_date</th>
+              <th>Arr_time</th>
+              <th>Dep_time</th>
+              <th>Economy_seats</th>
+              <th>Business_seats</th>
+              <th>First_seats</th>
+              <th>Flight_no</th>
+              <th>Baggage_allowance</th>
+              <th>Price</th>
+              <th>Dep_terminal</th>
+              <th>Arr_terminal</th>
+              <th>Trip_duration</th>
               <th>Update</th>
               <th>Delete</th>
             </tr>
