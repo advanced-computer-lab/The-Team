@@ -11,8 +11,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function SeatingArrival() {
   const { state } = useLocation();
-  const { arrival, cabin, seats,money,id,arrival_no } = state;
-  const [reservations, setReservations] = React.useState([]);
+  const { arrival, cabin, seats, money, id, arrival_no, price, reservation } =
+    state;
+
   const [change, setChange] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
@@ -21,17 +22,16 @@ export default function SeatingArrival() {
   const [arrtemp, setarrtemp] = React.useState([]);
   const navigate = useNavigate();
   var arrival_seats = [];
-  var tot =seats;
+  var tot = seats;
 
   useEffect(() => {
     async function fetchMyAPI() {
-
       var arrival1 = await axios
         .get("http://localhost:5000/flights/" + arrival)
         .catch((err) => {
           console.log(err);
         });
-     
+
       var y = 0;
       var eco1 = arrival1.data["Economy_seats"];
       var buss1 = arrival1.data["Business_seats"];
@@ -62,85 +62,68 @@ export default function SeatingArrival() {
         setChange(true);
       }
       setArrival_seats(arrival_seats);
-    
     }
     fetchMyAPI();
   }, [change]);
 
   const handleChange = (e) => {
-    if(arrtemp.length<seats && !arrtemp.includes(e)){
-       
-        var arr = [chosena];
-        arr.push(" Seat ");
-        arr.push(e);
-        arrtemp.push(e);
-        setChosena(arr);
-        
-      } else {
-        setAlert(true);
-        setOpen(true);
-      }
+    if (arrtemp.length < seats && !arrtemp.includes(e)) {
+      var arr = [chosena];
+      arr.push(" Seat ");
+      arr.push(e);
+      arrtemp.push(e);
+      setChosena(arr);
+    } else {
+      setAlert(true);
+      setOpen(true);
+    }
   };
-  const handleClick =async() => {
-    
+  const handleClick = async () => {
     if (arrtemp.length != tot) {
       setAlert(true);
       setOpen(true);
     } else {
- 
       await axios
-        .get("http://localhost:5000/reservations/"+ id + "/reservations")
-        .then((res) => {
-          setReservations(res.data);
-
-          console.log(reservations);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-        console.log(reservations);
-        
-
-      await axios
-        .patch("http://localhost:5000/flights/cancelledarr", reservations)
+        .patch("http://localhost:5000/flights/cancelledarr", reservation)
         .catch((err) => {
           console.log(err);
         });
       await axios({
         method: "patch", //you can set what request you want to be
         url: "http://localhost:5000/reservations/reservations/delete",
-        data: reservations,
+        data: reservation,
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       }).catch((err) => {
         console.log(err);
       });
-      var Arr_eSeats=[];
-      var Arr_bSeats=[];
-      var Arr_fSeats=[];
-      if (cabin === "Economy"){
-        Arr_eSeats=arrtemp;
-      }else if(cabin === "Business"){
-        Arr_bSeats=arrtemp;
-      }else{
-        Arr_fSeats=arrtemp;
+      var Arr_eSeats = [];
+      var Arr_bSeats = [];
+      var Arr_fSeats = [];
+      if (cabin === "Economy") {
+        Arr_eSeats = arrtemp;
+      } else if (cabin === "Business") {
+        Arr_bSeats = arrtemp;
+      } else {
+        Arr_fSeats = arrtemp;
       }
-      
+      var money1=money+price*3;
+
       const reservation1 = {
-        userId: reservations.userId,
-        Confirmation_Number: reservations.Confirmation_Number,
-        Price: money,
-        Dep_Flight_no: reservations.Dep_Flight_no,
-        Dep_Flight_id: reservations.Dep_Flight_id,
+        userId: reservation.userId,
+        Confirmation_Number: reservation.Confirmation_Number,
+        Price: money1,
+        Dep_Flight_no: reservation.Dep_Flight_no,
+        Dep_Flight_id: reservation.Dep_Flight_id,
         Arr_Flight_no: arrival_no,
-        Arr_Flight_id:arrival,
-        Dep_eSeats: reservations.Dep_eSeats,
-        Dep_bSeats: reservations.Dep_bSeats,
-        Dep_fSeats: reservations.Dep_fSeats,
+        Arr_Flight_id: arrival,
+        Dep_eSeats: reservation.Dep_eSeats,
+        Dep_bSeats: reservation.Dep_bSeats,
+        Dep_fSeats: reservation.Dep_fSeats,
         Arr_eSeats: Arr_eSeats,
         Arr_bSeats: Arr_bSeats,
-        Arr_fSeats:Arr_fSeats ,
+        Arr_fSeats: Arr_fSeats,
       };
       await axios
         .patch("http://localhost:5000/flights/addedarr", reservation1)
@@ -157,16 +140,16 @@ export default function SeatingArrival() {
       }).catch((err) => {
         console.log(err);
       });
+
       let formatedData = {
         money: money,
       };
-      if ((money = 0)) {
+      if (money === 0) {
       } else if (money < 0) {
         console.log("send mail");
       } else {
         navigate("/pay", { state: formatedData });
       }
-
     }
   };
   const handleDelete = () => {
@@ -176,29 +159,25 @@ export default function SeatingArrival() {
 
   return (
     <div>
-        <div>Choose {tot} Arrival Seat(s) :</div>
-        <ButtonGroup disableElevation variant="contained">
-          {arrival_seats1.map((e) => (
-            <Button
-              onClick={() => handleChange(e)}
-              variant="contained"
-            >
-              Seat {e}
-            </Button>
-          ))}
-        </ButtonGroup>
-        <div>Arrival Seats : {chosena}</div>
-        <div>
-          <Button variant="contained" onClick={() => handleClick()}>
-            Procced
+      <div>Choose {tot} Arrival Seat(s) :</div>
+      <ButtonGroup disableElevation variant="contained">
+        {arrival_seats1.map((e) => (
+          <Button onClick={() => handleChange(e)} variant="contained">
+            Seat {e}
           </Button>
-        </div>
-        <div>
-      
-          <Button variant="contained" onClick={() => handleDelete()}>
-            Clear All
-          </Button>
-          <Backdrop
+        ))}
+      </ButtonGroup>
+      <div>Arrival Seats : {chosena}</div>
+      <div>
+        <Button variant="contained" onClick={() => handleClick()}>
+          Procced
+        </Button>
+      </div>
+      <div>
+        <Button variant="contained" onClick={() => handleDelete()}>
+          Clear All
+        </Button>
+        <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={open}
         >
@@ -215,10 +194,8 @@ export default function SeatingArrival() {
               <strong>Please choose right seats</strong>
             </Alert>
           </Collapse>
-          </Backdrop>
-          
-        </div>
+        </Backdrop>
       </div>
-    
+    </div>
   );
 }
