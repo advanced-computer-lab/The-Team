@@ -9,6 +9,10 @@ import Collapse from "@mui/material/Collapse";
 import Backdrop from "@mui/material/Backdrop";
 import { useNavigate } from "react-router-dom";
 
+import EventSeatIcon from '@mui/icons-material/EventSeat';
+import DeleteIcon from '@mui/icons-material/Delete';
+import NextPlanIcon from '@mui/icons-material/NextPlan';
+
 export default function SeatingArrival() {
   const { state } = useLocation();
   const { arrival, cabin, seats, money, id, arrival_no, price, reservation } =
@@ -189,23 +193,46 @@ export default function SeatingArrival() {
   };
 
   return (
-    <div>
+    <div style={{
+      
+      display: "flex",
+      gap: 24,
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      align:"center",
+      width: "30vw",
+      backgroundColor:"blue",
+      
+    border: "1px solid grey",
+    padding: "23px 10px",
+    marginLeft:"530px",
+    marginTop:"150px",
+    fontSize: 18,
+    fontStyle:"italic",
+
+    borderRadius: 12,
+    boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+    background: "white",
+    gridTemplateColumns: "300px 300px",
+   
+  }}>
       <div>Choose {tot} Arrival Seat(s) :</div>
       <ButtonGroup disableElevation variant="contained">
         {arrival_seats1.map((e) => (
-          <Button onClick={() => handleChange(e)} variant="contained">
-            Seat {e}
+          <Button onClick={() => handleChange(e)} variant="contained" startIcon={<EventSeatIcon/>}>
+             {e}
           </Button>
         ))}
       </ButtonGroup>
       <div>Arrival Seats : {chosena}</div>
       <div>
-        <Button variant="contained" onClick={() => handleClick()}>
+        <Button variant="contained" endIcon={<NextPlanIcon/>}  onClick={() => handleClick()}>
           Procced
         </Button>
       </div>
       <div>
-        <Button variant="contained" onClick={() => handleDelete()}>
+        <Button variant="contained" endIcon={<DeleteIcon/>}  onClick={() => handleDelete()}>
           Clear All
         </Button>
         <Backdrop

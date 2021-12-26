@@ -207,7 +207,7 @@ export default function Summary() {
       padding: "40px 12px" ,
       borderRadius: 12,
       boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-      background: "#FDFAF6",
+      background: "white",
       gridTemplateColumns: "300px 300px",
       gap: 12,
     }

@@ -9,6 +9,11 @@ import Collapse from "@mui/material/Collapse";
 import Backdrop from "@mui/material/Backdrop";
 import { useNavigate } from "react-router-dom";
 
+
+import EventSeatIcon from '@mui/icons-material/EventSeat';
+import DeleteIcon from '@mui/icons-material/Delete';
+import NextPlanIcon from '@mui/icons-material/NextPlan';
+
 export default function ChangeSeats() {
   const { state } = useLocation();
   const { arrival, departure, seats,reservation } = state;
@@ -252,15 +257,39 @@ navigate("/h/profile/reservations");
   };
 
   return (
-    <div>
+    <div style={{
+      
+      display: "flex",
+      gap: 24,
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      align:"center",
+      width: "30vw",
+      backgroundColor:"blue",
+      
+    border: "1px solid grey",
+    padding: "23px 10px",
+    marginLeft:"530px",
+    marginTop:"150px",
+    fontSize: 18,
+    fontStyle:"italic",
+
+    borderRadius: 12,
+    boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+    background: "white",
+    gridTemplateColumns: "300px 300px",
+   
+  }}>
       <div>Choose {tot} Departure Seat(s) :</div>
       <ButtonGroup disableElevation variant="contained">
         {departure_seats1.map((e) => (
           <Button
             onClick={() => handleChange(e, "departure")}
             variant="contained"
+            startIcon={<EventSeatIcon/>}
           >
-            Seat {e}
+             {e}
           </Button>
         ))}
       </ButtonGroup>
@@ -271,21 +300,24 @@ navigate("/h/profile/reservations");
             <Button
               onClick={() => handleChange(e, "arrival")}
               variant="contained"
+              endIcon={<EventSeatIcon/>}
             >
-              Seat {e}
+               {e}
             </Button>
           ))}
         </ButtonGroup>
         <div>Departure Seats : {chosend}</div>
         <div>Arrival Seats : {chosena}</div>
         <div>
-          <Button variant="contained" onClick={() => handleClick()}>
+          <Button variant="contained"endIcon={<NextPlanIcon/>} onClick={() => handleClick()}>
             Procced
           </Button>
         </div>
-        <div>
+        <div style={ {
+     padding:"15px 13px"
+      }}>
       
-          <Button variant="contained" onClick={() => handleDelete()}>
+          <Button variant="contained" endIcon={<DeleteIcon/>} onClick={() => handleDelete()}>
             Clear All
           </Button>
           <Backdrop

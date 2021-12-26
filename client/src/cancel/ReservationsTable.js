@@ -3,18 +3,9 @@ import { MDBDataTableV5 } from "mdbreact";
 export default function ReservationsTable(props) {
   const [datatable, setDatatable] = React.useState({
     columns: [
+   
       {
-        label: "id",
-        field: "_id",
-        width: 100,
-      },
-      {
-        label: "userId",
-        field: "userId",
-        width: 100,
-      },
-      {
-        label: "Confirmation_Number",
+        label: "Confirmation Number",
         field: "Confirmation_Number",
         width: 100,
       },
@@ -24,25 +15,17 @@ export default function ReservationsTable(props) {
         width: 100,
       },
       {
-        label: "Arr_Flight_no",
+        label: "Arrival No.",
         field: "Arr_Flight_no",  
         width: 100,
       },
+  
       {
-        label: "Arr_Flight_id",
-        field: "Arr_Flight_id", 
-        width: 100,
-      },
-      {
-        label: "Dep_Flight_no",
+        label: "Departure No.",
         field: "Dep_Flight_no",  
         width: 100,
       },
-      {
-        label: "Dep_Flight_id",
-        field: "Dep_Flight_id", 
-        width: 100,
-      },
+    
       {
         label: "Arr_eSeats",
         field: "Arr_eSeats",
@@ -98,6 +81,7 @@ export default function ReservationsTable(props) {
         checkbox
         headCheckboxID="id2"
         bodyCheckboxID="checkboxes2"
+        searching={false}
         getValueCheckBox={(e) => {
           showLogs2(e);
           props.func(e);
