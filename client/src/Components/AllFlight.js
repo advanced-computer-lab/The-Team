@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { Link  } from 'react-router-dom';
 import axios from 'axios';
 
+import logo from "../logo.png";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+
 const Flight = props => (
   <tr>
     <td>{props.flight.From}</td>
@@ -90,7 +97,35 @@ class AllFlight extends Component {
   render() {
     return (
       <div>
-        <h3>Logged Flights</h3>
+        <AppBar position="static" sx={{
+    backgroundColor:"#006fa2"
+}}>
+        <Toolbar>
+        <Button href="/" variant="text" sx={{
+    color:"white"
+    
+}} >
+Home
+    </Button>
+
+    <IconButton style={{
+      marginLeft:"1400px"
+    }}
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+
+
+        </Toolbar>
+      </AppBar>
+        <h3 style={{
+          fontSize: 30
+        }}>Logged Flights</h3>
         <table className="table">
           <thead className="thead-light">
             <tr>

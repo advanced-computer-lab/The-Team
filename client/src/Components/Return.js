@@ -18,9 +18,25 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import "../App.css";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    "& .MuiPaper-root": {
+      backgroundColor: "#006fa2"
+    }
+    ,"& .MuiButton-root":{
+      color:"white",
+      backgroundColor:"#006fa2"
+      
+
+    }
+  }
+}));
 
 export default function Arrival(props) {
   var sel = {};
+  const classes = useStyles();
   const { state } = useLocation();
   const [change, setChange] = React.useState(false);
   const { selected_departure, arrival, cabin,children,passengers,userId } = state;
@@ -119,13 +135,13 @@ export default function Arrival(props) {
     }
   };
   return (
-    <div>
+    <div className={classes.root}>
 
 <AppBar position="static" sx={{
     backgroundColor:"#006fa2"
 }}>
         <Toolbar>
-        <Button href="/login" variant="text" sx={{
+        <Button href="/" variant="text" sx={{
           
           color:"white"
     }} >
@@ -140,6 +156,7 @@ export default function Arrival(props) {
                 aria-label="account of current user"
                 aria-haspopup="true"
                 color="inherit"
+                href="/h/profile"
               >
                 <AccountCircle />
               </IconButton>

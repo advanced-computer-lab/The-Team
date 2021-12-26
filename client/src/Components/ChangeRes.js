@@ -14,6 +14,13 @@ import AlertTitle from "@mui/material/AlertTitle";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import Collapse from "@mui/material/Collapse";
 import React, { useEffect } from "react";
+
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+
+
 export default function ChangeReservation() {
   const { state } = useLocation();
   const {
@@ -168,21 +175,66 @@ export default function ChangeReservation() {
 
   return (
     <div>
+
+<AppBar position="static" sx={{
+    backgroundColor:"#006fa2"
+}}>
+        <Toolbar>
+        <Button href="/" variant="text" sx={{
+    color:"white"
+    
+}} >
+Home
+    </Button>
+
+    <IconButton style={{
+      marginLeft:"1400px"
+    }}
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+                href="/h/profile"
+              >
+                <AccountCircle />
+              </IconButton>
+
+
+        </Toolbar>
+      </AppBar>
+      
       <ReservationsTable rows={[state]} />
       <div>
         <div>
-          <div style={{ width: "25%" }}>
+          <div style={{
+             display: "flex",
+             gap: 24,
+             flexDirection: "column",
+             justifyContent: "center",
+             alignItems: "center",
+              
+             display:"grid",
+             
+              padding: "24px 12px",
+            
+              gridTemplateColumns: "300px 300px",
+              gap: 12,
+              
+            }}>
+          <div style={{ width: "25%"}}>
             <Dropdown func={cabin} error={cabinError} />
           </div>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDatePicker
-              label="Date desktop"
+              label="Flight Date"
               inputFormat="yyyy/MM/dd"
               value={value}
               onChange={handleChange}
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
+          </div>
           <br />
         </div>
         <Button
