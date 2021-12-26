@@ -29,6 +29,7 @@ import ULogin from "./sign/Login";
 import Password from "./passwordEdit";
 import Pay from "./homepage/Payment/Pay";
 import CheckoutForm from "./homepage/Payment/CheckoutForm";
+import GuestLogin from "./Components/GuestLogin"
 
 
 const AdminPanelElement = AdminPanel();
@@ -84,6 +85,8 @@ function App() {
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/signin" element={<ULogin />} />
           <Route exact path="/pay" element={<Pay />} />
+          <Route exact path="/guest" element={<GuestLogin />} />
+
           <Route exact path="/r" element={<CheckoutForm />} />
           <Route exact path="/forget" element={<Forget />} />
 
