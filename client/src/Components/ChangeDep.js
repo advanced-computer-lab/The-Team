@@ -22,6 +22,7 @@ export default function ChangeDeparture() {
     price,
     seats,
     id,
+    reservation
 
   } = state;
   const navigate = useNavigate();
@@ -120,6 +121,8 @@ export default function ChangeDeparture() {
       cabin: cabin,
       seats: seats,
       money: row["PriceDif"],
+      price:price,
+      reservation:reservation
     };
     if (row.length != 0) {
       navigate("/h/seatingdep", {
