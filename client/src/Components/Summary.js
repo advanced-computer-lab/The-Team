@@ -177,6 +177,8 @@ export default function Summary() {
       money:mon*100
 
     }
+    var ff=mon*100
+    localStorage.setItem("monney",ff)
     navigate("/pay", {
       state: formatedData,
     });
