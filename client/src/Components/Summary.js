@@ -172,7 +172,15 @@ export default function Summary() {
           });
 
     }
-    navigate("/login");
+    var mon=pricea + priced
+    let formatedData={
+      money:mon
+
+    }
+    navigate("/pay", {
+      state: formatedData,
+    });
+
   };
 
   return (
