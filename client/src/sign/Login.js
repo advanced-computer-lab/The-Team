@@ -66,7 +66,36 @@ function Login(props) {
         else if (res.data.message === "Success") {
           console.log(res.data.token);
           localStorage.setItem("token", res.data.token);
+<<<<<<< Updated upstream
         navigate("/h/profile/password");
+=======
+
+
+
+
+          axios({
+            method: "get", //you can set what request you want to be
+            url: "http://localhost:5000/users/isAdmin",
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
+
+           .then((res) => {
+             console.log(res.data)
+              if(res.data=="Not"){
+                  navigate("/h");
+                            }
+                   else if(res.data=="Admin"){
+                       navigate("/home/adminpanel")
+                       }
+
+          })
+            .catch((err) => {
+              console.log(err);
+            });
+
+>>>>>>> Stashed changes
         }
       });
     }

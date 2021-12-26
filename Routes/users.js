@@ -1,7 +1,12 @@
 const router = require("express").Router();
 const nodemailer = require("nodemailer");
 let user = require("../Models/users.model");
+<<<<<<< Updated upstream
 var bcrypt = require('bcrypt');
+=======
+let reservation = require("../Models/reservations.model");
+var bcrypt = require("bcrypt");
+>>>>>>> Stashed changes
 const jwt = require("jsonwebtoken");
 
 
@@ -244,7 +249,69 @@ router.route("/:id/reservations").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+<<<<<<< Updated upstream
 router.route("/:id/cancelled").post((req, res) => {
+=======
+
+router.route("/myself").post(async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const userData = {};
+  userData.data = await verifyToken(token);
+  var nnn="";
+
+
+  var newreserved = await reservation
+     .find({ userId: userData.data.id })
+    .then((newreserved) => {
+     // console.log(newreserved);
+      res.json(newreserved) 
+      //console.log(newreserved);
+      nnn=newreserved;
+
+
+
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+
+
+
+
+  user.findById(userData.data.id).then((users) => {
+    const mail = users.Email;
+
+    let mailTransporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "acltheteam@gmail.com",
+        pass: "Damnpass456",
+      },
+    });
+
+
+
+    let mailDetails = {
+      from: "acltheteam@gmail.com",
+      to: "ziadearth@gmail.com",
+      subject: "Test mail",
+      text:
+        "Hello bro, these are your reservations " +
+        nnn
+    };
+
+    mailTransporter.sendMail(mailDetails, function (err, data) {
+      if (err) {
+        console.log("Error Occurs");
+      } else {
+        console.log("Email sent successfully");
+      }
+    });
+  });
+});
+
+
+
+router.route("/cancelled").post(async (req, res) => {
+>>>>>>> Stashed changes
   const token = req.headers.authorization.split(" ")[1];
   const userData={};
   userData.data =await verifyToken(token);
