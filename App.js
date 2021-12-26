@@ -5,7 +5,6 @@ const mongoose= require('mongoose');
 const path = require("path");
 require('dotenv').config({ path: '.env' });
 
-const request = require("supertest");
 
 
 const app = express();
