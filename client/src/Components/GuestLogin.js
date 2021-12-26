@@ -9,45 +9,27 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import UserProfile from "../UserProfile";
 
-//import { useNavigation } from '@react-navigation/native';
+export default function GuestLogin(props) {
+  const navigate = useNavigate();
 
-function Login(props) {
   const [Password, setPassword] = useState("");
   const [Email, setEmail] = useState("");
 
-  const [userValid, setUserValid] = React.useState("");
-
-  const navigate = useNavigate();
-  const goToLoginPage = () => navigate("/login");
-
-  //   const { state } = useLocation();
-  //   const { id } = state;
-
+  const { state } = useLocation();
   const handlePass = (event) => {
     setPassword(event.target.value);
   };
   const handleEmail = (event) => {
     setEmail(event.target.value);
   };
-  const handleGuest = () => {
-    localStorage.setItem("logged",false);
-    navigate("/h", {
-      state: {
-        logged: false,
-      },
-    });
-  };
-
   const onSubmit = () => {
     var flag1 = false;
     var flag2 = false;
-
     if (Password.length == 0 || Email.length == 0) {
       alert("enter all fields please please");
     } else {
       flag1 = true;
     }
-
     if (typeof Email !== "undefined") {
       var pattern = new RegExp(
         /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
@@ -59,7 +41,6 @@ function Login(props) {
         flag2 = true;
       }
     }
-
     if (flag1 && flag2) {
       const data = {
         //  id: id,
@@ -74,35 +55,13 @@ function Login(props) {
         else if (res.data.message === "Success") {
           console.log(res.data.token);
           localStorage.setItem("token", res.data.token);
-          localStorage.setItem("logged",true);
-
-          axios({
-            method: "get", //you can set what request you want to be
-            url: "http://localhost:5000/users/isAdmin",
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          })
-            .then((res) => {
-              console.log(res.data);
-              if (res.data == "Not") {
-                navigate("/h", {
-                  state: {
-                    logged: true,
-                  },
-                });
-              } else if (res.data == "Admin") {
-                navigate("/home/adminpanel");
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          navigate("/h/summary",{
+              state:state
+          });
         }
       });
     }
   };
-
   return (
     <div className="Login In">
       <div className="container">
@@ -171,19 +130,7 @@ function Login(props) {
         </div>
         <br></br>
         <br></br>
-
-        <Button onClick={handleGuest} variant="contained">
-          Continue as Guest
-        </Button>
-        <br></br>
-        <br></br>
-
-        <Button href="/forget" variant="contained">
-          Forgot Password?
-        </Button>
       </div>
     </div>
   );
 }
-
-export default Login;

@@ -84,7 +84,7 @@ export default function Summary() {
       setTimea(arrival1.data["Dep_time"]);
       setDated(departure1.data["Dep_date"]);
       setDatea(arrival1.data["Dep_date"]);
-      var rand=Math.floor((Math.random() * 10) + 1);
+      var rand=Math.floor((Math.random() * 100) + 1);
       setConfirm(userId + departure1.data["Flight_no"] +arrival1.data["Flight_no"]+caby+arrival_seats[0]+departure_seats[0]+rand);
       setAddeddepp(departure1);
       setAddedarr(arrival1);
@@ -172,7 +172,17 @@ export default function Summary() {
           });
 
     }
-    navigate("/login");
+    var mon=pricea + priced
+    let formatedData={
+      money:mon*100
+
+    }
+    var ff=mon*100
+    localStorage.setItem("monney",ff)
+    navigate("/pay", {
+      state: formatedData,
+    });
+
   };
 
   return (
@@ -197,7 +207,7 @@ export default function Summary() {
       padding: "40px 12px" ,
       borderRadius: 12,
       boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-      background: "#FDFAF6",
+      background: "white",
       gridTemplateColumns: "300px 300px",
       gap: 12,
     }

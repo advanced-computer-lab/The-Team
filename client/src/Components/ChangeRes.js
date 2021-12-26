@@ -14,6 +14,13 @@ import AlertTitle from "@mui/material/AlertTitle";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import Collapse from "@mui/material/Collapse";
 import React, { useEffect } from "react";
+
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+
+
 export default function ChangeReservation() {
   const { state } = useLocation();
   const {
@@ -34,7 +41,7 @@ export default function ChangeReservation() {
   const [dateError, setDateError] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
   const [warning, setWarning] = React.useState(false);
-  const [value, setValue] = React.useState(new Date(2018, 11, 24));
+  const [value, setValue] = React.useState(new Date(2021, 12, 27));
   const navigate = useNavigate();
   var cab = "";
 
@@ -73,6 +80,7 @@ export default function ChangeReservation() {
         To: res0.data.To,
         DepartureDate: formatedDate,
       };
+      console.log(queryData);
           
       var res = await axios
         .post("http://localhost:5000/flights/search/dep", queryData)
@@ -90,6 +98,7 @@ export default function ChangeReservation() {
           cabin: cab,
           price: price,
           seats: temp,
+          reservation:state
         };
 
         navigate("/h/changedep", { state: formatedData }); //TODO: need to fix path
@@ -115,13 +124,14 @@ export default function ChangeReservation() {
         });
 
       var formatedDate = formatDate(value);
-      var queryData = {
-        From: res0.data.From,
+      var queryData1 = {
+        From:res0.data.From ,
         To: res0.data.To,
-        ReturnDate: formatedDate,
+        ArrivalDate: formatedDate,
       };
+      console.log(queryData1);
       var res = await axios
-        .post("http://localhost:5000/flights/search/arr", queryData)
+        .post("http://localhost:5000/flights/search/arr", queryData1)
         .catch((err) => {
           console.log(err);
         });
@@ -135,6 +145,7 @@ export default function ChangeReservation() {
           cabin: cab,
           price: price,
           seats: temp,
+          reservation:state
         };
 
         navigate("/h/changearr", { state: formatedData }); //TODO: need to fix path
@@ -150,6 +161,7 @@ export default function ChangeReservation() {
       arrival: Arr_Flight_id,
       cabin: cab,
       seats: temp,
+      reservation:state
     };
 
     navigate("/h/changeseats", { state: formatedData });
@@ -163,21 +175,66 @@ export default function ChangeReservation() {
 
   return (
     <div>
+
+<AppBar position="static" sx={{
+    backgroundColor:"#006fa2"
+}}>
+        <Toolbar>
+        <Button href="/" variant="text" sx={{
+    color:"white"
+    
+}} >
+Home
+    </Button>
+
+    <IconButton style={{
+      marginLeft:"1400px"
+    }}
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+                href="/h/profile"
+              >
+                <AccountCircle />
+              </IconButton>
+
+
+        </Toolbar>
+      </AppBar>
+      
       <ReservationsTable rows={[state]} />
       <div>
         <div>
-          <div style={{ width: "25%" }}>
+          <div style={{
+             display: "flex",
+             gap: 24,
+             flexDirection: "column",
+             justifyContent: "center",
+             alignItems: "center",
+              
+             display:"grid",
+             
+              padding: "24px 12px",
+            
+              gridTemplateColumns: "300px 300px",
+              gap: 12,
+              
+            }}>
+          <div style={{ width: "25%"}}>
             <Dropdown func={cabin} error={cabinError} />
           </div>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDatePicker
-              label="Date desktop"
+              label="Flight Date"
               inputFormat="yyyy/MM/dd"
               value={value}
               onChange={handleChange}
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
+          </div>
           <br />
         </div>
         <Button

@@ -12,6 +12,8 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 import DiscreteSlider from "./Slider";
+import { useLocation } from "react-router-dom";
+
 import NavBar from "./NavBar";
 import '../App.css';
 
@@ -27,6 +29,8 @@ export default function Home(props) {
   const [warning, setWarning] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   
+const { state } = useLocation();
+const { logged } = state;
   const navigate = useNavigate();
   var from = "";
   var to = "";
@@ -62,6 +66,7 @@ export default function Home(props) {
   const handleChange = async (event) => {
     setOpen(!open);
     var er = validateData();
+    console.log("token: " +localStorage.getItem("token"));
     console.log(er);
     if (er) {
       setLoading(false);
@@ -140,7 +145,7 @@ export default function Home(props) {
   return (
     <div>
       <div>
-        <NavBar isLogged={true}  />
+        <NavBar isLogged={logged}  />
       </div>
 
       <div className="col-md-8 m-auto" style={{
