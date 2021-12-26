@@ -457,7 +457,7 @@ router.route("/moneydiff").post(async (req, res) => {
       subject: "Test mail",
       text:
         "Hello bro, you changed your reservation with a price diff" +
-        req.body.Price 
+        req.body.money
     };
 
     mailTransporter.sendMail(mailDetails, function (err, data) {
