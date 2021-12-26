@@ -18,13 +18,14 @@ import Collapse from "@mui/material/Collapse";
 export default function ChangeArrival() {
     const [change, setChange] = React.useState(false);
     const { state } = useLocation();
-    const { arrival, cabin,price, seats,id} = state;
+    const { arrival, cabin,price, seats,id,reservation} = state;
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [openal, setOpenal] = React.useState(false);
     const [alert, setAlert] = React.useState(false);
     const [row, setRow] = React.useState([]);
     var removed = [];
+
   
     useEffect(() => {
       seat();
@@ -70,7 +71,8 @@ export default function ChangeArrival() {
           }
   
           if (availableSeats < seats) removed.push(i);
-          var tempPrice=((arrival[i]["Price"][0])*seats)-price;
+          var tempPrice=arrival[i]["Price"][0]*seats-(price/2);
+          
           arrival[i] = Object.assign( { PriceDif: tempPrice },arrival[i]);
           arrival[i] = Object.assign( { Seats: availableSeats },arrival[i]);
           
@@ -85,7 +87,7 @@ export default function ChangeArrival() {
             y++;
           }
           if (availableSeats < seats) removed.push(i);
-          var tempPrice=((arrival[i]["Price"][1])*seats)-price;
+          var tempPrice=arrival[i]["Price"][1]*seats-(price/2);
           arrival[i] = Object.assign( { PriceDif: tempPrice },arrival[i]);
           arrival[i] = Object.assign({ Seats: availableSeats }, arrival[i]);
   
@@ -98,7 +100,7 @@ export default function ChangeArrival() {
             y++;
           }
           if (availableSeats < seats) removed.push(i);
-          var tempPrice=((arrival[i]["Price"][2])*seats)-price;
+          var tempPrice=arrival[i]["Price"][2]*seats-(price/2);
           arrival[i] = Object.assign( { PriceDif: tempPrice },arrival[i]);
           arrival[i] = Object.assign({ Seats: availableSeats }, arrival[i]);
   
@@ -115,7 +117,9 @@ export default function ChangeArrival() {
         arrival_no: row["Flight_no"],
         cabin: cabin,
         seats:seats,
-        money:row["PriceDif"]
+        money:row["PriceDif"],
+        price:price,
+        reservation:reservation,
       };
       if (row.length != 0) {
         navigate("/h/seatingarr", {

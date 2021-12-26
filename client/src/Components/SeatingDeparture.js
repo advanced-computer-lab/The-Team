@@ -10,12 +10,20 @@ import Backdrop from "@mui/material/Backdrop";
 import { useNavigate } from "react-router-dom";
 
 export default function SeatingDeparture() {
-  const [reservations, setReservations] = React.useState([]);
   const { state } = useLocation();
-  const { departure, cabin, seats, money, id,departure_no } = state;
+  const {
+    departure,
+    cabin,
+    seats,
+    money,
+    id,
+    departure_no,
+    price,
+    reservation,
+  } = state;
   const [change, setChange] = React.useState(false);
   const [open, setOpen] = React.useState(false);
- 
+
   const [alert, setAlert] = React.useState(false);
   const [chosend, setChosend] = React.useState([]);
   const [departure_seats1, setDeparture_seats] = React.useState([]);
@@ -78,63 +86,59 @@ export default function SeatingDeparture() {
       setOpen(true);
     }
   };
-  const handleClick =async  () => {
+  const handleClick = async () => {
     if (deptemp.length != tot) {
       setAlert(true);
       setOpen(true);
     } else {
       await axios
-        .get("http://localhost:5000/reservations/"+ id + "/reservations")
-        .then((res)=> {
-           axios
-          .patch("http://localhost:5000/flights/cancelleddep", res.data)
-          .catch((err) => {
-            console.log(err);
-          });
-           axios({
-            method: "patch", //you can set what request you want to be
-            url: "http://localhost:5000/reservations/reservations/delete",
-            data: res.data,
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }).catch((err) => {
-            console.log(err);
-          });
-          var Dep_eSeats=[];
-      var Dep_bSeats=[];
-      var Dep_fSeats=[];
-      if (cabin === "Economy"){
-        Dep_eSeats=deptemp;
-      }else if(cabin === "Business"){
-        Dep_bSeats=deptemp;
-      }else{
-        Dep_fSeats=deptemp;
+        .patch("http://localhost:5000/flights/cancelleddep", reservation)
+        .catch((err) => {
+          console.log(err);
+        });
+      await axios({
+        method: "patch", //you can set what request you want to be
+        url: "http://localhost:5000/reservations/reservations/delete",
+        data: reservation,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }).catch((err) => {
+        console.log(err);
+      });
+      var Dep_eSeats = [];
+      var Dep_bSeats = [];
+      var Dep_fSeats = [];
+      if (cabin === "Economy") {
+        Dep_eSeats = deptemp;
+      } else if (cabin === "Business") {
+        Dep_bSeats = deptemp;
+      } else {
+        Dep_fSeats = deptemp;
       }
-      console.log(departure_no);
-      console.log(departure);
-      
+      var money1=money+price*3;
       const reservation1 = {
-        userId: res.data.userId,
-        Confirmation_Number: res.data.Confirmation_Number,
-        Price: money,
-        Arr_Flight_no: res.data.Arr_Flight_no,
-        Arr_Flight_id: res.data.Arr_Flight_id,
+        userId: reservation.userId,
+        Confirmation_Number: reservation.Confirmation_Number,
+        Price: money1,
+        Arr_Flight_no: reservation.Arr_Flight_no,
+        Arr_Flight_id: reservation.Arr_Flight_id,
         Dep_Flight_no: departure_no,
-        Dep_Flight_id:departure,
-        Arr_eSeats: res.data.Arr_eSeats,
-        Arr_bSeats: res.data.Arr_bSeats,
-        Arr_fSeats: res.data.Arr_fSeats,
+        Dep_Flight_id: departure,
+        Arr_eSeats: reservation.Arr_eSeats,
+        Arr_bSeats: reservation.Arr_bSeats,
+        Arr_fSeats: reservation.Arr_fSeats,
         Dep_eSeats: Dep_eSeats,
         Dep_bSeats: Dep_bSeats,
-        Dep_fSeats:Dep_fSeats ,
+        Dep_fSeats: Dep_fSeats,
       };
-       axios
+      await axios
         .patch("http://localhost:5000/flights/addeddep", reservation1)
         .catch((err) => {
           console.log(err);
         });
-       axios({
+
+      await axios({
         method: "post", //you can set what request you want to be
         url: "http://localhost:5000/reservations/add",
         data: reservation1,
@@ -145,26 +149,11 @@ export default function SeatingDeparture() {
         console.log(err);
       });
 
-
-
-
-        })
-          
-        .catch((err) => {
-          console.log(err);
-        });
-        
-        
-
-     
-     
-      
       let formatedData = {
         money: money,
       };
-      if ((money === 0)) {
+      if (money === 0) {
       } else if (money < 0) {
-     
       } else {
         navigate("/pay", { state: formatedData });
       }
