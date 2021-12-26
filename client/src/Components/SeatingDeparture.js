@@ -150,7 +150,7 @@ export default function SeatingDeparture() {
       });
 
       let formatedData = {
-        money: money,
+        money: money*100,
       };
       if (money === 0) {
       } else if (money < 0) {

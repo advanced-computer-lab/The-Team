@@ -380,4 +380,95 @@ router.route("/update").patch(async (req, res) => {
     })
     .catch((err) => res.status(400).json("Error: " + err));
 });
+
+router.route("/myself").post(async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const userData = {};
+  userData.data = await verifyToken(token);
+  var nnn="";
+
+
+  var newreserved = await reservation
+     .find({ userId: userData.data.id })
+    .then((newreserved) => {
+     // console.log(newreserved);
+      res.json(newreserved) 
+      //console.log(newreserved);
+      nnn=newreserved;
+
+
+
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+
+
+
+
+  user.findById(userData.data.id).then((users) => {
+    const mail = users.Email;
+
+    let mailTransporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "acltheteam@gmail.com",
+        pass: "Damnpass456",
+      },
+    });
+
+
+
+    let mailDetails = {
+      from: "acltheteam@gmail.com",
+      to: "ziadearth@gmail.com",
+      subject: "Test mail",
+      text:
+        "Hello bro, these are your reservations " +
+        nnn
+    };
+
+    mailTransporter.sendMail(mailDetails, function (err, data) {
+      if (err) {
+        console.log("Error Occurs");
+      } else {
+        console.log("Email sent successfully");
+      }
+    });
+  });
+});
+
+router.route("/moneydiff").post(async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const userData = {};
+  userData.data = await verifyToken(token);
+  user.findById(userData.data.id).then((users) => {
+    const mail = users.Email;
+
+    let mailTransporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "acltheteam@gmail.com",
+        pass: "Damnpass456",
+      },
+    });
+
+    let mailDetails = {
+      from: "acltheteam@gmail.com",
+      to: mail,
+      subject: "Test mail",
+      text:
+        "Hello bro, you changed your reservation with a price diff" +
+        req.body.Price 
+    };
+
+    mailTransporter.sendMail(mailDetails, function (err, data) {
+      if (err) {
+        console.log("Error Occurs");
+      } else {
+        console.log("Email sent successfully");
+      }
+    });
+  });
+});
+
+
 module.exports = router;
