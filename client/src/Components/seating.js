@@ -132,7 +132,7 @@ export default function Seating() {
     }
   };
   const handleClick = () => {
-    var token = localStorage.getItem("token");
+    var token = localStorage.getItem("logged");
 
     if (deptemp.length != tot) {
       setAlert(true);
@@ -142,7 +142,7 @@ export default function Seating() {
       setAlert(true);
       setOpen(true);
     } else {
-      if (token) {
+      if (token==="true") {
         navigate("/h/summary", {
           state: {
             departure: departure,
@@ -158,7 +158,7 @@ export default function Seating() {
           },
         });
       } else {
-        navigate("/signin", {
+        navigate("/guest", {
           state: {
             departure: departure,
             arrival: arrival,

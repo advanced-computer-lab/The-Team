@@ -30,6 +30,7 @@ function Login(props) {
     setEmail(event.target.value);
   };
   const handleGuest = () => {
+    localStorage.setItem("logged",false);
     navigate("/h", {
       state: {
         logged: false,
@@ -73,6 +74,7 @@ function Login(props) {
         else if (res.data.message === "Success") {
           console.log(res.data.token);
           localStorage.setItem("token", res.data.token);
+          localStorage.setItem("logged",true);
 
           axios({
             method: "get", //you can set what request you want to be
