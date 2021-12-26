@@ -31,6 +31,7 @@ export default function CheckoutForm() {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
+          alert("Payment succeeded");
             navigate("/h/profile/reservations");
           
           break;
