@@ -4,7 +4,6 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
-import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
 export default function CheckoutForm() {
@@ -32,6 +31,8 @@ export default function CheckoutForm() {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
+            navigate("/h/profile/reservations");
+          
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -79,10 +80,6 @@ export default function CheckoutForm() {
     setIsLoading(false);
   };
 
-  const handleret = () => {
-    navigate("/h/profile/reservations");
-  }
-
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
@@ -93,18 +90,7 @@ export default function CheckoutForm() {
       </button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
-      <div>
 
-
-      <Button
-            onClick={handleret}
-            variant="text"
-          >
-            return to reservations
-          </Button>
-
-
-      </div>
     </form>
   );
 }
