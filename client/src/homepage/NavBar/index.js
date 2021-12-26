@@ -26,7 +26,7 @@ export default function NavBar(props) {
     if (isloggedIn) {
       navigate("/h/profile"); //TODO: need to fix path
     } else {
-      navigate("/login");
+      navigate("/signin");
     }
   };
 
