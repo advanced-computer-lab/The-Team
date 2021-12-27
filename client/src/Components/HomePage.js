@@ -77,7 +77,7 @@ export default function HomePage() {
           fontSize: 25,
         }}
       >
-        Welcome to Kabab Air
+        Welcome to LIVER and Kabab Air
       </h1>
 
       <view>

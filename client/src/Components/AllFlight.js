@@ -2,14 +2,36 @@ import React, { Component } from 'react';
 import { Link  } from 'react-router-dom';
 import axios from 'axios';
 
+import logo from "../logo.png";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+
 const Flight = props => (
   <tr>
     <td>{props.flight.From}</td>
     <td>{props.flight.To}</td>
-    <td>{props.flight.Flight_date}</td>
+    <td>{props.flight.Dep_date}</td>
+    <td>{props.flight.Arr_date}</td>
+    <td>{props.flight.Dep_time}</td>
+    <td>{props.flight.Arr_time}</td>
     <td>{props.flight.Economy_seats}</td>
     <td>{props.flight.Business_seats}</td>
     <td>{props.flight.First_seats}</td>
+    <td>{props.flight.First_no}</td>
+    <td>{props.flight.Baggage_allowance}</td>
+    <td>{props.flight.Price}</td>
+    <td>{props.flight.Dep_terminal}</td>
+    <td>{props.flight.Arr_terminal}</td>
+    <td>{props.flight.Trip_duration}</td>
+
+
+
+
+
+
     <td>
       <Link
         to='/home/adminpanel/flights/update'
@@ -75,16 +97,53 @@ class AllFlight extends Component {
   render() {
     return (
       <div>
-        <h3>Logged Flights</h3>
+        <AppBar position="static" sx={{
+    backgroundColor:"#006fa2"
+}}>
+        <Toolbar>
+        <Button href="/" variant="text" sx={{
+    color:"white"
+    
+}} >
+Home
+    </Button>
+
+    <IconButton style={{
+      marginLeft:"1400px"
+    }}
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+
+
+        </Toolbar>
+      </AppBar>
+        <h3 style={{
+          fontSize: 30
+        }}>Logged Flights</h3>
         <table className="table">
           <thead className="thead-light">
             <tr>
               <th>From</th>
               <th>To</th>
-              <th>Flight date</th>
-              <th>Economy</th>
-              <th>Business class</th>
-              <th>First class</th>
+              <th>Dep_date</th>
+              <th>Arr_date</th>
+              <th>Arr_time</th>
+              <th>Dep_time</th>
+              <th>Economy_seats</th>
+              <th>Business_seats</th>
+              <th>First_seats</th>
+              <th>Flight_no</th>
+              <th>Baggage_allowance</th>
+              <th>Price</th>
+              <th>Dep_terminal</th>
+              <th>Arr_terminal</th>
+              <th>Trip_duration</th>
               <th>Update</th>
               <th>Delete</th>
             </tr>
