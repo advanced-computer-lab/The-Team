@@ -33,15 +33,28 @@ export default function Search() {
 
   return (
     <div>
+        <div>
+        <Datatable data={search(data)} />
+      </div>
       <div>
+
+        
         <input
+
+        style={{
+          display:"flex"
+        }}
           type='text'
+          placeholder='Search'
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
         {columns &&
           columns.map((column) => (
-            <label>
+            <label style={{
+              display:"grid",
+              float:"right"
+            }}>
               <input
                 type='checkbox'
                 checked={searchColumns.includes(column)}
@@ -58,9 +71,7 @@ export default function Search() {
             </label>
           ))}
       </div>
-      <div>
-        <Datatable data={search(data)} />
-      </div>
+    
     </div>
   );
 }

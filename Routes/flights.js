@@ -80,31 +80,34 @@ router.route("/").get((req, res) => {
 
 
 router.route('/add').post((req, res)=>{
-const From = req.body.From;
-const To = req.body.To;
-const Dep_date = req.body.Dep_date;
-const Arr_date = req.body.Arr_date;
-const Dep_time = req.body.Dep_time;
-const Arr_time = req.body.Arr_time;
-const Economy_seats = Number(req.body.Economy_seats);
-const Business_seats = Number(req.body.Business_seats);
-const First_seats = Number(req.body.First_seats);
-const Flight_no = Number(req.body.Flight_no);
-const Baggage_allowance = Number(req.body.Baggage_allowance);
-const Price = req.body.Price;
-const Dep_terminal = Number(req.body.Dep_terminal);
-const Arr_terminal = Number(req.body.Arr_terminal);
-const Trip_duration = Number(req.body.Trip_duration);
-
-
-
-const newFlight =new Flight({From, To, Dep_date, Arr_date, Dep_time, Arr_time, Economy_seats,Business_seats, First_seats, Flight_no, Baggage_allowance,Price, Dep_terminal, Arr_terminal, Trip_duration })
-
-  newFlight
-    .save()
-    .then(() => res.json("Flight Added!"))
-    .catch((err) => res.status(400).json("Error " + err));
-});
+  const From = req.body.From;
+  const To = req.body.To;
+  const Dep_date = req.body.Dep_date;
+  const Arr_date = req.body.Arr_date;
+  const Dep_time = req.body.Dep_time;
+  const Arr_time = req.body.Arr_time;
+  const Economy_seats = Array(Number(req.body.Economy_seats)).fill(1);
+  const Business_seats = Array(Number(req.body.Business_seats)).fill(1);
+  const First_seats = Array(Number(req.body.First_seats)).fill(1);
+  const Flight_no = Number(req.body.Flight_no);
+  const Baggage_allowance = Number(req.body.Baggage_allowance);
+  const Price = Array(Number(3));
+  Price[0]=Number(req.body.Price*1);
+  Price[1]=Number(req.body.Price*1.25);
+  Price[2]=Number(req.body.Price*1.5);
+  const Dep_terminal = Number(req.body.Dep_terminal);
+  const Arr_terminal = Number(req.body.Arr_terminal);
+  const Trip_duration = Number(req.body.Trip_duration);
+  
+  
+  
+  const newFlight =new Flight({From, To, Dep_date, Arr_date, Dep_time, Arr_time, Economy_seats,Business_seats, First_seats, Flight_no, Baggage_allowance,Price, Dep_terminal, Arr_terminal, Trip_duration })
+  
+    newFlight
+      .save()
+      .then(() => res.json("Flight Added!"))
+      .catch((err) => res.status(400).json("Error " + err));
+  });
 
 router.route("/:id").get((req, res) => {
   Flight.findById(req.params.id)
@@ -223,12 +226,14 @@ router.route("/addeddep").patch((req, res) => {
         flights.Arr_date = req.body.Arr_date;
         flights.Dep_time = req.body.Dep_time;
         flights.Arr_time = req.body.Arr_time;
-        flights.Economy_seats = Number(req.body.Economy_seats);
-        flights.Business_seats = Number(req.body.Business_seats);
-        flights.First_seats = Number(req.body.First_seats);
+        flights.Economy_seats = Array(Number(req.body.Economy_seats)).fill(1);
+        flights.Business_seats = Array(Number(req.body.Business_seats)).fill(1);
+        flights.First_seats = Array(Number(req.body.First_seats)).fill(1);
         flights.Flight_no = Number(req.body.Flight_no);
         flights.Baggage_allowance = Number(req.body.Baggage_allowance);
-        flights.Price = req.body.Price;
+        flights.Price[0] = req.body.Price;
+        flights.Price[1] = req.body.Price*1.2;
+        flights.Price[2] = req.body.Price*1.3;
         flights.Dep_terminal = Number(req.body.Dep_terminal);
         flights.Arr_terminal = Number(req.body.Arr_terminal);
         flights.Trip_duration = Number(req.body.Trip_duration);

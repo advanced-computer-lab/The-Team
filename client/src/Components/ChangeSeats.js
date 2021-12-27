@@ -9,9 +9,14 @@ import Collapse from "@mui/material/Collapse";
 import Backdrop from "@mui/material/Backdrop";
 import { useNavigate } from "react-router-dom";
 
+
+import EventSeatIcon from '@mui/icons-material/EventSeat';
+import DeleteIcon from '@mui/icons-material/Delete';
+import NextPlanIcon from '@mui/icons-material/NextPlan';
+
 export default function ChangeSeats() {
   const { state } = useLocation();
-  const { arrival, departure, cabin, seats } = state;
+  const { arrival, departure, seats,reservation } = state;
   const [change, setChange] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [chosend, setChosend] = React.useState([]);
@@ -25,9 +30,18 @@ export default function ChangeSeats() {
   var arrival_seats = [];
   var tot = seats;
   var departure_seats = [];
+  const [cabin, setCabin] = React.useState("First_class");
+  
 
   useEffect(() => {
     async function fetchMyAPI() {
+      if (reservation.Dep_eSeats.length>0){
+        setCabin("Economy");
+      }
+      else if (reservation.Dep_bSeats.length>0){
+       setCabin("Business");
+      }
+      
       var departure1 = await axios
         .get("http://localhost:5000/flights/" + departure)
         .catch((err) => {
@@ -49,6 +63,8 @@ export default function ChangeSeats() {
           }
           y++;
         }
+         var te= reservation.Dep_eSeats;
+        departure_seats=departure_seats.concat(te);
       } else if (cabin === "Business") {
         while (y < buss.length) {
           if (buss[y] == 1) {
@@ -56,6 +72,8 @@ export default function ChangeSeats() {
           }
           y++;
         }
+        var te= reservation.Dep_bSeats;
+        departure_seats=departure_seats.concat(te);
       } else {
         while (y < firs.length) {
           if (firs[y] == 1) {
@@ -63,6 +81,8 @@ export default function ChangeSeats() {
           }
           y++;
         }
+        var te= reservation.Dep_fSeats;
+        departure_seats=departure_seats.concat(te);
       }
       y = 0;
       var eco1 = arrival1.data["Economy_seats"];
@@ -75,6 +95,8 @@ export default function ChangeSeats() {
           }
           y++;
         }
+        var te= reservation.Arr_eSeats;
+        arrival_seats=arrival_seats.concat(te);
         setChange(true);
       } else if (cabin === "Business") {
         while (y < buss1.length) {
@@ -83,6 +105,8 @@ export default function ChangeSeats() {
           }
           y++;
         }
+        var te= reservation.Arr_bSeats;
+        arrival_seats=arrival_seats.concat(te);
         setChange(true);
       } else {
         while (y < firs1.length) {
@@ -91,6 +115,8 @@ export default function ChangeSeats() {
           }
           y++;
         }
+        var te= reservation.Arr_fSeats;
+        arrival_seats=arrival_seats.concat(te);
         setChange(true);
       }
       setArrival_seats(arrival_seats);
@@ -101,7 +127,7 @@ export default function ChangeSeats() {
 
   const handleChange = (e, dep) => {
     if (dep === "departure") {
-      if (!deptemp.includes(e)) {
+      if (deptemp<seats &&!deptemp.includes(e)) {
         var arr = [chosend];
         arr.push(" Seat ");
         arr.push(e);
@@ -113,7 +139,7 @@ export default function ChangeSeats() {
         setOpen(true);
       }
     } else {
-      if (!arrtemp.includes(e)) {
+      if (arrtemp<seats && !arrtemp.includes(e)) {
         var arr = [chosena];
         arr.push(" Seat ");
         arr.push(e);
@@ -126,9 +152,9 @@ export default function ChangeSeats() {
       }
     }
   };
-  const handleClick = () => {
+  const handleClick =async () => {
     
-
+    
     if (deptemp.length != tot) {
       setAlert(true);
       setOpen(true);
@@ -137,24 +163,92 @@ export default function ChangeSeats() {
       setAlert(true);
       setOpen(true);
     } else {
-    //   navigate("/h/summary", {
-    //     state: {
-    //       departure:departure,
-    //       arrival:arrival,
-    //       cabin:cabin,
-    //       children:children,
-    //       passengers:passengers,
-    //       arrival_seats:arrtemp,
-    //       departure_seats:deptemp,
-    //       arrival_seats1:chosena,
-    //       departure_seats1:chosend,
-    //       userId:userId,
+      console.log(reservation)
+      await axios
+      .patch("http://localhost:5000/flights/cancelledarr", reservation)
+      .catch((err)=>{
+        console.log(err)
+      });
 
-    //     },
-      //});
+     await axios
+      .patch("http://localhost:5000/flights/cancelleddep", reservation)
+      .catch((err)=>{
+        console.log(err)
+      });
+     await axios({
+        method: "patch", //you can set what request you want to be
+        url: "http://localhost:5000/reservations/reservations/delete",
+        data: reservation,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+        .catch((err) => {
+          console.log(err);
+        });
+        var Arr_eSeats=[];
+        var Arr_bSeats=[];
+        var Arr_fSeats=[];
+        var Dep_eSeats=[];
+        var Dep_bSeats=[];
+        var Dep_fSeats=[];
+        console.log(cabin);
+        if (cabin==="Economy"){
+          Arr_eSeats=arrtemp;
+          Dep_eSeats=deptemp;
+          
+        }
+        else if(cabin==="Business"){
+          Arr_bSeats=arrtemp;
+          Dep_bSeats=deptemp;
+        }
+        else{
+          Arr_fSeats=arrtemp;
+          Dep_fSeats=deptemp;
+        }
+        const reservation1 = {
+          userId: reservation.userId,
+          Confirmation_Number: reservation.Confirmation_Number,
+          Price: reservation.price,
+          Arr_Flight_no: reservation.Arr_Flight_no,
+          Arr_Flight_id: reservation.Arr_Flight_id,
+          Dep_Flight_no: reservation.Dep_Flight_no,
+          Dep_Flight_id: reservation.Dep_Flight_id,
+          Arr_eSeats: Arr_eSeats,
+          Arr_bSeats: Arr_bSeats,
+          Arr_fSeats: Arr_fSeats,
+          Dep_eSeats: Dep_eSeats,
+          Dep_bSeats: Dep_bSeats,
+          Dep_fSeats: Dep_fSeats,
+        };
+        await axios
+        .patch("http://localhost:5000/flights/addedarr", reservation1).then(()=>{
+          axios
+          .patch("http://localhost:5000/flights/addeddep", reservation1)
+          .catch((err) => {
+            console.log(err);
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+     
+        await axios({
+          method: "post", //you can set what request you want to be
+          url: "http://localhost:5000/reservations/add",
+          data:reservation1,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+          .catch((err) => {
+            console.log(err);
+          });
+navigate("/h/profile/reservations");
 
-    }
-  };
+    
+  }
+};
   const handleDelete = () => {
     setChosena([]);
     setChosend([]);
@@ -163,15 +257,39 @@ export default function ChangeSeats() {
   };
 
   return (
-    <div>
+    <div style={{
+      
+      display: "flex",
+      gap: 24,
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      align:"center",
+      width: "30vw",
+      backgroundColor:"blue",
+      
+    border: "1px solid grey",
+    padding: "23px 10px",
+    marginLeft:"530px",
+    marginTop:"150px",
+    fontSize: 18,
+    fontStyle:"italic",
+
+    borderRadius: 12,
+    boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+    background: "white",
+    gridTemplateColumns: "300px 300px",
+   
+  }}>
       <div>Choose {tot} Departure Seat(s) :</div>
       <ButtonGroup disableElevation variant="contained">
         {departure_seats1.map((e) => (
           <Button
             onClick={() => handleChange(e, "departure")}
             variant="contained"
+            startIcon={<EventSeatIcon/>}
           >
-            Seat {e}
+             {e}
           </Button>
         ))}
       </ButtonGroup>
@@ -182,21 +300,24 @@ export default function ChangeSeats() {
             <Button
               onClick={() => handleChange(e, "arrival")}
               variant="contained"
+              endIcon={<EventSeatIcon/>}
             >
-              Seat {e}
+               {e}
             </Button>
           ))}
         </ButtonGroup>
         <div>Departure Seats : {chosend}</div>
         <div>Arrival Seats : {chosena}</div>
         <div>
-          <Button variant="contained" onClick={() => handleClick()}>
+          <Button variant="contained"endIcon={<NextPlanIcon/>} onClick={() => handleClick()}>
             Procced
           </Button>
         </div>
-        <div>
+        <div style={ {
+     padding:"15px 13px"
+      }}>
       
-          <Button variant="contained" onClick={() => handleDelete()}>
+          <Button variant="contained" endIcon={<DeleteIcon/>} onClick={() => handleDelete()}>
             Clear All
           </Button>
           <Backdrop

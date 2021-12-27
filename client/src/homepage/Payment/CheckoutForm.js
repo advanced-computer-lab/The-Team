@@ -4,10 +4,12 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +31,9 @@ export default function CheckoutForm() {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
+          alert("Payment succeeded");
+            navigate("/h/profile/reservations");
+          
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -86,6 +91,7 @@ export default function CheckoutForm() {
       </button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
+
     </form>
   );
 }
